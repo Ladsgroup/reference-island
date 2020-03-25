@@ -17,7 +17,9 @@ data/whitelisted_ext_idefs.json: \
 	data/external_idefs.json
 	python3 scripts/examine_ext_idefs.py
 
+data/ext_idef_check_result_limit10.json:
+	python3 scripts/sample_scrape.py
+
 .PHONY: clean
 clean:
-	rm data/*.json
-	rm data/*.jsonl
+	rm data/*.json	rm data/*.jsonl
