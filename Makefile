@@ -20,6 +20,9 @@ data/whitelisted_ext_idefs.json: \
 data/ext_idef_check_result_limit10.json:
 	python3 scripts/sample_scrape.py
 
+data/schema_equiv_props.json:
+	python3 scripts/generate_list_of_schema_equivalent_properties.py
+
 .PHONY: clean
 clean:
 	rm data/*.json	rm data/*.jsonl
