@@ -48,9 +48,6 @@ with open('data/scraped_dump.json') as f:
     data = json.load(f)
     rdfa_list = reduce(lambda acc, key: rdfa_reducer(acc, key, data[key]), data, [])
 
-    # print(json.dumps(data, sort_keys=True, indent=2))
-    # print(len(rdfa_list))
-    # P2689
     # print(json.dumps(rdfa_list, sort_keys=True, indent=2))
 
     with open('data/mapped_props.json') as p:
