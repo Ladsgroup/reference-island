@@ -7,7 +7,7 @@ import extruct
 import pprint
 from w3lib.html import get_base_url
 
-with open('whitelisted_externalIdProps1.json', 'r') as f:
+with open('data/whitelisted_ext_idefs.json', 'r') as f:
     external_identifiers = json.loads(f.read())
 
 def get_sparql_data(query):
@@ -36,7 +36,7 @@ WHERE
 {
   ?item wdt:""" + pid + """ ?value
 }
-LIMIT 10
+LIMIT 1
     """
     return get_sparql_data(query)
 

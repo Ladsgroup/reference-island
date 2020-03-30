@@ -17,7 +17,8 @@ data/whitelisted_ext_idefs.json: \
 	data/external_idefs.json
 	python3 scripts/examine_ext_idefs.py
 
-data/ext_idef_check_result_limit10.json:
+data/ext_idef_check_result_limit10.json: \
+	data/whitelisted_ext_idefs.json
 	python3 scripts/sample_scrape.py
 
 data/schema_equiv_props.json:
