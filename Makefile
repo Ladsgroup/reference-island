@@ -25,4 +25,5 @@ data/schema_equiv_props.json:
 
 .PHONY: clean
 clean:
-	rm data/*.json	rm data/*.jsonl
+	rm data/*.json
+	rm data/*.jsonl
