@@ -44,13 +44,13 @@ def rdfa_reducer(accumulator, prop, site_data):
     return accumulator + [ filtered_site_data ]
 
 
-with open('data/scraped_dump.json') as f:
+with open('data/ext_idef_check_result_limit10.json') as f:
     data = json.load(f)
     rdfa_list = reduce(lambda acc, key: rdfa_reducer(acc, key, data[key]), data, [])
 
     # print(json.dumps(rdfa_list, sort_keys=True, indent=2))
 
-    with open('data/mapped_props.json') as p:
+    with open('data/schema_equiv_props.json') as p:
         props_list = list(map(lambda propmap: propmap["url"] ,json.load(p)))
 
         total_mapped = 0
@@ -96,14 +96,15 @@ with open('data/scraped_dump.json') as f:
         avg_item_per_resource = 0
         avg_prop_per_item = 0
 
-        print(json.dumps({
-            "total_mapped": total_mapped,
-            "total_resources": total_resources,
-            "total_items": total_items,
-            "total_types": total_types,
-            "total_props": total_props,
-            "avg_items_per_resource": total_items / total_resources,
-            "avg_props_per_item": total_props / total_items,
-            "unmapped_types": unmapped_types,
-            "unmapped_props": unmapped_props
-        }, indent=2))
+        with open('data/rdfa_stats.json', 'w') as r:
+            r.write(json.dumps({
+                "total_mapped": total_mapped,
+                "total_resources": total_resources,
+                "total_items": total_items,
+                "total_types": total_types,
+                "total_props": total_props,
+                "avg_items_per_resource": total_items / total_resources,
+                "avg_props_per_item": total_props / total_items,
+                "unmapped_types": unmapped_types,
+                "unmapped_props": unmapped_props
+            }, indent=2))

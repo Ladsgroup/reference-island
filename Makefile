@@ -24,6 +24,11 @@ data/ext_idef_check_result_limit10.json: \
 data/schema_equiv_props.json:
 	python3 scripts/generate_list_of_schema_equivalent_properties.py
 
+data/rdfa_stats.json: \
+	data/ext_idef_check_result_limit10.json \
+	data/schema_equiv_props.json
+	python3 scripts/get_rdfa.py
+
 .PHONY: clean
 clean:
 	rm data/*.json
