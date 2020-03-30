@@ -67,5 +67,5 @@ for i in external_identifiers:
     print('Checking {0}'.format(i))
     usecases = get_usecases(i)
     final_results[i] = check_cases(usecases, formatter_urls[i])
-    with open('ext_idef_check_result_limit10.json', 'w') as f:
+    with open('data/ext_idef_check_result_limit10.json', 'w') as f:
         f.write(json.dumps(final_results))
