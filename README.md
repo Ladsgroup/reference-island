@@ -69,6 +69,27 @@ This step will take in the following inputs and will output the data expected in
 
 ## SS2: Fetch current mappings between Wikidata Properties and Schema.org Properties<a name="ss-2"></a>
 
+A service to retrieve the most recent state of mappings between Wikidata Properties and Schema.org properties.
+
+Outputs a list of objects representing a mapping. Each object has the following structure:
+
+* `property`: String representing a property on Wikidata.
+* `url`: A Schema.org property url
+
+Example:
+
+```json
+[
+    {
+        "property": "P1476",
+        "url": "http://schema.org/name"
+    },
+    ...
+]
+```
+
+
+
 ## SS3: Normalize data from various scraped raw formats<a name="ss-3"></a>
 
 This service takes in raw scraped data in either `json-ld`, `microdata` or `rdfa` format (For example, the results of the following scraping library: https://github.com/scrapinghub/extruct).
@@ -113,8 +134,8 @@ The output format is an object with the following properties:
 
    ```json
   {
-      url: "https://www.worldcat.org/identities/lccn-n79032058/",
-      referenceMetadata: {
+      "url": "https://www.worldcat.org/identities/lccn-n79032058/",
+      "referenceMetadata": {
           "P248": "Q76630151",
           "P7859": "lccn-n79032058"
       }
