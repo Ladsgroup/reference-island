@@ -4,7 +4,7 @@
 
 The following terms will be used throughout this document, their meanings are as follows:
 
-**Pipe <#>:** Represents a sequential step in the main data pipeline, which processes wikidata item serializations into a formatted list of potential references. 
+**Pipe <#>:** Represents a sequential step in the main data pipeline, which processes Wikidata item serializations into a formatted list of potential references. 
 
 **SS<#>:** Represents a "side service", to provide additional data to steps in the main pipeline, which will aid in making decisions or filter and format potential references.
 
@@ -12,7 +12,7 @@ The following terms will be used throughout this document, their meanings are as
 
 * The output formats for each step in the pipeline is to be formatted and encoded in `jsonl` with the exception of [Pipe 5](pipe-5).
 
-## Pipe 1: Find unreferenced statements and URLs for a given list of wikidata items<a name="pipe-1"></a>
+## Pipe 1: Find unreferenced statements and URLs for a given list of Wikidata items<a name="pipe-1"></a>
 
 This step will take in the following inputs, and will output the data expected in [Pipe 2](#pipe-2).
 
