@@ -35,7 +35,7 @@ This step will take in the following inputs and will output the data expected in
   * `resourceUrls`: List of objects describing external resources to scrape, and reference meta data to be added to references.
 
     * `url`: String representing the url to scrape
-    * `referenceMetadata`: Data to append to the potential references matched at the end of this stage with optional reference keys as provided by [SS4](#ss4).
+    * `referenceMetadata`: Data to append to the potential references matched at the end of this stage with optional reference keys as provided by [SS4](#ss-4).
 
     Example (Bnf Record for Ludwig Wittgenstein, with Wikidata property mapping):
     
@@ -88,5 +88,12 @@ This step will take in the following inputs and will output the data expected in
 
 ## Pipe 3: Filter extracted values by plain text matching<a name="pipe-3"></a>
 
-## Pipe 5: Format potential references into quickstatements format
+## Pipe 5: Format potential references into Quickstatements format<a name="pipe-5"></a>
 
+## SS1: Find good external ID Properties<a name="ss-1"></a>
+
+## SS2: Fetch current mappings between Wikidata Properties and Schema.org Properties<a name="ss-2"></a>
+
+## SS3: Normalize data from various scraped raw formats<a name="ss-3"></a>
+
+## SS4: Map External ID Properties and Values to URL and reference meta data<a name="ss-4"></a>
