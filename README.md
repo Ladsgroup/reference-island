@@ -16,11 +16,7 @@ The following terms will be used throughout this document, their meanings are as
 
 This step will take in the following inputs, and will output the data expected in [Pipe 2](#pipe-2).
 
-* `<varname>`: List of strings representing white listed Wikidata external id properties. Example:
-
-  ```json
-  ['P1234', 'P1233', /*...*/]
-  ```
+* `<varname>`: List of strings representing white listed Wikidata external id properties, same as output of [SS1](#ss-1).
 
 * `<varname>`: List of Wikidata item serializations, as described in https://www.mediawiki.org/wiki/Wikibase/DataModel/JSON
 
@@ -67,6 +63,16 @@ This step will take in the following inputs and will output the data expected in
 
 ## SS1: Find good external ID Properties<a name="ss-1"></a>
 
+A service to white-list external id properties based on a predefined blacklist, and the amount of Schema.org definitions found in a sample external resource.
+
+This service takes in a list of  manually blacklisted external ids, and retrieves a list of currently available external ids from Wikidata.
+
+The output for this service is a listed of string representation of white-listed external ids. For example:  
+
+  ```json
+  ['P1234', 'P1233', ...]
+  ```
+
 ## SS2: Fetch current mappings between Wikidata Properties and Schema.org Properties<a name="ss-2"></a>
 
 A service to retrieve the most recent state of mappings between Wikidata Properties and Schema.org properties.
@@ -74,7 +80,7 @@ A service to retrieve the most recent state of mappings between Wikidata Propert
 Outputs a list of objects representing a mapping. Each object has the following structure:
 
 * `property`: String representing a property on Wikidata.
-* `url`: A Schema.org property url
+* `url`: A Schema.org property URL
 
 Example:
 
