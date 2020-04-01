@@ -34,17 +34,17 @@ This step will take in the following inputs and will output the data expected in
     * `referenceMetadata`: Data to append to the potential references matched at the end of this stage with optional reference keys. 
 
     ***Note***: An example for this property can be found in the output provided by [SS4](#ss-4).
-  
-* `statements`: List of unreferenced statements in the following structure:
-  
-  * `pid`: The property id of the statement
+    
+  * `statements`: List of unreferenced statements in the following structure:
+    
+    * `pid`: The property id of the statement
     * `dataValue`: The data value of the statement / Item id of the Wikidata item value.
-
+  
     Example:
   
-  ```json
+      ```json
     [
-      {
+        {
             "pid": "P321", 
             "dataValue": "2020-04-01",
         },
@@ -54,8 +54,7 @@ This step will take in the following inputs and will output the data expected in
         }
         // ...
     ]
-  ```
-  
+      ```
 
 ## Pipe 3: Filter extracted values by plain text matching<a name="pipe-3"></a>
 
