@@ -35,33 +35,9 @@ This step will take in the following inputs and will output the data expected in
   * `resourceUrls`: List of objects describing external resources to scrape, and reference meta data to be added to references.
 
     * `url`: String representing the url to scrape
-    * `referenceMetadata`: Data to append to the potential references matched at the end of this stage with optional reference keys as provided by [SS4](#ss-4).
+    * `referenceMetadata`: Data to append to the potential references matched at the end of this stage with optional reference keys. 
 
-    Example (Bnf Record for Ludwig Wittgenstein, with Wikidata property mapping):
-    
-     ```json
-    {
-        url: "https://catalogue.bnf.fr/ark:/12148/cb11929322k",
-        referenceMetadata: {
-            "P248": "Q19938912",
-            "P268": "11929322k",
-    		"P854": "https://catalogue.bnf.fr/ark:/12148/cb11929322k"
-        }
-    }
-     ```
-
-    Will translate to (`*` denotes an optional property)
-    
-    ```json
-    {
-        url: [String],
-        referenceMetadata: {
-            *[statedInPropId]: [externalIdItem],
-            *[externalIdProp]: [externalIdVal],
-    		*[referenceUrl]: [String]
-        }
-}
-    ```
+    ***Note***: An example for this property can be found in the output provided by [SS4](#ss-4).
   
 * `statements`: List of unreferenced statements in the following structure:
   
@@ -118,4 +94,32 @@ Example:
 ]
 ```
 
-## SS4: Map External ID Properties and Values to URL and reference meta data<a name="ss-4"></a>
+## SS4: Map External ID Properties and Values to URL and reference meta-data<a name="ss-4"></a>
+
+This service takes in a string representation of an external id property and attempts to output a formatted url  for an external resource, as well as reference metadata according to the wikidata mapping. If non is found it will return `false`.
+
+The output format is an object with the following properties:
+
+* `url`: The formatted URL of an external resource
+
+* `referenceMetadata`: An object representing meta data for a potential reference, with the following key-value pairs:
+
+  | Key                              | Value                                     |
+  | -------------------------------- | ----------------------------------------- |
+  | "P248" ("stated in" Property id) | Wikidata item representing an external ID |
+  | Passed in external id Property   | Passed in external id value               |
+
+  Example (WorldCat Identitites record for Ludwig Wittgenstein, with Wikidata property mapping):
+
+   ```json
+  {
+      url: "https://www.worldcat.org/identities/lccn-n79032058/",
+      referenceMetadata: {
+          "P248": "Q76630151",
+          "P7859": "lccn-n79032058"
+      }
+  }
+   ```
+
+  
+
