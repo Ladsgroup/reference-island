@@ -63,7 +63,6 @@ This step will take in the following inputs and will output the data expected in
 }
     ```
   
-  
 * `statements`: List of unreferenced statements in the following structure:
   
   * `pid`: The property id of the statement
@@ -95,5 +94,28 @@ This step will take in the following inputs and will output the data expected in
 ## SS2: Fetch current mappings between Wikidata Properties and Schema.org Properties<a name="ss-2"></a>
 
 ## SS3: Normalize data from various scraped raw formats<a name="ss-3"></a>
+
+This service takes in raw scraped data in either `json-ld`, `microdata` or `rdfa` format (For example, the results of the following scraping library: https://github.com/scrapinghub/extruct).
+
+The output of this service will be a list of objects representing a Schema.org type with the following structure:
+
+* `type`: Schema.org type url
+* `properties`: An object representing Schema.org property value pairs where the keys are Schema.org property urls, and the values are the actual data from the site. 
+
+Example:
+
+```json
+[
+    {
+        "type": "http://schema.org/Person",
+        "properties": {
+            "http://schema.org/name": "Ludwig Wittgenstein",
+            "http://schema.org/sameAs": "http://viaf.org/viaf/24609378",
+            "http://schema.org/additionalName": "Ludvigs Vitgenšteins"
+        }
+    },
+    ...
+]
+```
 
 ## SS4: Map External ID Properties and Values to URL and reference meta data<a name="ss-4"></a>
