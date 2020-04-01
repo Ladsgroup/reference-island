@@ -58,6 +58,53 @@ This step will take in the following inputs and will output the data expected in
 
 ## Pipe 3: Filter extracted values by plain text matching<a name="pipe-3"></a>
 
+This step will take the output of Pipe 2 as it's primary input. It will also take the output of SS2 as an input.
+
+One row of this file relates to one unreferenced statement. It contains the itemId the statement was on as well as all the extracted structured data that relates to this statement and referenceMetadata referring to where that data came from.
+
+The format of the template of one row of Pipe 2 is as follows:
+```json
+{
+  "statement": {statementBlob},
+  "itemId": [itemId],
+  "references": [ {
+    referenceMetadata: referenceBlob,
+    extractedData: [ [value] ]
+    } ]
+}
+```
+
+### referenceBlob format
+```json
+{
+  *[statedInPropId]: [externalIdItem],
+  *[externalIdProp]: [externalIdVal],
+  *[referenceUrl]: [String],
+  [dateRetrieved]: [String]
+}
+```
+
+### statementBlob format
+```json
+{
+  "propertyId": [String],
+  "datatype": [String],
+  "value": {valueBlob}
+}
+```
+
+### valueBlob
+See https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/Wikibase/+/master/docs/topics/json.md#Snaks-json_snaks for the datavalue -> value key.
+
+For example:
+```json
+{
+  "entity-type": "item",
+  "numeric-id": 350,
+  "id": "Q350"
+}
+```
+
 ## Pipe 5: Format potential references into Quickstatements format<a name="pipe-5"></a>
 
 ## SS1: Find good external ID Properties<a name="ss-1"></a>
