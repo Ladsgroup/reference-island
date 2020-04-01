@@ -107,6 +107,11 @@ For example:
 
 ## Pipe 5: Format potential references into Quickstatements format<a name="pipe-5"></a>
 
+### input format
+```json
+{ "statement": {statementBlob}, "references": [ {referenceBlob}... ] }
+```
+
 ## SS1: Find good external ID Properties<a name="ss-1"></a>
 
 A service to white-list external id properties based on a predefined blacklist, and the amount of Schema.org definitions found in a sample external resource.
