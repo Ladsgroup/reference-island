@@ -133,7 +133,7 @@ Note this corresponds to the format of the referenceMetadata seen in [SS4](#ss-4
 }
 ```
 
-## SS1: Find good external ID Properties<a name="ss-1"></a>
+## SS1: Find good external Id Properties<a name="ss-1"></a>
 
 A service to whitelist external id properties based on a predefined blacklist, and the amount of Schema.org definitions found in a sample external resource.
 
