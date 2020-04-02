@@ -87,7 +87,7 @@ This step will take in the following inputs and will output the data expected in
             }
         ...
     ]
-      ```
+    ```
 
 ## Pipe 3: Filter extracted values by plain text matching<a name="pipe-3"></a>
 
