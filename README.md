@@ -10,7 +10,7 @@ The following terms will be used throughout this document, their meanings are as
 
 ## General Agreements
 
-* The output formats for each step in the pipeline is to be formatted and encoded in `jsonl` with the exception of [Pipe 5](pipe-5).
+* The output formats for each step in the pipeline is to be formatted and encoded in `jsonl` with the exception of [Pipe 5](#pipe-5).
 
 ## Pipe 1: Find unreferenced statements and URLs for a given list of Wikidata items<a name="pipe-1"></a>
 
