@@ -4,6 +4,7 @@ from setuptools import setup, find_packages
 extras_require = {
     'tests': [
         'flake8>=3.2.1',
+        'pytest'
     ],
 }
 
@@ -11,7 +12,7 @@ setup(
     name="wikidatarefisland",
     version="0.0.1",
     author="The Wikidata team",
-    description="Data pipieline to extract reference for Wikidata",
+    description="Data pipeline to extract reference for Wikidata",
     license="GPLv3",
     url="https://github.com/wmde/reference-island",
     long_description='',
