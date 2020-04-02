@@ -17,7 +17,7 @@ class Storage(object):
             for line in f:
                 try:
                     yield json.loads(line)
-                except:
+                except json.JSONDecodeError:
                     continue
 
     def store(self, file_, value, raw=False):
