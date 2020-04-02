@@ -35,23 +35,56 @@ This step will take in the following inputs and will output the data expected in
 
     ***Note***: An example for this property can be found in the output provided by [SS4](#ss-4).
     
-  * `statements`: List of unreferenced statements in the following structure:
+  * `statements`: List of unreferenced statements where each individual statement has the following structure: <a name="statement-blob"></a>
     
     * `pid`: The property id of the statement
-    * `dataValue`: The data value of the statement / Item id of the Wikidata item value.
-  
-    Example:
-  
-      ```json
+
+    * `value`: The data value of the statement / Item id of the Wikidata item value.
+
+    * `datatype`: The string describing the type of data held in value.
+
+    Template:
+    ```json
+    {
+      "pid": [String],
+      "datatype": [String],
+      "value": {valueBlob}
+    }
+    ```
+
+    See [Wikibase JSON response documentation](https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/Wikibase/+/master/docs/topics/json.md#Snaks-json_snaks) for the `datavalue -> value` key.
+
+    An example for the valueBlob:
+    ```json
+    {
+      "entity-type": "item",
+      "numeric-id": 350,
+      "id": "Q350"
+    }
+    ```
+
+    Complete Statement Example:
+    ```json
     [
         {
             "pid": "P321", 
-            "dataValue": "2020-04-01",
+            "datatype": "wikibase-item",
+            "value": {
+              "numeric-id": 214917,
+              "id": "Q214917"
+            },
         },
         {
             "pid": "P777",
-            "dataValue": "Q666"
-        }
+            "datatype": "time",
+            "value": {
+              "time": "+2013-12-07T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            }
         ...
     ]
       ```
@@ -73,35 +106,16 @@ The format of the template of one row of Pipe 2 is as follows:
     } ]
 }
 ```
+For details about the statement format see that in [Pipe 2](#statement-blob)
 
 ### `referenceBlob` format
+Note this corresponds to the format of the referenceMetadata seen in [SS4](#ss-4) with the new requirement of a  key value pair co-responding to  the date retrieved.
 ```json
 {
   *[statedInPropId]: [externalIdItem],
   *[externalIdProp]: [externalIdVal],
   *[referenceUrl]: [String],
   [dateRetrieved]: [String]
-}
-```
-
-### `statementBlob` format
-```json
-{
-  "propertyId": [String],
-  "datatype": [String],
-  "value": {valueBlob}
-}
-```
-
-### `valueBlob`
-See [Wikibase JSON response documentation](https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/Wikibase/+/master/docs/topics/json.md#Snaks-json_snaks) for the `datavalue -> value` key.
-
-For example:
-```json
-{
-  "entity-type": "item",
-  "numeric-id": 350,
-  "id": "Q350"
 }
 ```
 
