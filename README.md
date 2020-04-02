@@ -16,15 +16,15 @@ The following terms will be used throughout this document, their meanings are as
 
 This step will take in the following inputs, and will output the data expected in [Pipe 2](#pipe-2).
 
-* `<varname>`: List of strings representing white listed Wikidata external id properties, same as output of [SS1](#ss-1).
+* `whitelistedExtIds`: List of strings representing white listed Wikidata external id properties, same as output of [SS1](#ss-1).
 
-* `<varname>`: List of Wikidata item serializations, as described in https://www.mediawiki.org/wiki/Wikibase/DataModel/JSON
+* `items`: List of Wikidata item serializations, as described in the [Wikibase Data Model documentation](https://www.mediawiki.org/wiki/Wikibase/DataModel/JSON)
 
 ## Pipe 2: Scrape given URLs for potential matches between  unreferenced statements and structured data<a name="pipe-2"></a>
 
 This step will take in the following inputs and will output the data expected in [Pipe 3](#pipe-3).
 
-* `<varname>`:  List of objects to represent Wikidata Items with the following keys:
+* `items`:  List of objects to represent Wikidata Items with the following keys:
 
   * `itemId`: The Wikidata id of the item being examined
 
@@ -52,7 +52,7 @@ This step will take in the following inputs and will output the data expected in
             "pid": "P777",
             "dataValue": "Q666"
         }
-        // ...
+        ...
     ]
       ```
 
@@ -60,7 +60,7 @@ This step will take in the following inputs and will output the data expected in
 
 This step will take the output of Pipe 2 as it's primary input. It will also take the output of SS2 as an input.
 
-One row of this file relates to one unreferenced statement. It contains the itemId the statement was on as well as all the extracted structured data that relates to this statement and referenceMetadata referring to where that data came from.
+One row of this file relates to one unreferenced statement. It contains the `itemId` the statement was on as well as all the extracted structured data that relates to this statement and `referenceMetadata` referring to where that data came from.
 
 The format of the template of one row of Pipe 2 is as follows:
 ```json
@@ -74,7 +74,7 @@ The format of the template of one row of Pipe 2 is as follows:
 }
 ```
 
-### referenceBlob format
+### `referenceBlob` format
 ```json
 {
   *[statedInPropId]: [externalIdItem],
@@ -84,7 +84,7 @@ The format of the template of one row of Pipe 2 is as follows:
 }
 ```
 
-### statementBlob format
+### `statementBlob` format
 ```json
 {
   "propertyId": [String],
@@ -93,8 +93,8 @@ The format of the template of one row of Pipe 2 is as follows:
 }
 ```
 
-### valueBlob
-See https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/Wikibase/+/master/docs/topics/json.md#Snaks-json_snaks for the datavalue -> value key.
+### `valueBlob`
+See [Wikibase JSON response documentation](https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/Wikibase/+/master/docs/topics/json.md#Snaks-json_snaks) for the `datavalue -> value` key.
 
 For example:
 ```json
@@ -109,19 +109,25 @@ For example:
 
 ### input format
 ```json
-{ "statement": {statementBlob}, "references": [ {referenceBlob}... ] }
+{ 
+    "statement": { statementBlob }, 
+    "references": [ 
+        { referenceBlob },
+        ... 
+    ]
+}
 ```
 
 ## SS1: Find good external ID Properties<a name="ss-1"></a>
 
-A service to white-list external id properties based on a predefined blacklist, and the amount of Schema.org definitions found in a sample external resource.
+A service to whitelist external id properties based on a predefined blacklist, and the amount of Schema.org definitions found in a sample external resource.
 
 This service takes in a list of  manually blacklisted external ids, and retrieves a list of currently available external ids from Wikidata.
 
-The output for this service is a listed of string representation of white-listed external ids. For example:  
+The output for this service is a listed of string representation of whitelisted external ids. For example:  
 
   ```json
-  ['P1234', 'P1233', ...]
+  ["P1234", "P1233", ...]
   ```
 
 ## SS2: Fetch current mappings between Wikidata Properties and Schema.org Properties<a name="ss-2"></a>
@@ -153,8 +159,8 @@ This service takes in raw scraped data in either `json-ld`, `microdata` or `rdfa
 
 The output of this service will be a list of objects representing a Schema.org type with the following structure:
 
-* `type`: Schema.org type url
-* `properties`: An object representing Schema.org property value pairs where the keys are Schema.org property urls, and the values are the actual data from the site. 
+* `type`: Schema.org type URL
+* `properties`: An object representing Schema.org property value pairs where the keys are Schema.org property URLs, and the values are the actual data from the site. 
 
 Example:
 
@@ -172,9 +178,9 @@ Example:
 ]
 ```
 
-## SS4: Map External ID Properties and Values to URL and reference meta-data<a name="ss-4"></a>
+## SS4: Map External ID Properties and Values to URL and reference metadata<a name="ss-4"></a>
 
-This service takes in a string representation of an external id property and attempts to output a formatted url  for an external resource, as well as reference metadata according to the wikidata mapping. If non is found it will return `false`.
+This service takes in a string representation of an external id property and attempts to output a formatted URL  for an external resource, as well as reference metadata according to the Wikidata mapping. If non is found it will return `false`.
 
 The output format is an object with the following properties:
 
@@ -184,10 +190,10 @@ The output format is an object with the following properties:
 
   | Key                              | Value                                     |
   | -------------------------------- | ----------------------------------------- |
-  | "P248" ("stated in" Property id) | Wikidata item representing an external ID |
-  | Passed in external id Property   | Passed in external id value               |
+  | "P248" ("stated in" Property id) | Wikidata item representing an external id |
+  | Passed in external id property   | Passed in external id value               |
 
-  Example (WorldCat Identitites record for Ludwig Wittgenstein, with Wikidata property mapping):
+  Example (WorldCat Identities record for Ludwig Wittgenstein, with Wikidata property mapping):
 
    ```json
   {
