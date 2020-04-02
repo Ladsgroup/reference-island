@@ -85,8 +85,9 @@ This step will take in the following inputs and will output the data expected in
               "precision": 11,
               "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
             }
-        ...
+        }
     ]
+    ...
     ```
 
 ## Pipe 3: Filter extracted values by plain text matching<a name="pipe-3"></a>
