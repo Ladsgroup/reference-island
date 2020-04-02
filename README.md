@@ -16,7 +16,7 @@ The following terms will be used throughout this document, their meanings are as
 
 This step will take in the following inputs, and will output the data expected in [Pipe 2](#pipe-2).
 
-* `whitelistedExtIds`: List of strings representing white listed Wikidata external id properties, same as output of [SS1](#ss-1).
+* `whitelistedExtIds`: List of strings representing whitelisted Wikidata external id properties, same as output of [SS1](#ss-1).
 
 * `items`: List of Wikidata item serializations, as described in the [Wikibase Data Model documentation](https://www.mediawiki.org/wiki/Wikibase/DataModel/JSON)
 
