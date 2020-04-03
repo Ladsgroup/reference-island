@@ -1,7 +1,7 @@
 import json
 import os
 
-from wikidatarefisland.data_access.storage import Storage
+from wikidatarefisland.data_access import Storage
 
 
 class TestStorage:
