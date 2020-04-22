@@ -1,38 +1,25 @@
 import requests
+import os
 
 from wikidatarefisland import Config, Scaraper
-from wikidatarefisland.data_access import Storage
-from wikidatarefisland.services import (ExternalIdentifierFormatter,
-                                        SchemaorgPropertyMapper)
+from wikidatarefisland.services import SchemaorgPropertyMapper
 
 
 class MockResponse:
     def __init__(self, url):
-        with open('data/test_response.html', 'r') as f:
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        with open(os.path.join(dir_path, 'data/test_response.html'), 'r') as f:
             self.text = f.read()
         self.status_code = 200
+        self.url = url
 
-
-class MockExternalIdentifierFormatter(ExternalIdentifierFormatter):
-    def format(self, pid, value):
-        if pid == 'P1':
-            return {'url': 'https://example_with_schema.org/' + value}
-        return {'url': 'https://example_without_schema.org/' + value}
 
 class MockSchemaorgPropertyMapper(SchemaorgPropertyMapper):
     def get_mapping(self):
-        return [{'property': 'P2360', 'url': 'http://schema.org/audience'}]
-
-
-class MockStorage(Storage):
-    def __init__(self):
-        self.values = {}
-
-    def get(self, key):
-        return self.values.get(key, {})
-
-    def store(self, key, value, raw=False):
-        self.values[key] = value
+        return [
+            {'property': 'P321', 'url': 'http://schema.org/director'},
+            {'property': 'P123', 'url': 'http://schema.org/name'},
+        ]
 
 
 class MockConfig(Config):
@@ -40,8 +27,23 @@ class MockConfig(Config):
         pass
 
     def get(self, key):
-        if key == 'blacklisted_properties':
-            return ['P3']
+        if key == 'user_agent':
+            return 'Test'
+
+
+class MockSchemaorgNormalizer():
+    @staticmethod
+    def normalize_from_extruct(data):
+        return {
+            "properties": {
+                "http://schema.org/director": [
+                    data['microdata'][0]['director']['name']
+                ],
+                "http://schema.org/genre": [
+                    data['microdata'][0]['genre']
+                ]
+            }
+        }
 
 
 def test_run(monkeypatch):
@@ -49,9 +51,31 @@ def test_run(monkeypatch):
         return MockResponse(url)
 
     monkeypatch.setattr(requests, "get", mock_get)
-    storage = MockStorage()
-    scraper = Scaraper(MockConfig(), storage, MockSchemaorgNormalizer, MockSchemaorgPropertyMapper())
-    scraper.run()
-    assert storage.get(scraper.output_file_name) == \
-           {'P1': {'good_responses': 10, 'has_schema': 10, 'total_requests': 10},
-            'P2': {'good_responses': 10, 'has_schema': 0, 'total_requests': 10}}
+    item = {
+        'itemId': 'Q42',
+        'resourceUrls': [{
+            'url': 'https://example_with_schema.org/wow',
+            'referenceMetadata': {'a': 'b'}
+        }],
+        'statements': [{
+            "pid": "P321",
+            "datatype": "wikibase-item",
+            "value": {
+                "numeric-id": 214917,
+                "id": "Q214917"
+            }
+        }]
+    }
+    scraper = Scaraper(MockConfig(), MockSchemaorgNormalizer, MockSchemaorgPropertyMapper())
+    result = scraper.flow(item)
+    assert 'dateRetrieved' in result[0]['reference']['referenceMetadata']
+    assert len(result) == 1
+    del result[0]['reference']['referenceMetadata']['dateRetrieved']
+    assert result[0] == {
+        'statement': {
+            'pid': 'P321',
+            'datatype': 'wikibase-item',
+            'value': {'numeric-id': 214917, 'id': 'Q214917'}},
+        'itemId': 'Q42',
+        'reference': {'referenceMetadata': {'a': 'b'},
+                      'extractedData': ['James Cameron']}}
