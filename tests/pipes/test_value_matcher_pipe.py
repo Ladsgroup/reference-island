@@ -12,11 +12,11 @@ given = {
         "return": False
     },
     "number_match": {
-        "method": "match_string",
+        "method": "match_number",
         "return": True
     },
     "number_mismatch": {
-        "method": "match_string",
+        "method": "match_number",
         "return": False
     }
 }
