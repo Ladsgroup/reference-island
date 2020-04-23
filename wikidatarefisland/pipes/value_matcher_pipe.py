@@ -9,7 +9,8 @@ class ValueMatcherPipe():
 
     def flow(self, item):
         filters = [
-            self.matchers.match_string
+            self.matchers.match_string,
+            self.matchers.match_number
         ]
 
         if any(match(item) for match in filters):

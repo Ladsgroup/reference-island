@@ -1,9 +1,15 @@
 import pytest
 
-from wikidatarefisland.data_model.value_matchers import ValueMatchers, StringValue
+from wikidatarefisland.data_model.value_matchers import ValueMatchers, StringValue, QuantityValue
 
 mock = {
     "statement": {
+        "with_quantity": {
+            "datatype": 'quantity',
+            "value": {
+                "amount": "12"
+            }
+        },
         "with_string": {
             "datatype": 'string',
             "value": {
@@ -24,16 +30,19 @@ mock = {
                 }
             }
         },
-        "without_string": {
+        "without_type": {
             "datatype": 'some-other-data'
         }
     },
     "reference": {
-        "with_one_value_match": {
+        "with_one_quantity_match": {
+            "extractedData": ["12"]
+        },
+        "with_one_string_match": {
             "extractedData": ["Test"]
         },
         "with_multiple_values_match": {
-            "extractedData": ["Some", "Test"]
+            "extractedData": ["12", "Test"]
         },
         "without_match": {
             "extractedData": ["Some", "Other", "Values"]
@@ -42,30 +51,51 @@ mock = {
 }
 
 given = {
-    "no_string": {
-        "statement": mock["statement"]["without_string"]
+    "no_type": {
+        "statement": mock["statement"]["without_type"]
     },
-    "no_match": {
+    "no_quantity_match": {
+        "statement": mock["statement"]["with_quantity"],
+        "reference": mock["reference"]["without_match"]
+    },
+    "single_quantity_match": {
+        "statement": mock["statement"]["with_quantity"],
+        "reference": mock["reference"]["with_one_quantity_match"]
+    },
+    "multiple_quantity_match": {
+        "statement": mock["statement"]["with_quantity"],
+        "reference": mock["reference"]["with_multiple_values_match"]
+    },
+    "no_string_match": {
         "statement": mock["statement"]["with_string"],
         "reference": mock["reference"]["without_match"]
     },
     "single_string_match": {
         "statement": mock["statement"]["with_string"],
-        "reference": mock["reference"]["with_one_value_match"]
+        "reference": mock["reference"]["with_one_string_match"]
     },
     "single_url_match": {
         "statement": mock["statement"]["with_url"],
-        "reference": mock["reference"]["with_one_value_match"]
+        "reference": mock["reference"]["with_one_string_match"]
     },
     "single_monolingualtext_match": {
         "statement": mock["statement"]["with_monolingualtext"],
-        "reference": mock["reference"]["with_one_value_match"]
+        "reference": mock["reference"]["with_one_string_match"]
     },
-    "multiple_values_match": {
+    "multiple_string_match": {
         "statement": mock["statement"]["with_string"],
         "reference": mock["reference"]["with_multiple_values_match"]
     }
 }
+
+
+class TestQuantityValue:
+
+    @pytest.mark.parametrize("statement,equivalent", [
+        (mock["statement"]["with_quantity"], "12")
+    ])
+    def test_equivalence(self, statement, equivalent):
+        assert QuantityValue(statement) == equivalent
 
 
 class TestStringValue:
@@ -84,12 +114,21 @@ class TestStringValue:
 class TestValueMatchers:
 
     @pytest.mark.parametrize("given,expected", [
-        (given["no_string"], False),
-        (given["no_match"], False),
+        (given["no_type"], False),
+        (given["no_string_match"], False),
         (given["single_string_match"], True),
         (given["single_url_match"], True),
         (given["single_monolingualtext_match"], True),
-        (given["multiple_values_match"], True),
+        (given["multiple_string_match"], True),
     ])
     def test_match_string(self, given, expected):
         assert ValueMatchers.match_string(given) == expected
+
+    @pytest.mark.parametrize("given,expected", [
+        (given["no_type"], False),
+        (given["no_quantity_match"], False),
+        (given["single_quantity_match"], True),
+        (given["multiple_quantity_match"], True),
+    ])
+    def test_match_number(self, given, expected):
+        assert ValueMatchers.match_number(given) == expected
