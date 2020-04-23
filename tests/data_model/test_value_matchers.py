@@ -25,7 +25,7 @@ mock = {
         "with_monolingualtext": {
             "datatype": 'monolingualtext',
             "value": {
-                "value": { 
+                "value": {
                     "text": "Test"
                 }
             }
