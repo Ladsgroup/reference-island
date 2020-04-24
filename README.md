@@ -202,8 +202,8 @@ The output of this service will be a list of objects representing a Schema.org t
         "http://schema.org/birthPlace": {
           "http://schema.org/name": [ "Vienna" ],
           "http://schema.org/geo": {
-            "latitude": "48.20849",
-            "longitude": "16.37208"
+            "http://schema.org/geo/latitude": "48.20849",
+            "http://schema.org/geo/longitude": "16.37208"
           }
         }
     },
