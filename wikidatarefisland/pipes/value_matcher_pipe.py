@@ -14,7 +14,7 @@ class ValueMatcherPipe():
 
         Arguments:
             potential_match {dict} -- A potential statement - reference match to examine.
-                See: See: https://github.com/wmde/reference-island#statement-reference-blob 
+                See: See: https://github.com/wmde/reference-island#statement-reference-blob
 
         Returns:
             dict|None -- The input potential match if there's a match, None otherwise.
