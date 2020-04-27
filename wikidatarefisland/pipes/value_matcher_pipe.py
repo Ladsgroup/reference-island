@@ -21,7 +21,7 @@ class ValueMatcherPipe():
         """
         filters = [
             self.matchers.match_text,
-            self.matchers.match_number
+            self.matchers.match_quantity
         ]
 
         if any(match(potential_match) for match in filters):

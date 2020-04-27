@@ -65,7 +65,7 @@ class ValueMatchers:
         return value in reference["extractedData"]
 
     @staticmethod
-    def match_number(statement_reference):
+    def match_quantity(statement_reference):
         """Matches two string values
 
         Arguments:

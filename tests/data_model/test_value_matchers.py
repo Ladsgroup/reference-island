@@ -98,7 +98,7 @@ class TestQuantityValue:
         assert QuantityValue(statement) == equivalent
 
 
-class TestStringValue:
+class TestTextValue:
 
     @pytest.mark.parametrize("statement,equivalent", [
         (mock["statement"]["with_string"], "Test"),
@@ -121,7 +121,7 @@ class TestValueMatchers:
         (given["single_monolingualtext_match"], True),
         (given["multiple_string_match"], True),
     ])
-    def test_match_string(self, given, expected):
+    def test_match_text(self, given, expected):
         assert ValueMatchers.match_text(given) == expected
 
     @pytest.mark.parametrize("given,expected", [
@@ -130,5 +130,5 @@ class TestValueMatchers:
         (given["single_quantity_match"], True),
         (given["multiple_quantity_match"], True),
     ])
-    def test_match_number(self, given, expected):
-        assert ValueMatchers.match_number(given) == expected
+    def test_match_quantity(self, given, expected):
+        assert ValueMatchers.match_quantity(given) == expected

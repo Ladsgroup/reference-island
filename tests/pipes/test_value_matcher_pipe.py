@@ -12,11 +12,11 @@ given = {
         "return": False
     },
     "number_match": {
-        "method": "match_number",
+        "method": "match_quantity",
         "return": True
     },
     "number_mismatch": {
-        "method": "match_number",
+        "method": "match_quantity",
         "return": False
     }
 }
@@ -28,7 +28,7 @@ class MockMatchers:
         return False
 
     @staticmethod
-    def match_number(item):
+    def match_quantity(item):
         return False
 
 
