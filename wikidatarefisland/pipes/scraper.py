@@ -6,7 +6,7 @@ import requests
 from w3lib.html import get_base_url
 
 
-class Scaraper(object):
+class ScaraperPipe(object):
     def __init__(self, config, schemaorg_normalizer, schemaorg_mapper):
         """
 
@@ -55,22 +55,27 @@ class Scaraper(object):
     def _match_extracted_data(self, extracted_data, resourceUrls, mapping, item):
         final_data = []
         for url in extracted_data:
-            resourceUrls[url]['dateRetrieved'] = extracted_data[url]['timestamp']
-            for schema_property in extracted_data[url]['data']['properties']:
-                if schema_property not in mapping:
+            final_data += self._get_data_per_url(url, extracted_data[url],
+                                                 resourceUrls, mapping, item)
+        return final_data
+
+    def _get_data_per_url(self, url, data, resourceUrls, mapping, item):
+        final_data = []
+        resourceUrls[url]['dateRetrieved'] = data['timestamp']
+        for schema_property in data['data']:
+            if schema_property not in mapping:
+                continue
+            pid = mapping[schema_property]
+            for statement in item['statements']:
+                if statement['pid'] != pid:
                     continue
-                pid = mapping[schema_property]
-                for statement in item['statements']:
-                    if statement['pid'] != pid:
-                        continue
 
-                    formatted = self._format_result(
-                        statement,
-                        item['itemId'],
-                        resourceUrls[url],
-                        extracted_data[url]['data']['properties'][schema_property])
-                    final_data.append(formatted)
-
+                formatted = self._format_result(
+                    statement,
+                    item['itemId'],
+                    resourceUrls[url],
+                    data['data'][schema_property])
+                final_data.append(formatted)
         return final_data
 
     def _format_result(self, statement, item_id, metadata, extracted_data):

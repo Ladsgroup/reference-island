@@ -1,14 +1,15 @@
 import requests
 import os
 
-from wikidatarefisland import Config, Scaraper
+from wikidatarefisland import Config
+from wikidatarefisland.pipes import ScaraperPipe
 from wikidatarefisland.services import SchemaorgPropertyMapper
 
 
 class MockResponse:
     def __init__(self, url):
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(os.path.join(dir_path, 'data/test_response.html'), 'r') as f:
+        with open(os.path.join(dir_path, '../data/test_response.html'), 'r') as f:
             self.text = f.read()
         self.status_code = 200
         self.url = url
@@ -35,14 +36,12 @@ class MockSchemaorgNormalizer():
     @staticmethod
     def normalize_from_extruct(data):
         return {
-            "properties": {
-                "http://schema.org/director": [
-                    data['microdata'][0]['director']['name']
-                ],
-                "http://schema.org/genre": [
-                    data['microdata'][0]['genre']
-                ]
-            }
+            "http://schema.org/director": [
+                data['microdata'][0]['director']['name']
+            ],
+            "http://schema.org/genre": [
+                data['microdata'][0]['genre']
+            ]
         }
 
 
@@ -66,7 +65,7 @@ def test_run(monkeypatch):
             }
         }]
     }
-    scraper = Scaraper(MockConfig(), MockSchemaorgNormalizer, MockSchemaorgPropertyMapper())
+    scraper = ScaraperPipe(MockConfig(), MockSchemaorgNormalizer, MockSchemaorgPropertyMapper())
     result = scraper.flow(item)
     assert 'dateRetrieved' in result[0]['reference']['referenceMetadata']
     assert len(result) == 1
