@@ -1,8 +1,12 @@
 class QuantityValue:
-    """
-    A class to represent Wikibase Quantity Values
-    """
+    """Represents Wikibase Quantity Values"""
     def __init__(self, statement):
+        """Instantiates a quantity value
+
+        Arguments:
+            statement {dict} -- A statement dictionary.
+                See: https://github.com/wmde/reference-island#statement-dict
+        """
         self.type = statement["datatype"]
         self.value = statement["value"]["amount"]
 
@@ -13,11 +17,15 @@ class QuantityValue:
         return self.value == other
 
 
-class StringValue:
-    """
-    A class to represent Wikibase String Values
-    """
+class TextValue:
+    """Represent Wikibase Text Values"""
     def __init__(self, statement):
+        """Instantiates a text value according to it's datatype
+
+        Arguments:
+            statement {dict} -- A statement dictionary.
+                See: https://github.com/wmde/reference-island#statement-dict
+        """
         self.type = statement["datatype"]
         self.value = statement["value"]["value"]["text"] \
             if self.type == "monolingualtext" \
@@ -31,26 +39,42 @@ class StringValue:
 
 
 class ValueMatchers:
-    """
-    A class to collect static methods to match between two data values on an itemblob
-    """
+    """Collects static methods to match between two data values on a statement - reference blob"""
     STRING_DATATYPES = ["string", "url", "monolingualtext"]
     NUMBER_DATATYPES = ["quantity"]
 
     @staticmethod
-    def match_string(statement_reference):
+    def match_text(statement_reference):
+        """Matches two text values
+
+        Arguments:
+            statement_reference {dict} -- A statement - reference blob dictionary.
+                See: https://github.com/wmde/reference-island#statement-reference-blob
+
+        Returns:
+            bool -- True if a match exists, False otherwise
+        """
         statement = statement_reference["statement"]
 
         if statement["datatype"] not in ValueMatchers.STRING_DATATYPES:
             return False
 
-        value = StringValue(statement)
+        value = TextValue(statement)
         reference = statement_reference["reference"]
 
         return value in reference["extractedData"]
 
     @staticmethod
     def match_number(statement_reference):
+        """Matches two string values
+
+        Arguments:
+            statement_reference {dict} -- a statement -reference blob dictionary.
+                See: https://github.com/wmde/reference-island#statement-reference-blob
+
+        Returns:
+            bool -- True if a match exists, False otherwise
+        """
         statement = statement_reference["statement"]
 
         if statement["datatype"] not in ValueMatchers.NUMBER_DATATYPES:

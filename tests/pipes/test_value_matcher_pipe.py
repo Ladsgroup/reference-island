@@ -4,11 +4,11 @@ from wikidatarefisland.pipes.value_matcher_pipe import ValueMatcherPipe
 
 given = {
     "string_match": {
-        "method": "match_string",
+        "method": "match_text",
         "return": True
     },
     "string_mismatch": {
-        "method": "match_string",
+        "method": "match_text",
         "return": False
     },
     "number_match": {
@@ -24,7 +24,7 @@ given = {
 
 class MockMatchers:
     @staticmethod
-    def match_string(item):
+    def match_text(item):
         return False
 
     @staticmethod

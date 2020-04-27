@@ -9,7 +9,7 @@ class ValueMatcherPipe():
 
     def flow(self, item):
         filters = [
-            self.matchers.match_string,
+            self.matchers.match_text,
             self.matchers.match_number
         ]
 

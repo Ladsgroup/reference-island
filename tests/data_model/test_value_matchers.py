@@ -1,6 +1,6 @@
 import pytest
 
-from wikidatarefisland.data_model.value_matchers import ValueMatchers, StringValue, QuantityValue
+from wikidatarefisland.data_model.value_matchers import ValueMatchers, TextValue, QuantityValue
 
 mock = {
     "statement": {
@@ -108,7 +108,7 @@ class TestStringValue:
         (mock["statement"]["with_string"], "  Test ")
     ])
     def test_equivalence(self, statement, equivalent):
-        assert StringValue(statement) == equivalent
+        assert TextValue(statement) == equivalent
 
 
 class TestValueMatchers:
@@ -122,7 +122,7 @@ class TestValueMatchers:
         (given["multiple_string_match"], True),
     ])
     def test_match_string(self, given, expected):
-        assert ValueMatchers.match_string(given) == expected
+        assert ValueMatchers.match_text(given) == expected
 
     @pytest.mark.parametrize("given,expected", [
         (given["no_type"], False),
