@@ -27,9 +27,9 @@ class TextValue:
                 See: https://github.com/wmde/reference-island#statement-dict
         """
         self.type = statement["datatype"]
-        self.value = statement["value"]["value"]["text"] \
+        self.value = statement["value"]["text"] \
             if self.type == "monolingualtext" \
-            else statement["value"]["value"]
+            else statement["value"]
 
     def __eq__(self, other):
         if not isinstance(other, str):

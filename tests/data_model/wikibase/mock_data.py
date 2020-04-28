@@ -8,22 +8,16 @@ mock = {
         },
         "with_string": {
             "datatype": 'string',
-            "value": {
-                "value": "Test"
-            }
+            "value": "Test"
         },
         "with_url": {
             "datatype": 'url',
-            "value": {
-                "value": "Test"
-            }
+            "value": "Test"
         },
         "with_monolingualtext": {
             "datatype": 'monolingualtext',
             "value": {
-                "value": {
-                    "text": "Test"
-                }
+                "text": "Test"
             }
         },
         "without_type": {
