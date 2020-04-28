@@ -1,0 +1,3 @@
+from .quickstatements_formatter_pipe import QuickStatementsFormatterPipe
+
+__all__ = [QuickStatementsFormatterPipe]
