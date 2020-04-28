@@ -1,3 +1,3 @@
-from .pump import AbstractPump
+from .pump import AbstractPump, SimplePump
 
-__all__ = ["AbstractPump"]
+__all__ = ["AbstractPump", "SimplePump"]
