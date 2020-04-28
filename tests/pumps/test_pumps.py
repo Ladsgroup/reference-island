@@ -1,5 +1,6 @@
 import json
 
+from wikidatarefisland.pipes import AbstractPipe
 from wikidatarefisland.pumps import SimplePump
 
 mock_input_data = {'mock': 'inputdata'}
@@ -21,7 +22,7 @@ class MockStorage():
         self.mock_output_file_content += json.dumps(data)
 
 
-class MockPipe():
+class MockPipe(AbstractPipe):
     def flow(self, input):
         assert input == mock_input_data
         return [mock_output_data]
