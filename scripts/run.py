@@ -31,8 +31,10 @@ def main():
     # simple_pump = pumps.SimplePump(storage)
 
     if 'ss1' == args.step:
-        external_identifiers.GenerateWhitelistedExtIds(
+        ext_ids = external_identifiers.GenerateWhitelistedExtIds(
             wdqs_reader, storage, config, external_identifier_formatter).run()
+
+        storage.store(args.output_path, ext_ids)
         return
 
 
