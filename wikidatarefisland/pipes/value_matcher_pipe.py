@@ -1,4 +1,7 @@
-class ValueMatcherPipe():
+from .abstract_pipe import AbstractPipe
+
+
+class ValueMatcherPipe(AbstractPipe):
     """A pipesegment to match potential references with statement data"""
     def __init__(self, matchers):
         """Instantiate the pipe
@@ -17,12 +20,15 @@ class ValueMatcherPipe():
                 See: See: https://github.com/wmde/reference-island#statement-reference-blob
 
         Returns:
-            dict|None -- The input potential match if there's a match, None otherwise.
+            List -- A list containing the input potential match if there's a match, empty otherwise.
         """
         filters = [
             self.matchers.match_text,
             self.matchers.match_quantity
         ]
 
-        if any(match(potential_match) for match in filters):
-            return potential_match
+        if not any(match(potential_match) for match in filters):
+            return []
+            
+        return [potential_match]
+        

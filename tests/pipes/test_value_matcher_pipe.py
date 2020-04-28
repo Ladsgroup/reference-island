@@ -24,24 +24,24 @@ given = {
 
 class MockMatchers:
     @staticmethod
-    def match_text(item):
+    def match_text(potential_match):
         return False
 
     @staticmethod
-    def match_quantity(item):
+    def match_quantity(potential_match):
         return False
 
 
 class TestValueMatcherPipe:
 
     @pytest.mark.parametrize("mock,expected", [
-        (given["string_match"], "Test"),
-        (given["string_mismatch"], None),
-        (given["number_match"], "Test"),
-        (given["number_mismatch"], None)
+        (given["string_match"], ["Test"]),
+        (given["string_mismatch"], []),
+        (given["number_match"], ["Test"]),
+        (given["number_mismatch"], [])
     ])
     def test_flow(self, monkeypatch, mock, expected):
-        monkeypatch.setattr(MockMatchers, mock["method"], lambda item: mock["return"])
+        monkeypatch.setattr(MockMatchers, mock["method"], lambda potential_match: mock["return"])
 
         pipe = ValueMatcherPipe(MockMatchers)
 
