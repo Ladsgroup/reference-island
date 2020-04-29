@@ -23,6 +23,7 @@ def test_directory(tmpdir_factory):
     shutil.copy(yaml_path, config_file.strpath)
     return tmpdir
 
+
 def test_main_ss1(monkeypatch, test_directory):
     def mock_external_ids(_):
         return ['P1234']
