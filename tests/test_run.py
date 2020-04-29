@@ -20,7 +20,7 @@ def test_main_ss1(monkeypatch, tmpdir):
         return ['P1234']
 
     def mock_usecases(*args):
-        return [{'value': {'value': 'cat1234'}}]
+        return [{'value': {'value': 'cat1234'}}] * 6
 
     def mock_formatter(*args):
         return {
@@ -41,7 +41,6 @@ def test_main_ss1(monkeypatch, tmpdir):
     monkeypatch.setattr(WdqsExternalIdentifierFormatter, "format", mock_formatter)
     monkeypatch.setattr(requests, "get", mock_get)
 
-    # Worry about default.yml later
     test_filename = "test_result_ss1.json"
     mock_args = f"--step ss1 --output {test_filename}"
     mock_file_path = tmpdir.join('scripts', 'this_is_ignored.py')
@@ -57,5 +56,4 @@ def test_main_ss1(monkeypatch, tmpdir):
 
     run_main(mock_args.split(), mock_file_path)
 
-    # assert json.loads(result_file.read()) == ['P1234', 'P1235']
-    assert False
+    assert json.loads(result_file.read()) == ['P1234']
