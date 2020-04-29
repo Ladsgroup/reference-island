@@ -1,0 +1,1 @@
+from wikidatarefisland import run_main
