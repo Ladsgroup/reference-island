@@ -1,6 +1,8 @@
 import os
 import json
 import shutil
+
+import pytest
 import requests
 
 from wikidatarefisland import run_main
@@ -8,14 +10,20 @@ from wikidatarefisland.data_access import WdqsReader
 from wikidatarefisland.services import WdqsExternalIdentifierFormatter
 
 
-# Mocking checklist:
-# - WDQSReader: Get all external idefs --> ['P1234', 'P1235', 'P1236'] done
-# - WDQSReader: Check Usecases  --> [{ value: { value: '1234' } }] done
-# - External Idefs Formatter: Format --> { url: 'http://www.example.com/1234' }
-# - requests: get --> { status_code: 200, text: 'http://schema.org' }
+@pytest.fixture()
+def test_directory(tmpdir_factory):
+    tmpdir = tmpdir_factory.mktemp('directory')
+    conf_dir = tmpdir.mkdir('config')
+    tmpdir.mkdir('scripts')
+    tmpdir.mkdir('data')
+    config_file = conf_dir.join('default.yml')
+    override_file = conf_dir.join('override.yml')
+    override_file.write('')
+    yaml_path = os.path.join(os.path.dirname(__file__), '../config/default.yml')
+    shutil.copy(yaml_path, config_file.strpath)
+    return tmpdir
 
-
-def test_main_ss1(monkeypatch, tmpdir):
+def test_main_ss1(monkeypatch, test_directory):
     def mock_external_ids(_):
         return ['P1234']
 
@@ -43,16 +51,8 @@ def test_main_ss1(monkeypatch, tmpdir):
 
     test_filename = "test_result_ss1.json"
     mock_args = f"--step ss1 --output {test_filename}"
-    mock_file_path = tmpdir.join('scripts', 'this_is_ignored.py')
-    conf_dir = tmpdir.mkdir('config')
-    tmpdir.mkdir('scripts')
-    tmpdir.mkdir('data')
-    config_file = conf_dir.join('default.yml')
-    override_file = conf_dir.join('override.yml')
-    override_file.write('')
-    yaml_path = os.path.join(os.path.dirname(__file__), '../config/default.yml')
-    shutil.copy(yaml_path, config_file.strpath)
-    result_file = tmpdir.join('data').join(test_filename)
+    mock_file_path = test_directory.join('scripts', 'this_is_ignored.py')
+    result_file = test_directory.join('data', test_filename)
 
     run_main(mock_args.split(), mock_file_path)
 
