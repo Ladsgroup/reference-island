@@ -2,7 +2,7 @@ import requests
 import os
 
 from wikidatarefisland import Config
-from wikidatarefisland.pipes import ScaraperPipe
+from wikidatarefisland.pipes import ScraperPipe
 from wikidatarefisland.services import SchemaorgPropertyMapper
 
 
@@ -65,7 +65,7 @@ def test_run(monkeypatch):
             }
         }]
     }
-    scraper = ScaraperPipe(MockConfig(), MockSchemaorgNormalizer, MockSchemaorgPropertyMapper())
+    scraper = ScraperPipe(MockConfig(), MockSchemaorgNormalizer, MockSchemaorgPropertyMapper())
     result = scraper.flow(item)
     assert 'dateRetrieved' in result[0]['reference']['referenceMetadata']
     assert len(result) == 1

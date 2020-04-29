@@ -1,4 +1,4 @@
 from .abstract_pipe import AbstractPipe
-from .scraper import ScaraperPipe
+from .scraper import ScraperPipe
 
-__all__ = ["AbstractPipe", "ScaraperPipe"]
+__all__ = ["AbstractPipe", "ScraperPipe"]

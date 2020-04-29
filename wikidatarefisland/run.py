@@ -41,7 +41,7 @@ def main(argv, filepath):
         return
 
     if 'pipe2' == args.step:
-        the_scraper = pipes.ScaraperPipe(config, schemaorg_normalizer, schemaorg_mapper)
+        the_scraper = pipes.ScraperPipe(config, schemaorg_normalizer, schemaorg_mapper)
         simple_pump.run(the_scraper, args.input_path, args.output_path)
 
 
