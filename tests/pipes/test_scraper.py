@@ -30,6 +30,8 @@ class MockConfig(Config):
     def get(self, key):
         if key == 'user_agent':
             return 'Test'
+        if key == 'parallel_workers':
+            return 20
 
 
 class MockSchemaorgNormalizer():

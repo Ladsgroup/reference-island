@@ -30,7 +30,8 @@ class ScraperPipe(AbstractPipe):
             return
 
         extracted_data = {}
-        with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+        workers = int(self.config.get('parallel_workers'))
+        with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
             future_to_url = {
                 executor.submit(self._check_external_identifier, i): i for i in resource_urls}
         for future in concurrent.futures.as_completed(future_to_url):
