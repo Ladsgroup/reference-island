@@ -5,8 +5,10 @@ import extruct
 import requests
 from w3lib.html import get_base_url
 
+from .abstract_pipe import AbstractPipe
 
-class ScaraperPipe(object):
+
+class ScaraperPipe(AbstractPipe):
     def __init__(self, config, schemaorg_normalizer, schemaorg_mapper):
         """
 
