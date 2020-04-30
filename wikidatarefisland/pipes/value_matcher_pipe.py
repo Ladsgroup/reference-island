@@ -1,9 +1,10 @@
-from .abstract_pipe import AbstractPipe
+from wikidatarefisland.data_model.wikibase import ValueMatchers
+from wikidatarefisland.pipes import AbstractPipe
 
 
 class ValueMatcherPipe(AbstractPipe):
     """A pipesegment to match potential references with statement data"""
-    def __init__(self, matchers):
+    def __init__(self, matchers: ValueMatchers):
         """Instantiate the pipe
 
         Arguments:

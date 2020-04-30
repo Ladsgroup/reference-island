@@ -5,7 +5,8 @@ import sys
 from wikidatarefisland import (Config, data_access, external_identifiers,
                                services)
 
-# from wikidatarefisland import pumps
+from wikidatarefisland import pumps, pipes
+from wikidatarefisland.data_model import wikibase
 
 
 def main(argv, filepath):
@@ -29,13 +30,18 @@ def main(argv, filepath):
     external_identifier_formatter = services.WdqsExternalIdentifierFormatter(wdqs_reader)
 
     # Pumps
-    # simple_pump = pumps.SimplePump(storage)
+    simple_pump = pumps.SimplePump(storage)
 
     if 'ss1' == args.step:
         ext_ids = external_identifiers.GenerateWhitelistedExtIds(
             wdqs_reader, storage, config, external_identifier_formatter).run()
 
         storage.store(args.output_path, ext_ids)
+        return
+
+    if 'match' == args.step:
+        pipe = pipes.ValueMatcherPipe(wikibase.ValueMatchers)
+        simple_pump.run(pipe, args.input_path, args.output_path)
         return
 
 
