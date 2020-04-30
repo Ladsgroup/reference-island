@@ -30,6 +30,5 @@ class ValueMatcherPipe(AbstractPipe):
 
         if not any(match(potential_match) for match in filters):
             return []
-            
+
         return [potential_match]
-        
