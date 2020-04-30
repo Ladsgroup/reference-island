@@ -11,7 +11,7 @@ from wikidatarefisland.services import WdqsExternalIdentifierFormatter
 
 
 def relative_path(*paths):
-    """Generate absolute path from script relative path
+    """Generate absolute path from script relative path.
 
     Returns:
         str -- Absolute path string

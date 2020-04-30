@@ -2,20 +2,20 @@ from .value_types import TextValue, QuantityValue
 
 
 class ValueMatchers:
-    """Collects static methods to match between two data values on a statement - reference blob"""
+    """Collects static methods to match between two data values on a statement - reference blob."""
     STRING_DATATYPES = ["string", "url", "monolingualtext"]
     NUMBER_DATATYPES = ["quantity"]
 
     @staticmethod
     def match_text(statement_reference):
-        """Matches two text values
+        """Matches two text values.
 
         Arguments:
             statement_reference {dict} -- A statement - reference blob dictionary.
                 See: https://github.com/wmde/reference-island#statement-reference-blob
 
         Returns:
-            bool -- True if a match exists, False otherwise
+            bool -- True if a match exists, False otherwise.
         """
         statement = statement_reference["statement"]
 
@@ -29,14 +29,14 @@ class ValueMatchers:
 
     @staticmethod
     def match_quantity(statement_reference):
-        """Matches two string values
+        """Matches two quantity values.
 
         Arguments:
             statement_reference {dict} -- a statement -reference blob dictionary.
                 See: https://github.com/wmde/reference-island#statement-reference-blob
 
         Returns:
-            bool -- True if a match exists, False otherwise
+            bool -- True if a match exists, False otherwise.
         """
         statement = statement_reference["statement"]
 

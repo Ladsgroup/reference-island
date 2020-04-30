@@ -1,7 +1,7 @@
 class QuantityValue:
-    """Represents Wikibase Quantity Values"""
+    """Represent Wikibase Quantity Values."""
     def __init__(self, statement):
-        """Instantiates a quantity value
+        """Instantiates a quantity value.
 
         Arguments:
             statement {dict} -- A statement dictionary.
@@ -18,9 +18,9 @@ class QuantityValue:
 
 
 class TextValue:
-    """Represent Wikibase Text Values"""
+    """Represent Wikibase text Values."""
     def __init__(self, statement):
-        """Instantiates a text value according to it's datatype
+        """Instantiates a text value according to it's datatype.
 
         Arguments:
             statement {dict} -- A statement dictionary.
