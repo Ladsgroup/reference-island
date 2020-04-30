@@ -40,7 +40,7 @@ def main(argv, filepath):
         storage.store(args.output_path, ext_ids)
         return
 
-    if 'pipe2' == args.step:
+    if 'scrape' == args.step:
         the_scraper = pipes.ScraperPipe(config, schemaorg_normalizer, schemaorg_mapper)
         simple_pump.run(the_scraper, args.input_path, args.output_path)
 
