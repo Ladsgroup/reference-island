@@ -80,7 +80,8 @@ def test_main_match(test_directory):
     mock_input_path = relative_path('mock_data', test_given_filename)
     mock_expected_path = relative_path('mock_data', test_expected_filename)
 
-    mock_args = f"this_is_ignored.py --step match --input {test_given_filename} --output {test_result_filename}"
+    mock_args = f"this_is_ignored.py --step match --input {test_given_filename}" \
+                f" --output {test_result_filename}"
     mock_file_path = test_directory.join('scripts', 'this_is_ignored.py')
 
     shutil.copy(mock_input_path, given_file.strpath)
