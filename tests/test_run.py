@@ -18,6 +18,7 @@ def relative_path(*paths):
     """
     return os.path.join(os.path.dirname(__file__), *paths)
 
+
 @pytest.fixture()
 def test_directory(tmpdir_factory):
     tmpdir = tmpdir_factory.mktemp('directory')
@@ -27,7 +28,7 @@ def test_directory(tmpdir_factory):
     config_file = conf_dir.join('default.yml')
     override_file = conf_dir.join('override.yml')
     override_file.write('')
-    yaml_path = os.path.join(os.path.dirname(__file__), '../config/default.yml')
+    yaml_path = relative_path('..', 'config', 'default.yml')
     shutil.copy(yaml_path, config_file.strpath)
     return tmpdir
 
@@ -80,7 +81,7 @@ def test_main_match(test_directory):
     mock_expected_path = relative_path('mock_data', test_expected_filename)
 
     mock_args = f"--step match --input {test_given_filename} --output {test_result_filename}"
-    mock_file_path = test_directory.join('scripts', 'this_is_ignored_py')
+    mock_file_path = test_directory.join('scripts', 'this_is_ignored.py')
 
     shutil.copy(mock_input_path, given_file.strpath)
 
