@@ -20,6 +20,14 @@ mock = {
                 "text": "Test"
             }
         },
+        "with_globe-coordinate": {
+            "datatype": 'globe-coordinate',
+            "value": {
+                "latitude": 52.498469,
+                "longitude": 13.381021,
+                "globe": "http://www.wikidata.org/entity/Q2"
+            }
+        },
         "without_type": {
             "datatype": 'some-other-data'
         }
