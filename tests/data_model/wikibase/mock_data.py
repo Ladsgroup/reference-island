@@ -21,11 +21,21 @@ mock = {
             }
         },
         "with_globe-coordinate": {
-            "datatype": 'globe-coordinate',
-            "value": {
-                "latitude": 52.498469,
-                "longitude": 13.381021,
-                "globe": "http://www.wikidata.org/entity/Q2"
+            "on_earth": {
+                "datatype": 'globe-coordinate',
+                "value": {
+                    "latitude": 52.498469,
+                    "longitude": 13.381021,
+                    "globe": "http://www.wikidata.org/entity/Q2"
+                }
+            },
+            "on_mars": {
+                "datatype": 'globe-coordinate',
+                "value": {
+                    "latitude": 18.65,
+                    "longitude": 226.2,
+                    "globe": "http://www.wikidata.org/entity/Q111"
+                }
             }
         },
         "without_type": {

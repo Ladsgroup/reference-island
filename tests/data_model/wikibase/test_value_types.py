@@ -30,11 +30,11 @@ class TestTextValue:
 class TestGeoValue:
 
     @pytest.mark.parametrize("statement,equivalent", [
-        (mock["statement"]["with_globe-coordinate"], {
+        (mock["statement"]["with_globe-coordinate"]["on_earth"], {
             "latitude": "52.498469",
             "longitude": "13.381021"
         }),
-        (mock["statement"]["with_globe-coordinate"], {
+        (mock["statement"]["with_globe-coordinate"]["on_earth"], {
             "latitude": 52.498469,
             "longitude": 13.381021
         })
