@@ -39,7 +39,14 @@ class TextValue:
 
 
 class GeoValue:
+    """Represent Wikibase geogaraphical values"""
     def __init__(self, statement):
+        """Instantiates a geo value according to it's datatype
+
+        Arguments:
+            statement {dict} -- A statement dict.
+                See: https://github.com/wmde/reference-island#statement-dict
+        """
         self.type = statement["datatype"]
         self.value = statement["value"]
 
