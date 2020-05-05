@@ -54,7 +54,7 @@ class GeoValue:
         if(self.type != 'globe-coordinate'
            or 'latitude' not in other
            or 'longitude' not in other):
-            return self == other
+            return self.value == other
 
         return (self.value["latitude"] == float(other["latitude"])
                 and self.value["longitude"] == float(other["longitude"]))

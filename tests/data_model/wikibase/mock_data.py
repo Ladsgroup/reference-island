@@ -49,8 +49,17 @@ mock = {
         "with_one_string_match": {
             "extractedData": ["Test"]
         },
+        "with_one_geo_match": {
+            "extractedData": [{
+                "latitude": "52.498469",
+                "longitude": "13.381021",
+            }]
+        },
         "with_multiple_values_match": {
-            "extractedData": ["12", "Test"]
+            "extractedData": ["12", "Test", {
+                "latitude": "52.498469",
+                "longitude": "13.381021",
+            }]
         },
         "without_match": {
             "extractedData": ["Some", "Other", "Values"]
