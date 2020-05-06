@@ -15,7 +15,7 @@ class QuantityValue:
 
     def __eq__(self, other):
         if not isinstance(other, str):
-            return self == other
+            return self == str(other)
 
         return self.value == other
 
@@ -36,7 +36,7 @@ class TextValue:
 
     def __eq__(self, other):
         if not isinstance(other, str):
-            return self == other
+            return self == str(other)
 
         return self.value.lower().strip() == other.lower().strip()
 
@@ -57,7 +57,7 @@ class DateTimeValue:
 
     def __eq__(self, other):
         if not isinstance(other, str):
-            return self == other
+            return self == str(other)
 
         has_sign = other.startswith(('+', '-'))
         compare_sign = other[0] if has_sign else '+'
