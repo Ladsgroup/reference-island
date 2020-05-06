@@ -94,6 +94,12 @@ class GeoValue:
         self.value = statement["value"]
 
     def __eq__(self, other):
+        if isinstance(other, dict):
+            # TODO: Make it schema.org-agnostic
+            if 'http://schema.org/latitude' in other:
+                other['latitude'] = other['http://schema.org/latitude'][0]
+            if 'http://schema.org/longitude' in other:
+                other['longitude'] = other['http://schema.org/longitude'][0]
         if(self.type != 'globe-coordinate'
            or 'latitude' not in other
            or 'longitude' not in other):
