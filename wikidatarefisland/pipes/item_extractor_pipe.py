@@ -1,13 +1,13 @@
 from itertools import chain
 from .abstract_pipe import AbstractPipe
 from wikidatarefisland.data_model import StatementFilterer
-from ..data_model.filters import StatementFilters
+from ..data_model.filters import ItemFilters, StatementFilters
 
 
 class ItemExtractorPipe(AbstractPipe):
     """Pipe that extracts statements that could be referenced from an item"""
     def __init__(self, external_id_formatter,
-                 blacklisted_properties=None, whitelisted_ext_ids=None):
+                 blacklisted_properties=None, whitelisted_ext_ids=None, blacklisted_classes=None):
         self.external_id_formatter = external_id_formatter
         if blacklisted_properties is None:
             blacklisted_properties = []
@@ -15,12 +15,17 @@ class ItemExtractorPipe(AbstractPipe):
         if whitelisted_ext_ids is None:
             whitelisted_ext_ids = []
         self.whitelisted_ext_ids = whitelisted_ext_ids
+        if blacklisted_classes is None:
+            blacklisted_classes = []
+        self.blacklisted_classes = blacklisted_classes
 
     def flow(self, input_data):
+        item_class_excluder = ItemFilters().get_item_class_excluder(self.blacklisted_classes)
+        if item_class_excluder(input_data) is False:
+            return []
         return self._process_item(input_data)
 
     def _process_item(self, item_data):
-        # TODO: Filter out bail early if item is in excluded list. see: T251282
         all_statements = list(chain.from_iterable([i for i in item_data['claims'].values()]))
         result_statements = list(self._filter_potential_referenced_statements(
             all_statements))

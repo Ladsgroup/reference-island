@@ -28,3 +28,28 @@ class StatementFilters:
         that are any of the passed property ids
         """
         return lambda statement: statement.get('pid', '') in included_properties
+
+
+class ItemFilters:
+    @staticmethod
+    def get_item_class_excluder(excluded_classes):
+        """
+        Returns a filter that is false for all items in the provided class
+        e.g. that have any P31 statements of that class
+        """
+        class_property = 'P31'
+
+        def item_class_excluder(item):
+            claims = item.get('claims', {})
+            if class_property not in claims:
+                return True
+            all_classes = [
+                claim.get('mainsnak', {}).get('datavalue', {}).get('value', {}).get('id', '')
+                for claim in claims[class_property]
+            ]
+            if set(excluded_classes) & set(all_classes):
+                return False
+            else:
+                return True
+
+        return item_class_excluder
