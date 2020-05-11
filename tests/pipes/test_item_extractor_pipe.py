@@ -1,6 +1,3 @@
-# import importlib.resources as pkg_resources
-# import json
-
 import pytest
 
 from wikidatarefisland.pipes import ItemExtractorPipe
@@ -72,7 +69,7 @@ expected = {
 
 
 class MockExternalIdFormatter:
-    def format(*args):
+    def format(self, *args):
         return test_data.RESOURCE_BLOB
 
 
