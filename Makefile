@@ -9,3 +9,6 @@ data/scraped_data.jsonl: \
 data/matched_references.jsonl: \
 	data/scraped_data.jsonl
 	python3 wikidatarefisland/run.py --step match --input "scraped_data.jsonl" --output "matched_references.jsonl"
+data/matched_item_references.jsonl: \
+	data/scraped_data.jsonl
+	python3 wikidatarefisland/run.py --step item_analysis --input "scraped_data.jsonl" --side-service-input "whitelisted_ext_idefs.json" --output "wtf.jsonl"

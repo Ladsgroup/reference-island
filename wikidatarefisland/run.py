@@ -64,6 +64,20 @@ def main(argv, filepath):
         simple_pump.run(pipe, args.input_path, args.output_path)
         return
 
+    if 'item_analysis' == args.step:
+        whitelisted_ext_ids = storage.get(args.side_service_input_path)
+        pipe = pipes.ItemStatisticalAnalysisPipe(
+            whitelisted_ext_ids,
+            config.get('minimum_repetitions_for_item_values'),
+            config.get('maximum_noise_ratio_for_item_values')
+        )
+        observer_pump = pumps.ObserverPump(storage)
+        observer_pump.run(pipe, args.input_path, '-')
+        mapping = pipe.get_mapping()
+        pipe = pipes.ItemMappingMatcherPipe(mapping, whitelisted_ext_ids)
+        simple_pump.run(pipe, args.input_path, args.output_path)
+        return
+
 
 if __name__ == "__main__":
     main(sys.argv, __file__)
