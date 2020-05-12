@@ -316,6 +316,20 @@ class TestSchemaOrgGraph:
 
         assert result == expected, "Should extract graphs"
 
+    def test_get_nodes_self_referring(self):
+        given = [{
+            "@id": "_:b0",
+            "http://schema.org/name": [
+                {
+                    "@id": "_:b0"
+                }
+            ]
+        }]
+        expected = {'http://schema.org/name': ["_:b0"]}
+        result = SchemaOrgGraph(given).get_nodes()
+
+        assert result == [expected]
+
 
 class TestSchemaOrgNormalizer:
     def test_normalize_from_extruct(self):

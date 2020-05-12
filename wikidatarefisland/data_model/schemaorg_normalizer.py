@@ -13,6 +13,8 @@ class SchemaOrgNode:
     def _get_value(self, leaf):
         if "@id" in leaf:
             id = leaf["@id"]
+            if id == self.id:
+                return id
             return self._graph.get_node(id).get_props() if self._graph.has_node(id) else id
 
         return leaf["@value"]
