@@ -32,9 +32,8 @@ class SchemaOrgNode:
     def get_props(self, max_depth=1):
         return dict(map(
             lambda kvPair: (kvPair[0].replace('https://', 'http://'),
-                                        self.get_prop(kvPair[0], max_depth)),
-            self._props.items()
-        ))
+                    self.get_prop(kvPair[0], max_depth)),
+                    self._props.items()))
 
     def has_props(self):
         return len(self._props) > 0
