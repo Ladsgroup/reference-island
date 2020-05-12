@@ -6,7 +6,7 @@ from wikidatarefisland.data_model.schemaorg_normalizer import (
 
 
 class MockSchemaOrgNode:
-    def get_props(self):
+    def get_props(self, *args):
         return {"test": "mock"}
 
 
@@ -350,20 +350,20 @@ class TestSchemaOrgGraph:
             {
                 "http://schema.org/additionalName": [
                     {
-                        "http://schema.org/name": ["Elton John"],
-                        "http://schema.org/additionalName": ["http://example.com/reginaldId"]
-                    }
-                ],
-                "http://schema.org/name": ["Reginald Dwight"]
-            },
-            {
-                "http://schema.org/additionalName": [
-                    {
                         "http://schema.org/name": ["Reginald Dwight"],
                         "http://schema.org/additionalName": ["http://example.com/eltonId"]
                     }
                 ],
                 "http://schema.org/name": ["Elton John"]
+            },
+            {
+                "http://schema.org/additionalName": [
+                    {
+                        "http://schema.org/name": ["Elton John"],
+                        "http://schema.org/additionalName": ["http://example.com/reginaldId"]
+                    }
+                ],
+                "http://schema.org/name": ["Reginald Dwight"]
             }
         ]
 

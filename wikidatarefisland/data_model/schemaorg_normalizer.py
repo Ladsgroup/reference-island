@@ -10,33 +10,28 @@ class SchemaOrgNode:
         self._type = data["@type"] if "@type" in data else None
         self._props = dict(filter(lambda kvPair: "schema.org" in kvPair[0], data.items()))
 
-    def _get_value(self, leaf, ancestorIds):
+    def _get_value(self, leaf, depth):
         if "@value" in leaf:
             return leaf["@value"]
 
         id = leaf["@id"]
 
-        if id == self.id:
+        if id == self.id or depth == 0:
             return id
 
-        if id in ancestorIds:
-            return id
+        return self._graph.get_node(id).get_props(depth-1) if self._graph.has_node(id) else id
 
-        ancestorIds.append(self.id)
-
-        return self._graph.get_node(id).get_props(ancestorIds) if self._graph.has_node(id) else id
-
-    def get_prop(self, propName, ancestorIds=[]):
+    def get_prop(self, propName, depth=1):
         leaf = self._props[propName]
 
         if isinstance(leaf, list):
-            return list(map(lambda item: self._get_value(item, ancestorIds), leaf))
+            return list(map(lambda item: self._get_value(item, depth), leaf))
 
-        return self._get_value(leaf, ancestorIds)
+        return self._get_value(leaf, depth)
 
-    def get_props(self, ancestorIds=[]):
+    def get_props(self, depth=1):
         return dict(map(lambda kvPair: (kvPair[0].replace('https://', 'http://'),
-                                        self.get_prop(kvPair[0], ancestorIds)), self._props.items()))
+                                        self.get_prop(kvPair[0], depth)), self._props.items()))
 
     def has_props(self):
         return len(self._props) > 0
