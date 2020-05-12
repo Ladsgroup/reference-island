@@ -330,6 +330,46 @@ class TestSchemaOrgGraph:
 
         assert result == [expected]
 
+    def test_get_nodes_circular_referring(self):
+        given = [
+            {
+                "@id": "http://example.com/eltonId",
+                "@type": "Person",
+                "http://schema.org/name": {"@value": "Elton John"},
+                "http://schema.org/additionalName": {"@id": "http://example.com/reginaldId"}
+            },
+            {
+                "@id": "http://example.com/reginaldId",
+                "@type": "Person",
+                "http://schema.org/name": {"@value": "Reginald Dwight"},
+                "http://schema.org/additionalName": {"@id": "http://example.com/eltonId"}
+            }
+        ]
+
+        expected = [
+            {
+                "http://schema.org/additionalName": [
+                    {
+                        "http://schema.org/name": ["Elton John"],
+                        "http://schema.org/additionalName": ["http://example.com/reginaldId"]
+                    }
+                ],
+                "http://schema.org/name": ["Reginald Dwight"]
+            },
+            {
+                "http://schema.org/additionalName": [
+                    {
+                        "http://schema.org/name": ["Reginald Dwight"],
+                        "http://schema.org/additionalName": ["http://example.com/eltonId"]
+                    }
+                ],
+                "http://schema.org/name": ["Elton John"]
+            }
+        ]
+
+        result = SchemaOrgGraph(given).get_nodes()
+        assert result == expected
+
 
 class TestSchemaOrgNormalizer:
     def test_normalize_from_extruct(self):
