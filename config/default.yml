@@ -105,6 +105,10 @@ blacklisted_external_identifiers:
     - P6578
     - P1004
 
+imported_from_properties:
+    - P143
+    - P4656
+
 data_storage_path:
     'data/'
 
