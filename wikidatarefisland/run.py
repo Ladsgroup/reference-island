@@ -66,16 +66,16 @@ def main(argv, filepath):
 
     if 'item_analysis' == args.step:
         whitelisted_ext_ids = storage.get(args.side_service_input_path)
-        pipe = pipes.ItemStatisticalAnalysisPipe(
+        analysis_pipe = pipes.ItemStatisticalAnalysisPipe(
             whitelisted_ext_ids,
             config.get('minimum_repetitions_for_item_values'),
             config.get('maximum_noise_ratio_for_item_values')
         )
         observer_pump = pumps.ObserverPump(storage)
-        observer_pump.run(pipe, args.input_path, '-')
-        mapping = pipe.get_mapping()
-        pipe = pipes.ItemMappingMatcherPipe(mapping, whitelisted_ext_ids)
-        simple_pump.run(pipe, args.input_path, args.output_path)
+        observer_pump.run(analysis_pipe, args.input_path, '-')
+        mapping = analysis_pipe.get_mapping()
+        matching_pipe = pipes.ItemMappingMatcherPipe(mapping, whitelisted_ext_ids)
+        simple_pump.run(matching_pipe, args.input_path, args.output_path)
         return
 
 
