@@ -13,7 +13,7 @@ function getDesc() {
     $title = "Reference hunt!";
     return [
         "label" => ["en" => $title],
-        "description" => ["en" => "<a href=\"https://www.wikidata.org/wiki/Wikidata:Automated_finding_references_input\">Reference hunt</a> suggestions to add references in items based on structued data in the web. Source code can be found in <a href=\"https://github.com/wmde/reference-island\">here</a>"],
+        "description" => ["en" => "[https://www.wikidata.org/wiki/Wikidata:Automated_finding_references_input Reference hunt] suggestions to add references in items based on structued data in the web. Source code can be found in [https://github.com/wmde/reference-island here]"],
         "icon" => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Treasure_map.png/120px-Treasure_map.png',
     ];
 }
