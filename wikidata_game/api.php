@@ -90,10 +90,14 @@ function getReferenceSnak($reference) {
 }
 
 function getTextForUsers($data) {
+    $values = [];
+    foreach ( $data["reference"]["extractedData"]  as $value ) {
+        $values[] = json_encode( $value );
+    }
     return "Is the value for this claim and the value given in the reference the same?\nProperty: " . $data["statement"]["pid"] .
         "\nValue of the statement: " . json_encode($data["statement"]["value"]) .
         "\nURL reference: " . $data["reference"]["referenceMetadata"]["P854"] .
-        "\nValue given in the reference: " . json_encode($data["reference"]["extractedData"]);
+        "\nValues given in the reference: \n* " . implode("\n* ", $values);
 }
 
 function getTiles() {
