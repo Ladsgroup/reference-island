@@ -20,10 +20,9 @@ class StatementFilters:
                 return True
 
             for reference in statement.get('references', []):
-                for snak in reference.get('snaks', []):
-                    for pid in snak:
-                        if pid not in imported_from_properties:
-                            return False
+                for snak_pid in reference.get('snaks', {}):
+                    if snak_pid not in imported_from_properties:
+                        return False
 
             return True
 

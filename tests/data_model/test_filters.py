@@ -5,15 +5,13 @@ from wikidatarefisland.data_model import StatementFilters
 IMPORTED_FROM_PROPERTY = 'P123'
 
 mock_imported_reference_statement = {'mainsnak': {'property': 'P1'}, 'references': [
-    {'snaks': [
-        {IMPORTED_FROM_PROPERTY: 'bar'}
-    ]}
+    {'snaks': {IMPORTED_FROM_PROPERTY: 'bar'}}
 ]}
 mock_reference_having_statement = {'mainsnak': {'property': 'P1'}, 'references': [
-    {'snaks': [
-        {'foo': 'bar'},
-        {IMPORTED_FROM_PROPERTY: 'bar'}
-    ]}
+    {'snaks': {
+        'foo': 'bar',
+        IMPORTED_FROM_PROPERTY: 'bar'
+    }}
 ]}
 mock_reference_missing_statement = {'mainsnak': {'property': 'P1'}}
 mock_external_id_statement = {'mainsnak': {'property': 'P2', 'datatype': 'external-id'}}

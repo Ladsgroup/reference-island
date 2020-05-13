@@ -57,7 +57,7 @@ mock = {
             },
             "references": [
                 {
-                    "snaks": [{IMPORTED_FROM_PROPERTY: "bar"}]
+                    "snaks": {IMPORTED_FROM_PROPERTY: "bar"}
                 }
             ]
         },
@@ -67,10 +67,10 @@ mock = {
             },
             "references": [
                 {
-                    "snaks": [
-                        {"foo": "bar"},
-                        {IMPORTED_FROM_PROPERTY: "bar"}
-                    ]
+                    "snaks": {
+                        "foo": "bar",
+                        IMPORTED_FROM_PROPERTY: "bar"
+                    }
                 }
             ]
         },
