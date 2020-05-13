@@ -13,7 +13,7 @@ function getDesc() {
     $title = "Reference hunt!";
     return [
         "label" => ["en" => $title],
-        "description" => ["en" => "[https://www.wikidata.org/wiki/Wikidata:Automated_finding_references_input Reference hunt] suggestions to add references in items based on structued data in the web. Source code can be found in [https://github.com/wmde/reference-island here]"],
+        "description" => ["en" => "<a href=\"https://www.wikidata.org/wiki/Wikidata:Automated_finding_references_input\">Reference hunt</a> suggestions to add references in items based on structued data in the web. Source code can be found in <a href=\"https://github.com/wmde/reference-island\">here</a>"],
         "icon" => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Treasure_map.png/120px-Treasure_map.png',
     ];
 }
@@ -47,6 +47,9 @@ function getReferenceSnak($reference) {
     foreach ($reference as $pid => $value) {
         if ($pid == 'P854') {
             // We skip url for references given in the game: T251262#6096951
+            continue;
+        }
+        if ($pid == 'dateRetrieved') {
             continue;
         }
         if ($pid == 'P813') {
@@ -110,7 +113,7 @@ function getTiles() {
             'action' => 'wbsetreference',
             'statement' => $guid,
             'tags' => 'reference-game',
-            'snaks' => getReferenceSnak($data['reference']['referenceMetadata']),
+            'snaks' => json_encode(getReferenceSnak($data['reference']['referenceMetadata'])),
         ];
         $tile = [
             'id' => (int)$row['ref_id'],
