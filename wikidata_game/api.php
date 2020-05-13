@@ -118,11 +118,14 @@ function getTiles() {
             'controls' => []
         ];
         $tile['sections'][] = ['type' => 'item', 'q' => $data['itemId']];
+        if ( $data['statement']['datatype'] == 'wikibase-item' ) {
+            $tile['sections'][] = ['type' => 'item', 'q' => $data['statement']['value']['id']];
+        }
         $tile['sections'][] = [
             'type' => 'text',
             'title' => 'Possible reference',
             'text' => getTextForUsers($data),
-            'url' => $data['reference']['referenceMetadata']['referenceUrl']
+            'url' => $data['reference']['referenceMetadata']['P854']
         ];
         $tile['controls'][] = [
             'type' => 'buttons',
