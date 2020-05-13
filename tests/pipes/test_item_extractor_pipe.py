@@ -59,17 +59,6 @@ given = {
 
 expected = {
     "line": {
-        # TODO: This shouldn't be a valid output, see T251944
-        "without_resource_urls": {
-            **test_data.LINE,
-            "statements": [test_data.STATEMENT_BLOB],
-            "resourceUrls": []
-        },
-        # TODO: This shouldn't be a valid output, see T251944
-        "without_statements": {
-            **test_data.LINE,
-            "statements": []
-        },
         "with_all": {
             **test_data.LINE,
             "statements": [test_data.STATEMENT_BLOB],
@@ -86,26 +75,11 @@ class MockExternalIdFormatter:
 
 class TestItemExtractorPipe:
     @pytest.mark.parametrize("given,expected", [
-        (
-            given["item"]["without_non_imported_references"],
-            [expected["line"]["with_all"]]
-        ),
-        (
-            given["item"]["without_unreferenced_claims"],
-            [expected["line"]["without_statements"]]
-        ),
-        (
-            given["item"]["without_non_blacklisted_properties"],
-            [expected["line"]["without_statements"]]
-        ),
-        (
-            given["item"]["without_whitelisted_external_ids"],
-            [expected["line"]["without_resource_urls"]]
-        ),
-        (
-            given["item"]["with_all"],
-            [expected["line"]["with_all"]]
-        )
+        (given["item"]["without_non_imported_references"], [expected["line"]["with_all"]]),
+        (given["item"]["without_unreferenced_claims"], []),
+        (given["item"]["without_non_blacklisted_properties"], []),
+        (given["item"]["without_whitelisted_external_ids"], []),
+        (given["item"]["with_all"], [expected["line"]["with_all"]])
     ])
     def test_flow(self, given, expected):
         external_id_formatter = MockExternalIdFormatter()
