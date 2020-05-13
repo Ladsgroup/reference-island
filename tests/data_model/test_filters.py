@@ -2,7 +2,19 @@ import pytest
 
 from wikidatarefisland.data_model import StatementFilters
 
-mock_reference_having_statement = {'mainsnak': {'property': 'P1'}, 'references': [{'foo': 'bar'}]}
+IMPORTED_FROM_PROPERTY = 'P123'
+
+mock_imported_reference_statement = {'mainsnak': {'property': 'P1'}, 'references': [
+    {'snaks': [
+        {IMPORTED_FROM_PROPERTY: 'bar'}
+    ]}
+]}
+mock_reference_having_statement = {'mainsnak': {'property': 'P1'}, 'references': [
+    {'snaks': [
+        {'foo': 'bar'},
+        {IMPORTED_FROM_PROPERTY: 'bar'}
+    ]}
+]}
 mock_reference_missing_statement = {'mainsnak': {'property': 'P1'}}
 mock_external_id_statement = {'mainsnak': {'property': 'P2', 'datatype': 'external-id'}}
 mock_p1_statement = {'mainsnak': {'property': 'P1'}}
@@ -34,6 +46,11 @@ def get_property_id_statement_includer():
     return StatementFilters().get_property_id_statement_includer
 
 
+@pytest.fixture
+def get_imported_statements_includer():
+    return StatementFilters().get_imported_statements_includer
+
+
 @pytest.mark.parametrize(
     "statement,expected",
     [
@@ -54,6 +71,18 @@ def test_referenced_statement_excluder(statement, expected, referenced_statement
 )
 def test_external_id_statement_excluder(statement, expected, external_id_statement_excluder):
     assert external_id_statement_excluder(statement) == expected
+
+
+@pytest.mark.parametrize(
+    "statement,expected",
+    [
+        (mock_reference_having_statement, False),
+        (mock_reference_missing_statement, True),
+        (mock_imported_reference_statement, True)
+    ]
+)
+def test_imported_statements_includer(statement, expected, get_imported_statements_includer):
+    assert get_imported_statements_includer([IMPORTED_FROM_PROPERTY])(statement) == expected
 
 
 @pytest.mark.parametrize(

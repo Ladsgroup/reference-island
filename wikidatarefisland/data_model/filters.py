@@ -14,6 +14,22 @@ class StatementFilters:
         return statement.get('mainsnak', {}).get('datatype') != "external-id"
 
     @staticmethod
+    def get_imported_statements_includer(imported_from_properties):
+        def imported_statements_includer(statement):
+            if StatementFilters.referenced_statement_excluder(statement):
+                return True
+
+            for reference in statement.get('references', []):
+                for snak in reference.get('snaks', []):
+                    for pid in snak:
+                        if pid not in imported_from_properties:
+                            return False
+
+            return True
+
+        return imported_statements_includer
+
+    @staticmethod
     def get_property_id_statement_excluder(excluded_properties):
         """
         Method that returns a filter that is false for all statements
