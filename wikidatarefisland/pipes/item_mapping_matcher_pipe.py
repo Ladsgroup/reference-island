@@ -2,27 +2,26 @@ from wikidatarefisland.pipes import AbstractPipe
 
 
 class ItemMappingMatcherPipe(AbstractPipe):
-    """A pipe segment to match potential references with statement data."""
+    """Pipe to match potential references with statement data on item values using a mapping."""
 
     def __init__(self, mapping, whitelisted_external_identifiers):
-        """Instantiate the pipe
-
-        Arguments:
-            matchers {wikidatarefisland.data_model.ValueMatchers} --
-                A static class with value matcher functions
+        """
+        :type mapping: dict See ItemStatisticalAnalysisPipe.get_mapping()
+        :type whitelisted_external_identifiers: list of whitelisted external identifiers
+            like ['P1', 'P3', ...]
         """
         self.mapping = mapping
         self.whitelisted_external_identifiers = whitelisted_external_identifiers
 
     def flow(self, potential_match):
-        """Applies transformations to data flow
+        """Apply transformations to data flow
 
         Arguments:
             potential_match {dict} -- A potential statement - reference match to examine.
                 See: See: https://github.com/wmde/reference-island#statement-reference-blob
 
         Returns:
-            The input, this class just observes.
+            List -- A list containing the input potential match if there's a match, empty otherwise.
         """
         if potential_match['statement']['datatype'] != 'wikibase-item':
             return []

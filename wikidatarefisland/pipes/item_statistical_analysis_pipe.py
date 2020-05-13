@@ -35,6 +35,7 @@ class ItemStatisticalAnalysisPipe(AbstractPipe):
             return [potential_match]
         item_id = potential_match['statement']['value']['numeric-id']
         ext_id_property = None
+        # TODO: Pass the pid in the scraper so we can use it directly here
         for pid in potential_match['reference']['referenceMetadata']:
             if pid not in self.whitelisted_external_identifiers:
                 continue
@@ -74,18 +75,18 @@ class ItemStatisticalAnalysisPipe(AbstractPipe):
         for value in self.statistics[ext_id_property][pid]:
             items = self.statistics[ext_id_property][pid][value]
             if len(items) > self.minimum_repetitions:
-                preferred_value = self.get_preferd_item_with_noise(items)
+                preferred_value = self.get_preferred_item_with_noise(items)
                 if preferred_value:
-                    per_pid_result[value] = self.get_preferd_item_with_noise(items)
+                    per_pid_result[value] = preferred_value
 
         return per_pid_result
 
-    def get_preferd_item_with_noise(self, items):
+    def get_preferred_item_with_noise(self, items):
         """
         :type items: list
         """
         # Everything is the same, bail out.
-        if len(list(set(items))) == 1:
+        if len(set(items)) == 1:
             return items[0]
         for case in list(set(items)):
             if (items.count(case) / len(items)) > (1 - self.maximum_noise):
