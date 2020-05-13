@@ -1,6 +1,7 @@
 import pytest
 
 from wikidatarefisland.pipes import ItemExtractorPipe
+
 from .test_data import mock_data as test_data
 
 given = {

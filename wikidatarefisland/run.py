@@ -2,10 +2,8 @@ import argparse
 import os
 import sys
 
-from wikidatarefisland import (Config, data_access, data_model, external_identifiers, pipes,
-                               services)
-
-from wikidatarefisland import pumps
+from wikidatarefisland import (Config, data_access, data_model,
+                               external_identifiers, pipes, pumps, services)
 from wikidatarefisland.data_model import wikibase
 
 

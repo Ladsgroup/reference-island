@@ -1,8 +1,5 @@
 from wikidatarefisland.data_model.schemaorg_normalizer import (
-    SchemaOrgNormalizer,
-    SchemaOrgGraph,
-    SchemaOrgNode
-)
+    SchemaOrgGraph, SchemaOrgNode, SchemaOrgNormalizer)
 
 
 class MockSchemaOrgNode:

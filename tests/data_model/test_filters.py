@@ -1,11 +1,12 @@
+import importlib.resources as pkg_resources
 import json
 
 import pytest
 
 from wikidatarefisland.data_model import StatementFilters
 from wikidatarefisland.data_model.filters import ItemFilters
+
 from . import mock_data
-import importlib.resources as pkg_resources
 
 mock_reference_having_statement = {'mainsnak': {'property': 'P1'}, 'references': [{'foo': 'bar'}]}
 mock_reference_missing_statement = {'mainsnak': {'property': 'P1'}}
