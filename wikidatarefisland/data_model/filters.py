@@ -36,7 +36,9 @@ class ItemFilters:
     @staticmethod
     def get_item_class_excluder(excluded_classes):
         """
-        Returns a filter that is false for all items in the provided class
+        Exclude items by class
+
+        Return a filter that is false for all items in the provided class
         e.g. that have any P31 statements of that class
         """
         class_property = 'P31'
