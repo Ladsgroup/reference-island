@@ -1,4 +1,4 @@
-IMPORTED_FROM_PROPERTY = "P143"
+IGNORED_REFERENCE_PROPERTY = "P143"
 WHITELISTED_EXT_ID = "P3029"
 EXTERNAL_ID_VALUE = "tst1234"
 NON_WHITELISTED_EXT_ID = "P3028"
@@ -47,7 +47,7 @@ LINE = {
 
 mock = {
     "claim": {
-        "with_imported_references_only": {
+        "with_ignored_references_only": {
             "mainsnak": {
                 "property": NON_BLACKLISTED_PROPERTY,
                 "datavalue": {
@@ -57,7 +57,7 @@ mock = {
             },
             "references": [
                 {
-                    "snaks": {IMPORTED_FROM_PROPERTY: "bar"}
+                    "snaks": {IGNORED_REFERENCE_PROPERTY: "bar"}
                 }
             ]
         },
@@ -69,7 +69,7 @@ mock = {
                 {
                     "snaks": {
                         "foo": "bar",
-                        IMPORTED_FROM_PROPERTY: "bar"
+                        IGNORED_REFERENCE_PROPERTY: "bar"
                     }
                 }
             ]

@@ -105,7 +105,7 @@ blacklisted_external_identifiers:
     - P6578
     - P1004
 
-imported_from_properties:
+ignored_reference_properties:
     - P143
     - P4656
 

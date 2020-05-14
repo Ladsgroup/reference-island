@@ -12,7 +12,7 @@ class ItemExtractorPipe(AbstractPipe):
     def __init__(self, external_id_formatter,
                  blacklisted_properties=None,
                  whitelisted_ext_ids=None,
-                 imported_from_properties=[]):
+                 ignored_reference_properties=[]):
         self.external_id_formatter = external_id_formatter
         if blacklisted_properties is None:
             blacklisted_properties = []
@@ -20,7 +20,7 @@ class ItemExtractorPipe(AbstractPipe):
         if whitelisted_ext_ids is None:
             whitelisted_ext_ids = []
         self.whitelisted_ext_ids = whitelisted_ext_ids
-        self.imported_from_properties = imported_from_properties
+        self.ignored_reference_properties = ignored_reference_properties
 
     def flow(self, input_data):
         return self._process_item(input_data)
@@ -61,7 +61,7 @@ class ItemExtractorPipe(AbstractPipe):
         statement_filters = StatementFilters()
         ref_statement_filters = [
             lambda statement: statement is not None,
-            statement_filters.get_imported_statements_includer(self.imported_from_properties),
+            statement_filters.get_referenced_statement_excluder(self.ignored_reference_properties),
             statement_filters.external_id_statement_excluder,
             statement_filters.get_property_id_statement_excluder(self.blacklisted_properties)
         ]
