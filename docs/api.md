@@ -117,8 +117,10 @@ The format of the template of one row of Pipe 2 is as follows:
   "statement": {statementBlob},
   "itemId": [itemId],
   "reference": {
-    referenceMetadata: referenceBlob,
-    extractedData: [ [value] ]
+    "url": [scrapedResourceURL],
+    "ext_idef_pid": [externalIdentifierPID]
+    "referenceMetadata": {referenceBlob},
+    "extractedData": [ [value] ]
     }
 }
 ```
@@ -130,8 +132,7 @@ Note this corresponds to the format of the referenceMetadata seen in [SS4](#ss-4
 {
   *[statedInPropId]: [externalIdItem],
   *[externalIdProp]: [externalIdVal],
-  *[referenceUrl]: [String],
-  [dateRetrieved]: [String]
+  *[referenceUrl]: [String], // This is optional
 }
 ```
 
