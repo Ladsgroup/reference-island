@@ -18,9 +18,10 @@
     $is_game_branch = substr($branch, 0, 5) === 'game-';
 
     if($payload->action === 'closed'){
+        $root = $_SERVER['DOCUMENT_ROOT'];
         $status = NULL;
         $output = [];
-        exec('rm stage/' . $branch . '-api.php', $output, $status);
+        exec('rm ' . $root . 'stage/' . $branch . '-api.php', $output, $status);
 
         $message = $status === 0 ? $branch . '-api.php was successfully removed' :  'An error occurred while trying to clean ' . $branch . '. Please see ~/error.log for more information.';
 
