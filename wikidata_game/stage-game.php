@@ -11,13 +11,14 @@
     $datetime_string = date('c');
 
     $payload = json_decode($_POST["payload"]);
+    $actions = ['synchronize', 'opened', 'reopened'];
 
     $branch = $payload->pull_request->head->ref;
     // Check if current branch is a game branch
     $is_game_branch = substr($branch, 0, 5) === 'game-';
 
-    // If it is not a merge to master from game branch, exit
-    if($payload->action != 'synchronize'
+    // If it is not am update to a game branch pull request, exit
+    if(!in_array($payload->action, $actions)
         || !$is_game_branch 
         || $payload->pull_request->base->ref != 'master'){
 
