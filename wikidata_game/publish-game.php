@@ -20,10 +20,6 @@
         || !$is_game_branch 
         || !$payload->pull_request->merged 
         || $payload->pull_request->base->ref != 'master'){
-
-        $message = $payload->action . ': ' . $payload->pull_request->base->ref . ': ' . $payload->pull_request->head->ref . ': ' . $payload->pull_request->merged;
-        file_put_contents($logfile_path, $datetime_string . ' ' . $message . PHP_EOL, FILE_APPEND);
-
         exit;
     }
 
