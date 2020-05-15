@@ -1,0 +1,1 @@
+cp ~/reference-island/wikidata_game/api.php ~/public_html/api.php
