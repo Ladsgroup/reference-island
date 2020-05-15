@@ -17,7 +17,18 @@
     // Check if current branch is a game branch
     $is_game_branch = substr($branch, 0, 5) === 'game-';
 
-    // If it is not am update to a game branch pull request, exit
+    if($payload->action === 'closed'){
+        $status = NULL;
+        $output = [];
+        exec('rm stage/' . $branch . '-api.php', $output, $status);
+
+        $message = $status === 0 ? $branch . '-api.php was successfully removed' :  'An error occurred while trying to clean ' . $branch . '. Please see ~/error.log for more information.';
+
+        file_put_contents($logfile_path, $datetime_string . ' ' . $message . PHP_EOL, FILE_APPEND);
+        exit;
+    }
+
+    // If it is not an update to a game branch pull request, exit
     if(!in_array($payload->action, $actions)
         || !$is_game_branch 
         || $payload->pull_request->base->ref != 'master'){
@@ -33,7 +44,7 @@
     $output = shell_exec($script_path . ' ' . $branch);
 
     $message = 'Attempting to deploy ' . $payload->pull_request->head->sha . ' of ' . $payload->pull_request->head->ref . ' to staging environment.' . PHP_EOL;
-    $message .= $output ? $output : 'An error occurred while trying to stage' . $branch . '. Please see ~/error.log for more information.';
+    $message .= $output ? $output : 'An error occurred while trying to stage ' . $branch . '. Please see ~/error.log for more information.';
     
     file_put_contents($logfile_path, $datetime_string . ' ' . $message . PHP_EOL, FILE_APPEND);
 ?>
