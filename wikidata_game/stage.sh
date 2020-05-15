@@ -1,6 +1,7 @@
 BRANCH=$1
 HOME="/data/project/wd-ref-island"
 
+git -C "$HOME/reference-island/" fetch --all
 git -C "$HOME/reference-island/" checkout $BRANCH
 git -C "$HOME/reference-island/" pull
 
