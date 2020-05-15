@@ -17,15 +17,15 @@
     $is_game_branch = substr($branch, 0, 5) === 'game-';
 
     // If it is not a merge to master from game branch, exit
-    if($payload->action != 'synchronize'
-        || !$is_game_branch 
-        || $payload->pull_request->base->ref != 'master'){
+    // if($payload->action != 'synchronize'
+    //     || !$is_game_branch 
+    //     || $payload->pull_request->base->ref != 'master'){
 
-        $message = $payload->action . ': ' . $payload->pull_request->base->ref . ': ' . $branch . ': ' . $payload->pull_request->merged;
-        file_put_contents($logfile_path, $datetime_string . ' ' . $message . PHP_EOL, FILE_APPEND);
+    //     $message = $payload->action . ': ' . $payload->pull_request->base->ref . ': ' . $branch . ': ' . $payload->pull_request->merged;
+    //     file_put_contents($logfile_path, $datetime_string . ' ' . $message . PHP_EOL, FILE_APPEND);
 
-        exit;
-    }
+    //     exit;
+    // }
 
     $script_path = '../reference-island/wikidata_game/stage.sh';
 
