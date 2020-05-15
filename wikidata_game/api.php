@@ -1,7 +1,7 @@
 <?PHP
 // This is a POC, don't judge
 function getDb() {
-    $dbmycnf = parse_ini_file("../replica.my.cnf");
+    $dbmycnf = parse_ini_file("~/replica.my.cnf");
     $dbuser = $dbmycnf['user'];
     $dbpass = $dbmycnf['password'];
     $dbhost = "tools.db.svc.eqiad.wmflabs";
