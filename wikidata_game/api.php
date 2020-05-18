@@ -101,6 +101,57 @@ function getTextForUsers($data) {
         "\nValues given in the reference: \n* " . implode("\n* ", $values);
 }
 
+function getFormattedValue($type, $value, $datatype) {
+    $params = [
+        'action' => 'wbformatvalue',
+        'generate' => 'text/html',
+        'datavalue' => '',
+        'datatype' => $datatype
+    ];
+
+    $params['datavalue'] = json_encode([
+        'type' => $type,
+        'value' => $value
+    ]);
+
+    $data = loadApi($params);
+
+    return $data['result'];
+}
+
+function formatStatementValue($statement) {
+    $value = $statement["value"];
+    $datatype = $statement["datatype"];
+
+    switch ($datatype){
+        case 'wikibase-item':
+            return getFormattedValue('wikibase-entityid', $value, $datatype);
+        case 'time':
+            return getFormattedValue('time', $value, $datatype);
+        case 'globe-coordinate':
+            return 'Latitude: ' . $value['latitude'] . ', Longitude ' . $value['longitude'];
+        case 'monolingualtext':
+            return $value['text'];
+        case 'quantity':
+            return $value['amount'];
+        default:
+            return $value;
+    }
+}
+
+function formatClaimHTML($data) {
+    $statement = $data["statement"];
+    $separator = ' ';
+    
+    $html = '<p class="statement">';
+    $html .= '<span class="item">' . $data['itemId'] . '</span>' . $separator;
+    $html .= '<span class="property-id">' . $statement['pid'] . '</span>' . $separator;
+    $html .= '<span class="value">' . formatStatementValue($statement) . '</span>';
+    $html .= '</p>';
+
+    return $html;
+}
+
 function getTiles() {
     $db = getDb();
     $num = $_REQUEST['num'];
@@ -108,61 +159,63 @@ function getTiles() {
     $result = $db->query($sql);
     $result = $result->fetchAll();
     $output = [];
-    /**
-     * Under construction message, will be remove when ui is finished
-     **/
-    $tile = [
-       'id' => 0,
-       'sections' => [[
-          'type' => 'text',
-          'title' => 'Coming Soon!',
-          'text' => 'This game is still under development, please stay tuned and visit us again soon.'
-       ]],
-       'controls' => []
-    ];
+    
+    foreach ($result as $row) {
+        $data = json_decode($row['ref_data'], true);
+        $guid = getGuid($data['statement'], $data['itemId']);
+        if (!$guid) {
+            continue;
+        }
+        $refApi = [
+            'action' => 'wbsetreference',
+            'statement' => $guid,
+            'tags' => 'reference-game',
+            'snaks' => json_encode(getReferenceSnak($data['reference']['referenceMetadata'])),
+        ];
+        $tile = [
+            'id' => (int)$row['ref_id'],
+            'sections' => [],
+            'controls' => []
+        ];
+        $tile['sections'][] = [
+            'type' => 'html',
+            'text' => '<p style="font-size: 24px; font-weight: bold;">Does the following statement claim match the extracted data?</p>'
+        ];
+        $tile['sections'][] = [
+            'type' => 'html',
+            'title' => 'Wikidata statement',
+            'text' => formatClaimHTML($data)
+        ];
+        $tile['sections'][] = [
+            'type' => 'html',
+            'title' => 'Extracted Data',
+            'text' => '<pre>' . json_encode($data['reference']['extractedData']) . '</pre>'
+        ];
+        $tile['sections'][] = [
+            'type' => 'html',
+            'text' => '<p style="font-size: 24px; font-weight: bold;">Related Wikidata items</p>'
+        ];
+        $tile['sections'][] = ['type' => 'item', 'q' => $data['itemId']];
+        if ( $data['statement']['datatype'] == 'wikibase-item' ) {
+            $tile['sections'][] = ['type' => 'item', 'q' => $data['statement']['value']['id']];
+        }
+        // $tile['sections'][] = [
+        //     'type' => 'text',
+        //     'title' => 'Possible reference',
+        //     'text' => getTextForUsers($data),
+        //     'url' => $data['reference']['referenceMetadata']['P854']
+        // ];
+        $tile['controls'][] = [
+            'type' => 'buttons',
+            'entries' => [
+                ['type' => 'green', 'decision' => 'accept', 'label' => 'Accept', 'api_action' => $refApi],
+                ['type' => 'white', 'decision' => 'skip', 'label' => 'Skip'],
+                ['type' => 'blue', 'decision' => 'reject', 'label' => 'Reject']
+            ]
+        ];
 
-    $output[] = $tile;
-    /**
-     * Commented out until the game UI is ready
-     **/
-    //foreach ($result as $row) {
-    //    $data = json_decode($row['ref_data'], true);
-    //    $guid = getGuid($data['statement'], $data['itemId']);
-    //    if (!$guid) {
-    //        continue;
-    //    }
-    //    $refApi = [
-    //        'action' => 'wbsetreference',
-    //        'statement' => $guid,
-    //        'tags' => 'reference-game',
-    //        'snaks' => json_encode(getReferenceSnak($data['reference']['referenceMetadata'])),
-    //    ];
-    //    $tile = [
-    //        'id' => (int)$row['ref_id'],
-    //        'sections' => [],
-    //        'controls' => []
-    //    ];
-    //    $tile['sections'][] = ['type' => 'item', 'q' => $data['itemId']];
-    //    if ( $data['statement']['datatype'] == 'wikibase-item' ) {
-    //        $tile['sections'][] = ['type' => 'item', 'q' => $data['statement']['value']['id']];
-    //    }
-    //    $tile['sections'][] = [
-    //        'type' => 'text',
-    //        'title' => 'Possible reference',
-    //        'text' => getTextForUsers($data),
-    //        'url' => $data['reference']['referenceMetadata']['P854']
-    //    ];
-    //    $tile['controls'][] = [
-    //        'type' => 'buttons',
-    //        'entries' => [
-    //            ['type' => 'green', 'decision' => 'accept', 'label' => 'Accept', 'api_action' => $refApi],
-    //            ['type' => 'white', 'decision' => 'skip', 'label' => 'Skip'],
-    //            ['type' => 'blue', 'decision' => 'reject', 'label' => 'Reject']
-    //        ]
-    //    ];
-    //
-    //    $output[] = $tile;
-    //}
+        $output[] = $tile;
+    }
 
     return $output;
 }
