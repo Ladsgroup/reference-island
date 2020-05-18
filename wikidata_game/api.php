@@ -129,13 +129,28 @@ function getFormattedProperty($id) {
     return getFormattedValue('wikibase-entityid', $propertyValue, 'wikibase-property');
 }
 
+function getFormattedItem($id) {
+    $itemValue = [
+        'entity-type' => 'item',
+        'id' => $id,
+        'numeric-id' => (int)substr($id, 1)
+    ];
+
+    return getFormattedValue('wikibase-entityid', $itemValue, 'wikibase-item');
+}
+
+function formatEntityValue($id, $value){
+    return $value . ' <sub class="id" style="font-size: 0.65em">[' . $id . ']</sub>';
+}
+
 function formatStatementValue($statement) {
     $value = $statement["value"];
     $datatype = $statement["datatype"];
 
     switch ($datatype){
         case 'wikibase-item':
-            return getFormattedValue('wikibase-entityid', $value, $datatype);
+            $formattedData = getFormattedValue('wikibase-entityid', $value, $datatype);
+            return formatEntityValue($value['id'], $formattedData);
         case 'time':
             return getFormattedValue('time', $value, $datatype);
         case 'globe-coordinate':
@@ -150,14 +165,20 @@ function formatStatementValue($statement) {
 }
 
 function formatClaimHTML($data) {
+    $itemId = $data['itemId'];
     $statement = $data["statement"];
-    $separator = ' ';
+    $separator = ' : ';
     
-    $html = '<p class="statement">';
-    $html .= '<span class="item">' . $data['itemId'] . '</span>' . $separator;
-    $html .= '<span class="property-id">' . getFormattedProperty($statement['pid']) . '</span>' . $separator;
+    $html = '<p class="statement lead">';
+    $html .= '<span class="item">' . formatEntityValue($itemId, getFormattedItem($itemId)) . '</span>' . $separator;
+    $html .= '<span class="property-id">' . formatEntityValue($statement ['pid'], getFormattedProperty($statement['pid'])) . '</span>' . $separator;
     $html .= '<span class="value">' . formatStatementValue($statement) . '</span>';
     $html .= '</p>';
+
+    $html .= '<details class="raw-statement">';
+    $html .= '<summary>Raw Data</summary>';
+    $html .= '<pre>' . json_encode($statement, JSON_PRETTY_PRINT) . '</pre>';
+    $html .= '</details>';
 
     return $html;
 }
@@ -205,10 +226,10 @@ function getTiles() {
             'type' => 'html',
             'text' => '<p style="font-size: 24px; font-weight: bold;">Related Wikidata items</p>'
         ];
-        $tile['sections'][] = ['type' => 'item', 'q' => $data['itemId']];
-        if ( $data['statement']['datatype'] == 'wikibase-item' ) {
-            $tile['sections'][] = ['type' => 'item', 'q' => $data['statement']['value']['id']];
-        }
+        // $tile['sections'][] = ['type' => 'item', 'q' => $data['itemId']];
+        // if ( $data['statement']['datatype'] == 'wikibase-item' ) {
+        //     $tile['sections'][] = ['type' => 'item', 'q' => $data['statement']['value']['id']];
+        // }
         // $tile['sections'][] = [
         //     'type' => 'text',
         //     'title' => 'Possible reference',
