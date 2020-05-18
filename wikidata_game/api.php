@@ -119,6 +119,16 @@ function getFormattedValue($type, $value, $datatype) {
     return $data['result'];
 }
 
+function getFormattedProperty($id) {
+    $propertyValue = [
+        'entity-type' => 'property',
+        'id' => $id,
+        'numeric-id' => (int)substr($id, 1)
+    ];
+
+    return getFormattedValue('wikibase-entityid', $propertyValue, 'wikibase-property');
+}
+
 function formatStatementValue($statement) {
     $value = $statement["value"];
     $datatype = $statement["datatype"];
@@ -145,7 +155,7 @@ function formatClaimHTML($data) {
     
     $html = '<p class="statement">';
     $html .= '<span class="item">' . $data['itemId'] . '</span>' . $separator;
-    $html .= '<span class="property-id">' . $statement['pid'] . '</span>' . $separator;
+    $html .= '<span class="property-id">' . getFormattedProperty($statement['pid']) . '</span>' . $separator;
     $html .= '<span class="value">' . formatStatementValue($statement) . '</span>';
     $html .= '</p>';
 
