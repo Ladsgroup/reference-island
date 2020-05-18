@@ -140,7 +140,7 @@ function getFormattedItem($id) {
 }
 
 function formatEntityValue($id, $value){
-    return $value . ' <sub class="id" style="font-size: 0.65em">[' . $id . ']</sub>';
+    return '<span class="lead">' . $value . ' <sub class="id" style="font-size: 0.65em">[' . $id . ']</sub></span>';
 }
 
 function formatStatementValue($statement) {
@@ -166,10 +166,10 @@ function formatClaimHTML($data) {
     $itemId = $data['itemId'];
     $statement = $data["statement"];
     
-    $html = '<div class="statement lead">';
-    $html .= '<p class="item">' . formatEntityValue($itemId, getFormattedItem($itemId)) . '</p>';
-    $html .= '<p class="property-id">' . formatEntityValue($statement ['pid'], getFormattedProperty($statement['pid'])) . '</p>';
-    $html .= '<p class="value">' . formatStatementValue($statement) . '</p>';
+    $html = '<div class="statement">';
+    $html .= '<p class="item">Item: ' . formatEntityValue($itemId, getFormattedItem($itemId)) . '</p>';
+    $html .= '<p class="property-id">Property: ' . formatEntityValue($statement ['pid'], getFormattedProperty($statement['pid'])) . '</p>';
+    $html .= '<p class="value">Value: ' . formatStatementValue($statement) . '</p>';
     $html .= '</div>';
 
     return $html;
@@ -202,7 +202,7 @@ function getTiles() {
         ];
         $tile['sections'][] = [
             'type' => 'html',
-            'text' => '<p style="font-size: 24px; font-weight: bold;">Does the following statement claim match the extracted data?</p>'
+            'text' => '<h2>Does the following statement match the extracted data?</p>'
         ];
         $tile['sections'][] = [
             'type' => 'html',
