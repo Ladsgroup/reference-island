@@ -175,6 +175,24 @@ function formatClaimHTML($data) {
     return $html;
 }
 
+function formatSourceURL($referenceMeta){
+    $url = $referenceMeta["P854"];
+    $retrieved = $referenceMeta["dateRetrieved"];
+    return '<a class="lead" target="_blank" href="' . $url .'">' . $url . '</a> (Retrieved: ' . $retrieved . ')';  
+} 
+
+function formatSourceDataHTML($data) {
+    $sourceData = $data["reference"];
+    
+    $html = '<div class="extracted-data">';
+    $html .= '<p class="source-url">Source URL: '. formatSourceURL($sourceData["referenceMetadata"]) .'</p>';
+    $html .= '<p>Extracted Data:</p>';
+    $html .= '<pre>' . json_encode($sourceData['extractedData']) . '</pre>';
+    $html .= '</div>';
+
+    return $html;
+}
+
 function getTiles() {
     $db = getDb();
     $num = $_REQUEST['num'];
@@ -211,8 +229,8 @@ function getTiles() {
         ];
         $tile['sections'][] = [
             'type' => 'html',
-            'title' => 'Extracted Data',
-            'text' => '<pre>' . json_encode($data['reference']['extractedData']) . '</pre>'
+            'title' => 'Source Data',
+            'text' => formatSourceDataHTML($data)
         ];
         $tile['controls'][] = [
             'type' => 'buttons',
@@ -264,7 +282,6 @@ function dispatchRequest($action) {
 
     return ['error' => "No valid action!"];
 }
-
 
 $output = dispatchRequest($_REQUEST['action']);
 if (isset($_REQUEST['callback'])) {
