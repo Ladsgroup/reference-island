@@ -151,14 +151,12 @@ function formatStatementValue($statement) {
         case 'wikibase-item':
             $formattedData = getFormattedValue('wikibase-entityid', $value, $datatype);
             return formatEntityValue($value['id'], $formattedData);
-        case 'time':
-            return getFormattedValue('time', $value, $datatype);
         case 'globe-coordinate':
-            return 'Latitude: ' . $value['latitude'] . ', Longitude ' . $value['longitude'];
+            return getFormattedValue('globecoordinate', $value, $datatype);
+        case 'time':
         case 'monolingualtext':
-            return $value['text'];
         case 'quantity':
-            return $value['amount'];
+            return getFormattedValue($datatype, $value, $datatype);
         default:
             return $value;
     }
@@ -167,18 +165,12 @@ function formatStatementValue($statement) {
 function formatClaimHTML($data) {
     $itemId = $data['itemId'];
     $statement = $data["statement"];
-    $separator = ' : ';
     
-    $html = '<p class="statement lead">';
-    $html .= '<span class="item">' . formatEntityValue($itemId, getFormattedItem($itemId)) . '</span>' . $separator;
-    $html .= '<span class="property-id">' . formatEntityValue($statement ['pid'], getFormattedProperty($statement['pid'])) . '</span>' . $separator;
-    $html .= '<span class="value">' . formatStatementValue($statement) . '</span>';
-    $html .= '</p>';
-
-    $html .= '<details class="raw-statement">';
-    $html .= '<summary>Raw Data</summary>';
-    $html .= '<pre>' . json_encode($statement, JSON_PRETTY_PRINT) . '</pre>';
-    $html .= '</details>';
+    $html = '<div class="statement lead">';
+    $html .= '<p class="item">' . formatEntityValue($itemId, getFormattedItem($itemId)) . '</p>';
+    $html .= '<p class="property-id">' . formatEntityValue($statement ['pid'], getFormattedProperty($statement['pid'])) . '</p>';
+    $html .= '<p class="value">' . formatStatementValue($statement) . '</p>';
+    $html .= '</div>';
 
     return $html;
 }
@@ -222,20 +214,6 @@ function getTiles() {
             'title' => 'Extracted Data',
             'text' => '<pre>' . json_encode($data['reference']['extractedData']) . '</pre>'
         ];
-        $tile['sections'][] = [
-            'type' => 'html',
-            'text' => '<p style="font-size: 24px; font-weight: bold;">Related Wikidata items</p>'
-        ];
-        // $tile['sections'][] = ['type' => 'item', 'q' => $data['itemId']];
-        // if ( $data['statement']['datatype'] == 'wikibase-item' ) {
-        //     $tile['sections'][] = ['type' => 'item', 'q' => $data['statement']['value']['id']];
-        // }
-        // $tile['sections'][] = [
-        //     'type' => 'text',
-        //     'title' => 'Possible reference',
-        //     'text' => getTextForUsers($data),
-        //     'url' => $data['reference']['referenceMetadata']['P854']
-        // ];
         $tile['controls'][] = [
             'type' => 'buttons',
             'entries' => [
