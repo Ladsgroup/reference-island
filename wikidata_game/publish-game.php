@@ -3,7 +3,7 @@
     require_once('../secrets.php');
 
     echo stream_get_contents(detectRequestBody());
-    file_put_contents('../logs/debug.log', date('c') . ' | ' . $PUBLISH_TOKEN . PHP_EOL, FILE_APPEND);
+    file_put_contents('../logs/debug.log', date('c') . ' | ' . PUBLISH_TOKEN . PHP_EOL, FILE_APPEND);
     
     if(!isset($_SERVER['HTTP_X_GITHUB_EVENT'])){
         exit;
