@@ -1,5 +1,5 @@
 <?php
-    error_log($HTTP_RAW_POST_DATA);
+    echo $HTTP_RAW_POST_DATA;
     if(!isset($_SERVER['HTTP_X_GITHUB_EVENT'])){
         exit;
     }
