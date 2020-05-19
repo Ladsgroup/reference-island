@@ -7,6 +7,13 @@
         exit;
     }
 
+    $payload = stream_get_contents(detectRequestBody());
+    $tokens = parse_ini_file('../tokens.my.cnf');
+
+    if(!verifySignature($tokens['stage'], $payload)){
+        exit;
+    }
+
     $logfile_path = '../logs/staging.log';
     $datetime_string = date('c');
 

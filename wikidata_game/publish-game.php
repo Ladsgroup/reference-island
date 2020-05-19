@@ -1,17 +1,20 @@
 <?php
-    require_once('secure-hooks.php');
 
-    $payload = stream_get_contents(detectRequestBody());
-    $tokens = parse_ini_file('../tokens.my.cnf');
-
-    $match = verifySignature($tokens['publish'], $payload);
-    file_put_contents('../logs/debug.log', date('c') . ' | ' . $match . PHP_EOL, FILE_APPEND);
     
     if(!isset($_SERVER['HTTP_X_GITHUB_EVENT'])){
         exit;
     }
 
     if($_SERVER['HTTP_X_GITHUB_EVENT'] != 'pull_request'){
+        exit;
+    }
+
+    require_once('secure-hooks.php');
+
+    $payload = stream_get_contents(detectRequestBody());
+    $tokens = parse_ini_file('../tokens.my.cnf');
+
+    if(!verifySignature($tokens['publish'], $payload)){
         exit;
     }
 
