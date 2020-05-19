@@ -1,3 +1,6 @@
+# Exit script if any of the commands fail
+set -e
+
 BRANCH=$1
 HOME="/data/project/wd-ref-island"
 
