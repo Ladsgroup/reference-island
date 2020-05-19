@@ -27,12 +27,10 @@
     $is_game_branch = substr($branch, 0, 5) === 'game-';
 
     if($payload->action === 'closed'){
-        $root = $_SERVER['DOCUMENT_ROOT'];
-        $status = NULL;
-        $output = [];
-        exec('rm ' . $root . 'stage/' . $branch . '-api.php', $output, $status);
+        $script_path = '../reference-island/wikidata_game/unstage.sh';
+        $output = shell_exec($script_path . ' ' . $branch);
 
-        $message = $status === 0 ? $branch . '-api.php was successfully removed' :  'An error occurred while trying to clean ' . $branch . '. Please see ~/error.log for more information.';
+        $message = $output ? $output :  'An error occurred while trying to clean ' . $branch . '. Please see ~/error.log for more information.';
 
         file_put_contents($logfile_path, $datetime_string . ' ' . $message . PHP_EOL, FILE_APPEND);
         exit;
@@ -46,7 +44,6 @@
     }
 
     $script_path = '../reference-island/wikidata_game/stage.sh';
-
     $output = shell_exec($script_path . ' ' . $branch);
 
     $message = 'Attempting to deploy ' . $payload->pull_request->head->sha . ' of ' . $payload->pull_request->head->ref . ' to staging environment.' . PHP_EOL;
