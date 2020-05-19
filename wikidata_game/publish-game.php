@@ -1,5 +1,15 @@
 <?php
-    echo $HTTP_RAW_POST_DATA;
+    function detectRequestBody() {
+        $rawInput = fopen('php://input', 'r');
+        $tempStream = fopen('php://temp', 'r+');
+        stream_copy_to_stream($rawInput, $tempStream);
+        rewind($tempStream);
+    
+        return $tempStream;
+    }
+
+    echo detectRequestBody();
+    
     if(!isset($_SERVER['HTTP_X_GITHUB_EVENT'])){
         exit;
     }
