@@ -28,7 +28,7 @@
 
     if($payload->action === 'closed'){
         $script_path = '../reference-island/wikidata_game/unstage.sh';
-        $output = shell_exec($script_path . ' ' . $branch);
+        $output = shell_exec($script_path . ' ' . escapeshellarg($branch));
 
         $message = $output ? $output :  'An error occurred while trying to clean ' . $branch . '. Please see ~/error.log for more information.';
 
@@ -44,7 +44,7 @@
     }
 
     $script_path = '../reference-island/wikidata_game/stage.sh';
-    $output = shell_exec($script_path . ' ' . $branch);
+    $output = shell_exec($script_path . ' ' . escapeshellarg($branch));
 
     $message = 'Attempting to deploy ' . $payload->pull_request->head->sha . ' of ' . $payload->pull_request->head->ref . ' to staging environment.' . PHP_EOL;
     $message .= $output ? $output : 'An error occurred while trying to stage ' . $branch . '. Please see ~/error.log for more information.';
