@@ -7,6 +7,8 @@
         exit;
     }
 
+    require_once('secure-hooks.php');
+
     $payload = stream_get_contents(detectRequestBody());
     $tokens = parse_ini_file('../tokens.my.cnf');
 
