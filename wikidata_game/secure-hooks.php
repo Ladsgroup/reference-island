@@ -8,4 +8,13 @@ function detectRequestBody() {
 
     return $tempStream;
 }
+
+function verifySignature($token, $payload){
+    if(!isset($_SERVER['HTTP_X_HUB_SIGNATURE'])) {
+        return false;
+    }
+
+    $signature = 'sha1=' . hash_hmac('sha1', $payload, $token);
+    return hash_equals($signature, $_SERVER['HTTP_X_HUB_SIGNATURE']);
+}
 ?>

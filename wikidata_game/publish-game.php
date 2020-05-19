@@ -1,10 +1,11 @@
 <?php
     require_once('secure-hooks.php');
 
-    echo stream_get_contents(detectRequestBody());
+    $payload = stream_get_contents(detectRequestBody());
     $tokens = parse_ini_file('../tokens.my.cnf');
-    
-    file_put_contents('../logs/debug.log', date('c') . ' | ' . $tokens['publish'] . PHP_EOL, FILE_APPEND);
+
+    $match = verifySignature($tokens['publish'], $payload);
+    file_put_contents('../logs/debug.log', date('c') . ' | ' . $match . PHP_EOL, FILE_APPEND);
     
     if(!isset($_SERVER['HTTP_X_GITHUB_EVENT'])){
         exit;
