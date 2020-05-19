@@ -1,5 +1,5 @@
 <?php
-    require_once('secure_hooks.php');
+    require_once('./secure_hooks.php');
 
     echo stream_get_contents(detectRequestBody());
     
