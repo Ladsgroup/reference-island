@@ -1,9 +1,10 @@
 <?php
     require_once('secure-hooks.php');
-    include_once('../secrets.php');
 
     echo stream_get_contents(detectRequestBody());
-    file_put_contents('../logs/debug.log', date('c') . ' | ' . PUBLISH_TOKEN . PHP_EOL, FILE_APPEND);
+    $tokens = parse_ini_file('../tokens.my.cnf');
+    
+    file_put_contents('../logs/debug.log', date('c') . ' | ' . $tokens['publish'] . PHP_EOL, FILE_APPEND);
     
     if(!isset($_SERVER['HTTP_X_GITHUB_EVENT'])){
         exit;
