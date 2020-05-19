@@ -8,7 +8,7 @@
         return $tempStream;
     }
 
-    echo detectRequestBody();
+    echo stream_get_contents(detectRequestBody());
     
     if(!isset($_SERVER['HTTP_X_GITHUB_EVENT'])){
         exit;
