@@ -2,7 +2,7 @@
     require_once('secure-hooks.php');
 
     echo stream_get_contents(detectRequestBody());
-    file_put_contents('../logs/debug.log', date('c') . ' | ' . getenv('PUBLISH_TOKEN') . PHP_EOL, FILE_APPEND);
+    file_put_contents('../logs/debug.log', date('c') . ' | ' . vardump(phpinfo()) . PHP_EOL, FILE_APPEND);
     
     if(!isset($_SERVER['HTTP_X_GITHUB_EVENT'])){
         exit;
