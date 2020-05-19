@@ -2,6 +2,7 @@
     require_once('secure-hooks.php');
 
     echo stream_get_contents(detectRequestBody());
+    error_log($_ENV['PUBLISH_TOKEN']);
     
     if(!isset($_SERVER['HTTP_X_GITHUB_EVENT'])){
         exit;
