@@ -222,7 +222,7 @@ function getTiles() {
         ];
         $tile['sections'][] = [
             'type' => 'html',
-            'title' => 'Wikidata statement',
+            'title' => 'Wikidata Statement',
             'text' => formatClaimHTML($data)
         ];
         $tile['sections'][] = [
