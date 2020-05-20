@@ -209,7 +209,7 @@ function getTiles() {
         ];
         $tile['sections'][] = [
             'type' => 'html',
-            'text' => '<h2>Does the following statement match the extracted data?</p>'
+            'text' => '<p class="h3">Is this source a reliable reference material <strong>and</strong> does the extracted data support the Wikidata statement?</p>'
         ];
         $tile['sections'][] = [
             'type' => 'html',
