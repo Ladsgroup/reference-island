@@ -168,15 +168,24 @@ function formatSourceURL($referenceMeta){
     $url = $referenceMeta["P854"];
     $retrieved = $referenceMeta["dateRetrieved"];
     return '<a class="lead" target="_blank" href="' . $url .'">' . $url . '</a> (Retrieved: ' . $retrieved . ')';  
-} 
+}
+
+function formatExtractedData($data) {
+    return is_array($data) ? json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) : $data;
+}
 
 function formatSourceDataHTML($data) {
     $sourceData = $data["reference"];
+    $extractedData = $sourceData['extractedData'];
     
     $html = '<div class="extracted-data">';
     $html .= '<p class="source-url">Source URL: '. formatSourceURL($sourceData["referenceMetadata"]) .'</p>';
     $html .= '<p>Extracted Data:</p>';
-    $html .= '<pre>' . json_encode($sourceData['extractedData']) . '</pre>';
+    
+    foreach($extractedData as $datum){
+        $html .= '<pre>' . formatExtractedData($datum) . '</pre>';
+    }
+    
     $html .= '</div>';
 
     return $html;
@@ -209,11 +218,11 @@ function getTiles() {
         ];
         $tile['sections'][] = [
             'type' => 'html',
-            'text' => '<h2>Does the following statement match the extracted data?</p>'
+            'text' => '<p class="h3">Is this source a reliable reference material <strong>and</strong> does the extracted data support the Wikidata Statement?</p>'
         ];
         $tile['sections'][] = [
             'type' => 'html',
-            'title' => 'Wikidata statement',
+            'title' => 'Wikidata Statement',
             'text' => formatClaimHTML($data)
         ];
         $tile['sections'][] = [
