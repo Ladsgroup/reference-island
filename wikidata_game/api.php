@@ -171,7 +171,7 @@ function formatSourceURL($referenceMeta){
 }
 
 function formatExtractedData($data) {
-    return is_array($data) ? json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) : $data;
+    return is_array($data) ? json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) : $data;
 }
 
 function formatSourceDataHTML($data) {
