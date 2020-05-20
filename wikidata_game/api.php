@@ -1,7 +1,8 @@
 <?PHP
 // This is a POC, don't judge
 function getDb() {
-    $dbmycnf = parse_ini_file("../replica.my.cnf");
+    $server_root = $_SERVER['DOCUMENT_ROOT'];
+    $dbmycnf = parse_ini_file($server_root . "../replica.my.cnf");
     $dbuser = $dbmycnf['user'];
     $dbpass = $dbmycnf['password'];
     $dbhost = "tools.db.svc.eqiad.wmflabs";
@@ -49,6 +50,9 @@ function getReferenceSnak($reference) {
             // We skip url for references given in the game: T251262#6096951
             continue;
         }
+        if ($pid == 'dateRetrieved') {
+            continue;
+        }
         if ($pid == 'P813') {
             // Time data type
             $dataValue = [
@@ -87,10 +91,14 @@ function getReferenceSnak($reference) {
 }
 
 function getTextForUsers($data) {
+    $values = [];
+    foreach ( $data["reference"]["extractedData"]  as $value ) {
+        $values[] = json_encode( $value );
+    }
     return "Is the value for this claim and the value given in the reference the same?\nProperty: " . $data["statement"]["pid"] .
         "\nValue of the statement: " . json_encode($data["statement"]["value"]) .
         "\nURL reference: " . $data["reference"]["referenceMetadata"]["P854"] .
-        "\nValue given in the reference: " . json_encode($data["reference"]["extractedData"]);
+        "\nValues given in the reference: \n* " . implode("\n* ", $values);
 }
 
 function getTiles() {
@@ -100,41 +108,61 @@ function getTiles() {
     $result = $db->query($sql);
     $result = $result->fetchAll();
     $output = [];
-    foreach ($result as $row) {
-        $data = json_decode($row['ref_data'], true);
-        $guid = getGuid($data['statement'], $data['itemId']);
-        if (!$guid) {
-            continue;
-        }
-        $refApi = [
-            'action' => 'wbsetreference',
-            'statement' => $guid,
-            'tags' => 'reference-game',
-            'snaks' => getReferenceSnak($data['reference']['referenceMetadata']),
-        ];
-        $tile = [
-            'id' => (int)$row['ref_id'],
-            'sections' => [],
-            'controls' => []
-        ];
-        $tile['sections'][] = ['type' => 'item', 'q' => $data['itemId']];
-        $tile['sections'][] = [
-            'type' => 'text',
-            'title' => 'Possible reference',
-            'text' => getTextForUsers($data),
-            'url' => $data['reference']['referenceMetadata']['referenceUrl']
-        ];
-        $tile['controls'][] = [
-            'type' => 'buttons',
-            'entries' => [
-                ['type' => 'green', 'decision' => 'accept', 'label' => 'Accept', 'api_action' => $refApi],
-                ['type' => 'white', 'decision' => 'skip', 'label' => 'Skip'],
-                ['type' => 'blue', 'decision' => 'reject', 'label' => 'Reject']
-            ]
-        ];
+    /**
+     * Under construction message, will be remove when ui is finished
+     **/
+    $tile = [
+       'id' => 0,
+       'sections' => [[
+          'type' => 'text',
+          'title' => 'Coming Soon!',
+          'text' => 'This game is still under development, please stay tuned and visit us again soon.'
+       ]],
+       'controls' => []
+    ];
 
-        $output[] = $tile;
-    }
+    $output[] = $tile;
+    /**
+     * Commented out until the game UI is ready
+     **/
+    //foreach ($result as $row) {
+    //    $data = json_decode($row['ref_data'], true);
+    //    $guid = getGuid($data['statement'], $data['itemId']);
+    //    if (!$guid) {
+    //        continue;
+    //    }
+    //    $refApi = [
+    //        'action' => 'wbsetreference',
+    //        'statement' => $guid,
+    //        'tags' => 'reference-game',
+    //        'snaks' => json_encode(getReferenceSnak($data['reference']['referenceMetadata'])),
+    //    ];
+    //    $tile = [
+    //        'id' => (int)$row['ref_id'],
+    //        'sections' => [],
+    //        'controls' => []
+    //    ];
+    //    $tile['sections'][] = ['type' => 'item', 'q' => $data['itemId']];
+    //    if ( $data['statement']['datatype'] == 'wikibase-item' ) {
+    //        $tile['sections'][] = ['type' => 'item', 'q' => $data['statement']['value']['id']];
+    //    }
+    //    $tile['sections'][] = [
+    //        'type' => 'text',
+    //        'title' => 'Possible reference',
+    //        'text' => getTextForUsers($data),
+    //        'url' => $data['reference']['referenceMetadata']['P854']
+    //    ];
+    //    $tile['controls'][] = [
+    //        'type' => 'buttons',
+    //        'entries' => [
+    //            ['type' => 'green', 'decision' => 'accept', 'label' => 'Accept', 'api_action' => $refApi],
+    //            ['type' => 'white', 'decision' => 'skip', 'label' => 'Skip'],
+    //            ['type' => 'blue', 'decision' => 'reject', 'label' => 'Reject']
+    //        ]
+    //    ];
+    //
+    //    $output[] = $tile;
+    //}
 
     return $output;
 }

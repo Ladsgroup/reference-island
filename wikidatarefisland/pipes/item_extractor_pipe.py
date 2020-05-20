@@ -10,7 +10,10 @@ from .abstract_pipe import AbstractPipe
 class ItemExtractorPipe(AbstractPipe):
     """Pipe that extracts statements that could be referenced from an item"""
     def __init__(self, external_id_formatter,
-                 blacklisted_properties=None, whitelisted_ext_ids=None, blacklisted_classes=None):
+                 blacklisted_properties=None,
+                 whitelisted_ext_ids=None,
+                 blacklisted_classes=None,
+                 ignored_reference_properties=[]):
         self.external_id_formatter = external_id_formatter
         if blacklisted_properties is None:
             blacklisted_properties = []
@@ -21,6 +24,7 @@ class ItemExtractorPipe(AbstractPipe):
         if blacklisted_classes is None:
             blacklisted_classes = []
         self.blacklisted_classes = blacklisted_classes
+        self.ignored_reference_properties = ignored_reference_properties
 
     def flow(self, input_data):
         item_class_excluder = ItemFilters().get_item_class_excluder(self.blacklisted_classes)
@@ -30,12 +34,16 @@ class ItemExtractorPipe(AbstractPipe):
 
     def _process_item(self, item_data):
         all_statements = list(chain.from_iterable([i for i in item_data['claims'].values()]))
-        result_statements = self._filter_potential_referenced_statements(
-            all_statements)
+        result_statements = list(self._filter_potential_referenced_statements(
+            all_statements))
         resource_urls = list(self._extract_potential_resource_urls(all_statements))
+
+        if not result_statements or not resource_urls:
+            return []
+
         return [{
             'itemId': item_data['id'],
-            'statements': list(result_statements),
+            'statements': result_statements,
             'resourceUrls': resource_urls
         }]
 
@@ -59,7 +67,7 @@ class ItemExtractorPipe(AbstractPipe):
         statement_filters = StatementFilters()
         ref_statement_filters = [
             lambda statement: statement is not None,
-            statement_filters.referenced_statement_excluder,
+            statement_filters.get_referenced_statement_excluder(self.ignored_reference_properties),
             statement_filters.external_id_statement_excluder,
             statement_filters.get_property_id_statement_excluder(self.blacklisted_properties)
         ]

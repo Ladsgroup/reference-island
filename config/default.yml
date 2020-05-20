@@ -105,6 +105,13 @@ blacklisted_external_identifiers:
     - P6578
     - P1004
 
+ignored_reference_properties:
+    - P143
+    - P4656
+
+reference_url_property:
+        'P854'
+
 data_storage_path:
     'data/'
 
@@ -116,3 +123,10 @@ wdqs_url:
 
 parallel_workers:
     20
+
+# Minimum number of repetitions of item and its value to be considered the same
+minimum_repetitions_for_item_values:
+    3
+# Maximum noise ratio in item value. This should never be more than 0.5
+maximum_noise_ratio_for_item_values:
+    0.2
