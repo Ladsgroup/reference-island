@@ -218,7 +218,7 @@ function getTiles() {
         ];
         $tile['sections'][] = [
             'type' => 'html',
-            'text' => '<p class="h3">Is this source a reliable reference material <strong>and</strong> does the extracted data support the Wikidata statement?</p>'
+            'text' => '<p class="h3">Is this source a reliable reference material <strong>and</strong> does the extracted data support the Wikidata Statement?</p>'
         ];
         $tile['sections'][] = [
             'type' => 'html',
