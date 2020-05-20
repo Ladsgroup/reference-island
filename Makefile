@@ -9,6 +9,8 @@ data/whitelisted_ext_idefs.json:
 data/extracted_unreferenced_statements.jsonl: \
 	data/whitelisted_ext_idefs.json
 	python3 wikidatarefisland/run.py --step extract_items --side-service-input "whitelisted_ext_idefs.json" --input "dump.json" --output "extracted_unreferenced_statements.jsonl"
+data/schema_org_context.jsonld:
+	python3 wikidatarefisland/run.py --step fetch_schema_ctx --output "schema_org_context.jsonld"
 data/scraped_data.jsonl: \
 	data/extracted_unreferenced_statements.jsonl \
 	data/schema_org_context.jsonld
