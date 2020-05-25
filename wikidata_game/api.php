@@ -129,7 +129,7 @@ function getFormattedItem($id) {
 }
 
 function formatEntityValue($id, $value){
-    $full_url_link = str_replace('href="/', 'href="http://wikidata.org/', $value); 
+    $full_url_link = str_replace('href="/', 'target="_blank" href="http://wikidata.org/', $value); 
     return '<span class="lead">' . $full_url_link . ' <sub class="id" style="font-size: 0.65em">[' . $id . ']</sub></span>';
 }
 
