@@ -207,11 +207,15 @@ function getTiles() {
         if (!$guid) {
             continue;
         }
+        $referenceMetadata = $data['reference']['referenceMetadata'];
+        if (!array_key_exists( 'P813', $referenceMetadata)) {
+            $referenceMetadata['P813'] = $referenceMetadata['dateRetrieved'];
+        }
         $refApi = [
             'action' => 'wbsetreference',
             'statement' => $guid,
             'tags' => 'reference-game',
-            'snaks' => json_encode(getReferenceSnak($data['reference']['referenceMetadata'])),
+            'snaks' => json_encode(getReferenceSnak($referenceMetadata)),
         ];
         $tile = [
             'id' => (int)$row['ref_id'],
