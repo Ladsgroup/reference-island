@@ -1,3 +1,5 @@
+import bz2
+import gzip
 import json
 import os
 
@@ -15,11 +17,29 @@ class Storage(object):
         path = os.path.join(self.path, file_)
         with open(path, 'r') as f:
             for line in f:
+                yield json.loads(line.strip())
+
+    def get_dump_lines(self, path):
+        mode = 'r'
+        file_ = os.path.split(path)[-1]
+        if file_.endswith('.gz'):
+            f = gzip.open(path, mode)
+        elif file_.endswith('.bz2'):
+            f = bz2.BZ2File(path, mode)
+        elif file_.endswith('.json'):
+            f = open(path, mode)
+        else:
+            raise NotImplementedError(f'Reading file {file_} is not supported')
+        try:
+            for line in f:
+                if isinstance(line, bytes):
+                    line = line.decode('utf-8')
                 try:
-                    # TODO Fix this hack to make json behave a bit like jsonl: T251271
                     yield json.loads(line.strip().strip(','))
                 except json.JSONDecodeError:
                     continue
+        finally:
+            f.close()
 
     def store(self, file_, value, raw=False):
         path = os.path.join(self.path, file_)
