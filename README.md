@@ -48,7 +48,7 @@ For each part of the pipeline, add name of the file as argument to make (for mor
 
 ### Installing composer dependencies
 
-To run the phpunit tests locally, run the following command from the `wikidata_game` directory:
+To install the project's dependencies, run the following command from the `wikidata_game` directory:
 
 ```bash
 php bin/composer install
