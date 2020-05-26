@@ -20,7 +20,7 @@ class MockStorage():
 
     def get_dump_lines(self, input_file_name):
         assert input_file_name == mock_input_file_path, 'should pass input file name to Storage'
-        return [mock_input_data]*3
+        return [mock_input_data]*50
 
     def append(self, output_file_name, data, raw=False):
         self.append_func_call += 1
@@ -52,15 +52,16 @@ def test_dump_reader_pump():
     pipe = MockPipe()
     pump.run(pipe, mock_input_file_path, mock_output_file_path)
     assert mock_storage.mock_output_file_content.strip() == \
-        '\n'.join([json.dumps(mock_output_data)] * 3)
+        '\n'.join([json.dumps(mock_output_data)] * 50)
 
 
 def test_dump_reader_pump_batch():
     mock_storage = MockStorage()
-    batch_size = 2
+    batch_size = 9
     pump = DumpReaderPump(mock_storage, batch_size)
     pipe = MockPipe()
     pump.run(pipe, mock_input_file_path, mock_output_file_path)
     assert mock_storage.mock_output_file_content.strip() == \
-        '\n'.join([json.dumps(mock_output_data)] * 3)
-    assert mock_storage.append_func_call == 2
+        '\n'.join([json.dumps(mock_output_data)] * 50)
+    # five times for each batch, once to flush out the rest
+    assert mock_storage.append_func_call == 6
