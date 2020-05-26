@@ -1,6 +1,9 @@
 name: Wikidata Reference Hunt Game
 
-on: [push]
+on: 
+  push:
+    paths:
+      - 'wikidata_game/**'
 
 jobs:
   test:
