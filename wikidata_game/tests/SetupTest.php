@@ -5,6 +5,6 @@ final class SetupTest extends TestCase
 {
     public function testCanRunTests(): void
     {
-        $this->assertTrue(true);
+        $this->assertTrue(false);
     }
 }
