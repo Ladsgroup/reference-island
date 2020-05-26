@@ -115,12 +115,12 @@ class TestStorage:
 
     def test_append_raw(self, tmpdir):
         mock_file = tmpdir.join('test.txt')
-        mock_file.write('Hello ')
+        mock_file.write('Hello')
 
         storage = Storage(tmpdir)
         storage.append('test.txt', 'Goodbye', True)
 
-        assert mock_file.read() == 'Hello Goodbye'
+        assert mock_file.read() == 'Hello\nGoodbye'
 
     def test_append_json(self, tmpdir):
         mock_lines = [
