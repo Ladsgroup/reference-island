@@ -36,6 +36,7 @@ class DumpReaderPump(AbstractPump):
                 if len(values) >= self.batch_size:
                     self.storage.append(output_file_path, '\n'.join(values), raw=True)
                     values = []
+        self.storage.append(output_file_path, '\n'.join(values), raw=True)
 
 
 class ObserverPump(AbstractPump):

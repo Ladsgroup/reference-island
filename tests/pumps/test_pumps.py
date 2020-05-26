@@ -12,6 +12,7 @@ mock_output_file_path = 'output_file_path'
 class MockStorage():
     def __init__(self):
         self.mock_output_file_content = ''
+        self.append_func_call = 0
 
     def getLines(self, input_file_name):
         assert input_file_name == mock_input_file_path, 'should pass input file name to Storage'
@@ -22,11 +23,13 @@ class MockStorage():
         return [mock_input_data]*3
 
     def append(self, output_file_name, data, raw=False):
+        self.append_func_call += 1
         assert output_file_name == mock_output_file_path, 'should pass output file name to Storage'
         if not raw:
             self.mock_output_file_content += json.dumps(data)
         else:
-            self.mock_output_file_content += data + '\n'
+            self.mock_output_file_content += data
+        self.mock_output_file_content += '\n'
 
 
 class MockPipe(AbstractPipe):
@@ -40,7 +43,7 @@ def test_simple_pump():
     pump = SimplePump(mock_storage)
     pipe = MockPipe()
     pump.run(pipe, mock_input_file_path, mock_output_file_path)
-    assert mock_storage.mock_output_file_content == json.dumps(mock_output_data)
+    assert mock_storage.mock_output_file_content == json.dumps(mock_output_data) + '\n'
 
 
 def test_dump_reader_pump():
@@ -59,4 +62,5 @@ def test_dump_reader_pump_batch():
     pipe = MockPipe()
     pump.run(pipe, mock_input_file_path, mock_output_file_path)
     assert mock_storage.mock_output_file_content.strip() == \
-        '\n'.join([json.dumps(mock_output_data)] * batch_size)
+        '\n'.join([json.dumps(mock_output_data)] * 3)
+    assert mock_storage.append_func_call == 2
