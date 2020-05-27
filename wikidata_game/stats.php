@@ -49,8 +49,14 @@ const FLAGS = [
 ];
 
 $config_dir = getenv('CONFIG_PATH') ? getenv('CONFIG_PATH') : dirname($_SERVER['DOCUMENT_ROOT']);
-$mycnf_path = $config_dir . 'replica.my.cnf';
-$dbmycnf = parse_ini_file($mycnf_path);
+
+$replica_cnf_path = $config_dir . '/replica.my.cnf';
+$env_cnf_path = $config_dir . '/env.my.cnf';
+
+$replicamycnf = parse_ini_file($replica_cnf_path);
+$envmycnf = parse_ini_file($env_cnf_path);
+
+$dbmycnf = array_merge($replicamycnf, $envmycnf);
 $db = getDb($dbmycnf);
 
 // SCRIPT
