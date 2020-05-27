@@ -27,6 +27,8 @@ def main(argv, filepath):
     parser.add_argument('--write-batch', default=20, dest='write_batch', type=int,
                         help='Batch size to write in the file, '
                              'choose bigger number if you have large memory')
+    parser.add_argument('--dump-path', dest='dump_path', type=str,
+                        help='Absolute path to the dump file')
 
     args = parser.parse_args(argv[1:])
 
@@ -58,7 +60,7 @@ def main(argv, filepath):
             config.get('blacklisted_item_classes'),
             config.get('ignored_reference_properties')
         )
-        dump_reader_pump.run(item_extractor, args.input_path, args.output_path)
+        dump_reader_pump.run(item_extractor, args.dump_path, args.output_path)
 
     if 'scrape' == args.step:
         schema_context = storage.get(args.side_service_input_path)
