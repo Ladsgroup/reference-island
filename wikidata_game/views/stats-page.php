@@ -10,16 +10,19 @@
     <h2>Total Matches</h2>
     <ul>
         <li>
-            <strong>Number of Total Matches </strong>: <?php echo $all_matches ?>
+            <strong>Number of Total Matches </strong>: <?php echo $total_matches ?>
         </li>
         <li>
-            <strong>Number of Accepted Matches</strong>: <?php echo $accepted_matches ?>
+            <strong>Total Matches Reviewed</strong>: <?php echo $total_reviewed ?>
         </li>
         <li>
-            <strong>Number of Rejected Matches</strong>: <?php echo $rejected_matches ?>
+            <strong>Total Accepted Matches</strong>: <?php echo $accepted_matches ?>
         </li>
         <li>
-            <strong>Acceptance Rate</strong>: <?php echo ($acceptance_rate) ?>%
+            <strong>Total Rejected Matches</strong>: <?php echo $rejected_matches ?>
+        </li>
+        <li>
+            <strong>Acceptance Rate</strong>: <?php echo $acceptance_rate ?>%
         </li>
     </ul>
 </body>
