@@ -10,6 +10,7 @@ require_once('helpers.php');
  * 
  * @throws InvalidArgumentException when an invalid database configuration is passed
  */
+// TODO: Unit Tests needed (Mocking Database connection)
 function getDb(array $db_cnf): PDO {
     $required_keys = ['user', 'password', 'dbhost', 'dbname'];
     
@@ -32,6 +33,7 @@ function getDb(array $db_cnf): PDO {
  * @param PDO $db
  * @return Closure function to query and retrieve matches
  */
+// TODO: Unit Tests needed (Mocking Database connection)
 function createMatchesGetter(PDO $db): Closure {
 
     /**
@@ -41,7 +43,7 @@ function createMatchesGetter(PDO $db): Closure {
      * @return array A list of matches
      */
     return function(int $flag = -1) use ($db): array {
-        $sql = $flag === -1 ? "SELECT * FROM refs WHERE ref_flag = :flag" : "SELECT * FROM refs";
+        $sql = $flag !== -1 ? "SELECT * FROM refs WHERE ref_flag = :flag" : "SELECT * FROM refs";
         $query = $db->prepare($sql);
         
         $query->execute(['flag' => $flag]);
@@ -55,6 +57,7 @@ function createMatchesGetter(PDO $db): Closure {
  * @param PDO $db
  * @return Closure
  */
+// TODO: Unit Tests needed (Mocking Database connection)
 function createMatchesCounter(PDO $db): Closure {
     
     /**

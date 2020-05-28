@@ -4,11 +4,6 @@
     "scripts": {
         "test": "phpunit --testdox tests"
     },
-    "autoload": {
-        "psr-4": {
-            "WikidataGame\\": ["lib/"]
-        }
-    },
     "require-dev": {
         "phpunit/phpunit": "^9"
     },

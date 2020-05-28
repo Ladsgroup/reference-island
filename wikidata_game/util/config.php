@@ -5,6 +5,7 @@
  *
  * @return string Path to config path
  */
+// TODO: Unit Tests needed (Mocking Env Vars)
 function getConfigDirectory(): string {
     // From environment variable
     if(getenv('CONFIG_PATH')){
@@ -28,9 +29,12 @@ function getConfigDirectory(): string {
 /**
  * Reads configuration files and return a composed list of all configurations
  *
- * @param string ...$paths
+ * @param string ...$paths variable amount of paths to read configurations from
  * @return array An array of collected configurations from paths
+ * 
+ * @throws InvalidArgumentException when a file doesn't exists in provided path
  */
+// TODO: Unit Tests needed (Mocking FileSystem)
 function getConfig(string ...$paths): array {
     return array_reduce($paths, function($config, $path){
         $resolved_path = realpath($path); 
