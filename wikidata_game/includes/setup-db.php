@@ -11,3 +11,4 @@ $db = getDb($db_config);
 
 // Create query abstractions
 $countMatches = createMatchesCounter($db);
+$getMatches = createMatchesReader($db);

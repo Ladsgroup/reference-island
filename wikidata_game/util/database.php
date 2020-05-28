@@ -34,20 +34,22 @@ function getDb(array $db_cnf): PDO {
  * @return Closure function to query and retrieve matches
  */
 // TODO: Unit Tests needed (Mocking Database connection)
-function createMatchesGetter(PDO $db): Closure {
-
+function createMatchesReader(PDO $db): Closure {
     /**
      * Queries and retrieves a list of potential matches from the game database
      *
      * @param integer $flag Match flag filter: 0 - Pending matches, 1 - Accepted matches, 2 - Rejected matches
      * @return array A list of matches
      */
-    return function(int $flag = -1) use ($db): array {
+    return function(int $flag = -1) use ($db): iterable {
         $sql = $flag !== -1 ? "SELECT * FROM refs WHERE ref_flag = :flag" : "SELECT * FROM refs";
         $query = $db->prepare($sql);
         
         $query->execute(['flag' => $flag]);
-        return $query->fetchAll();
+        
+        while($row = $query->fetch(PDO::FETCH_ASSOC)){
+            yield $row;
+        }
     };
 }
 

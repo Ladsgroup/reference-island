@@ -1,7 +1,14 @@
 <?php declare(strict_types=1);
 
 require_once('includes/constants.php');
+require_once('includes/responses.php');
 require_once('includes/setup-db.php');
+
+if(isset($_GET['dump']) && $_GET['dump'] === 'rejected'){
+    $rejected = $getMatches(FLAGS['REJECTED']);
+    csvDumpResponse('rejected-matches', $rejected);
+    exit();
+}
 
 $total_matches = $countMatches();
 $accepted_matches = $countMatches(FLAGS['ACCEPTED']);
