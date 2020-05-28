@@ -39,6 +39,7 @@ function createMatchesReader(PDO $db): Closure {
      * Queries and retrieves a list of potential matches from the game database
      *
      * @param integer $flag Match flag filter: 0 - Pending matches, 1 - Accepted matches, 2 - Rejected matches
+     *                                         Default: (-1) - All matches
      * @return array A list of matches
      */
     return function(int $flag = -1) use ($db): iterable {
@@ -66,6 +67,7 @@ function createMatchesCounter(PDO $db): Closure {
      * Counts matches in the game database
      *
      * @param integer $flag Match flag filter: 0 - Pending matches, 1 - Accepted matches, 2 - Rejected matches
+     *                                         Default: (-1) - All matches
      * @return integer A list of matches
      */
     return function(int $flag = -1) use ($db): int {
