@@ -7,7 +7,8 @@ import requests
 
 from wikidatarefisland import run_main
 from wikidatarefisland.data_access import WdqsReader
-from wikidatarefisland.services import WdqsExternalIdentifierFormatter
+from wikidatarefisland.data_model import SchemaOrgNormalizer
+from wikidatarefisland.services import WdqsExternalIdentifierFormatter, WdqsSchemaorgPropertyMapper
 
 
 def relative_path(*paths):
@@ -17,6 +18,23 @@ def relative_path(*paths):
         str -- Absolute path string
     """
     return os.path.join(os.path.dirname(__file__), *paths)
+
+
+class MockResponse:
+    def __init__(self, url):
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        with open(os.path.join(dir_path, 'data/test_response.html'), 'r') as f:
+            self.text = f.read()
+        self.status_code = 200
+        self.url = url
+
+
+class MockSession():
+    def __init__(self):
+        self.headers = {}
+
+    def get(self, url, *args, **kwargs):
+        return MockResponse(url)
 
 
 @pytest.fixture()
@@ -90,3 +108,57 @@ def test_main_match(test_directory):
 
     with open(mock_expected_path) as expected:
         assert result_file.read() == expected.read()
+
+
+def test_scraper(monkeypatch, test_directory):
+    def mock_get_mapping(_):
+        return [
+            {'property': 'P321', 'url': 'http://schema.org/director'},
+            {'property': 'P123', 'url': 'http://schema.org/name'},
+        ]
+
+    def mock_normalize_from_extruct(_, data):
+        return [{
+            "http://schema.org/director": [
+                data['microdata'][0]['director']['name']
+            ],
+            "http://schema.org/genre": [
+                data['microdata'][0]['genre']
+            ]
+        }]
+
+    monkeypatch.setattr(SchemaOrgNormalizer, "normalize_from_extruct", mock_normalize_from_extruct)
+    monkeypatch.setattr(WdqsSchemaorgPropertyMapper, "get_mapping", mock_get_mapping)
+    monkeypatch.setattr(requests, "Session", MockSession)
+
+    test_given_filename = "test_given_pipe1.jsonl"
+    mock_input_path = relative_path('mock_data', test_given_filename)
+    given_file = test_directory.join('data', test_given_filename)
+    shutil.copy(mock_input_path, given_file.strpath)
+
+    side_service_file = test_directory.join('data', 'side_service_input.json')
+    shutil.copy(relative_path('mock_data', 'empty.json'), side_service_file.strpath)
+
+    test_filename = "test_result_scraper.jsonl"
+    mock_file_path = test_directory.join('scripts', 'this_is_ignored.py')
+    result_file = test_directory.join('data', test_filename)
+
+    mock_args = f"this_is_ignored.py --step scrape " \
+                f"--input {test_given_filename} --output {test_filename}"
+
+    run_main(mock_args.split(), mock_file_path)
+
+    expected_result = {
+        'statement': {
+            'pid': 'P321',
+            'datatype': 'wikibase-item',
+            'value': {'numeric-id': 214917, 'id': 'Q214917'}},
+        'itemId': 'Q42',
+        'reference': {'referenceMetadata': {
+            'a': 'b',
+            'P854': 'https://example_with_schema.org/wow'},
+            'extractedData': ['James Cameron']}}
+    result = json.loads(result_file.read())
+    assert 'dateRetrieved' in result['reference']['referenceMetadata']
+    del result['reference']['referenceMetadata']['dateRetrieved']
+    assert result == expected_result
