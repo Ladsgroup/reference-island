@@ -2,7 +2,25 @@
 
 The following document describes the various data dump outputs of the Reference Island data pipeline process, and the structure of the data within.
 
-[TOC]
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [JSON and JSON-L dumps](#json-and-json-l-dumps)
+  - [Whitelisted External Ids Dump](#whitelisted-external-ids-dump)
+  - [Extracted Items Dump](#extracted-items-dump)
+  - [Potential Matches Dump](#potential-matches-dump)
+- [Lines](#lines)
+  - [`ItemLine`](#itemline)
+  - [`MatchLine`](#matchline)
+- [Blobs](#blobs)
+  - [`StatementBlob`](#statementblob)
+    - [Potential Values](#potential-values)
+  - [`ResourceBlob`](#resourceblob)
+  - [`ReferenceBlob`](#referenceblob)
+  - [`ReferenceMetaBlob`](#referencemetablob)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## JSON and JSON-L dumps
 
@@ -14,19 +32,19 @@ This dump is the Result of Side Service 1:  Resource Whitelister. It is a `json`
 
 ### Extracted Items Dump
 
-This dump is the result of Pipe 1: Item Extractor. It is a `jsonl` file where each line follows the [`ItemLine`](#item-line) schema. 
+This dump is the result of Pipe 1: Item Extractor. It is a `jsonl` file where each line follows the [`ItemLine`](#itemline) schema. 
 
 [Scrape #2 Item Dump Example](https://github.com/wmde/reference-hunting-data/raw/master/first_run/extracted_unreferenced_statements.jsonl.gz).
 
 ### Potential Matches Dump
 
-This dump is the result of Pipe 2: Scraper, Pipe 3: Value Matcher and Pipe 4: Statistical Matcher. It is a `jsonl` file where each line follows the [`MatchLine`](#match-line) schema.
+This dump is the result of Pipe 2: Scraper, Pipe 3: Value Matcher and Pipe 4: Statistical Matcher. It is a `jsonl` file where each line follows the [`MatchLine`](#matchline) schema.
 
 [Scrape #2 Potential Match Example](https://raw.githubusercontent.com/wmde/reference-hunting-data/master/second_run/references.jsonl?token=ABOZJNJRCIEWGXBVW5G4HAS63JN5U).
 
 ## Lines
 
-### <a name="item-line"></a>`ItemLine`
+### `ItemLine`
 
 A JSON object to represent a Wikibase item which contains unreferenced statements and ***whitelisted*** external source URLs. This information is extracted from a Wikidata data dump in Pipe 1: Item Extractor.
 
@@ -40,10 +58,10 @@ A JSON object to represent a Wikibase item which contains unreferenced statement
 
 For more information on the various sub-schema included in an `ItemLine` follow the links below:
 
-* [`StatementBlob`](#statement-blob)
-* [`ResourceBlob`](#resource-blob)
+* [`StatementBlob`](#statementblob)
+* [`ResourceBlob`](#resourceblob)
 
-### <a name="match-line"></a>`MatchLine` 
+### `MatchLine` 
 
 JSON object representing a ***potential*** data match between an unreferenced Wikibase Statement claim and a piece of extracted data, as well as encoded information for generating a Wikibase reference.
 
@@ -57,12 +75,12 @@ JSON object representing a ***potential*** data match between an unreferenced Wi
 
 For more information on the various sub-schema included in a `MatchLine` follow the links below:
 
-* [`StatementBlob`](#statement-blob)
-* [`ReferenceBlob`](#reference-blob)
+* [`StatementBlob`](#statementblob)
+* [`ReferenceBlob`](#referenceblob)
 
 ## Blobs
 
-### <a name="statement-blob"></a>`StatementBlob`
+### `StatementBlob`
 
 The `StatementBlob` schema describes an unreferenced Wikibase Statement claim, and it's value. 
 
@@ -180,7 +198,7 @@ The `"value"` key in a statement can contain any of the value objects extracted 
           }
     }
     ```
-### <a name="resource-blob"></a>`ResourceBlob`
+### `ResourceBlob`
 
 A `ResourceBlob` schema describes a URL to scrape for data matches, as well as instructions on building a potential reference for that URL.
 
@@ -193,9 +211,9 @@ A `ResourceBlob` schema describes a URL to scrape for data matches, as well as i
 
 For more information on the various sub-schema included in a `MatchLine` follow the links below:
 
-* [`ReferenceMetaBlob`](#reference-meta)
+* [`ReferenceMetaBlob`](#referencemeta)
 
-### <a name="reference-blob"></a>`ReferenceBlob`
+### `ReferenceBlob`
 
 The `ReferenceBlob` schema describes data to support a potential reference, as well as the potential reference itself.
 
@@ -208,9 +226,9 @@ The `ReferenceBlob` schema describes data to support a potential reference, as w
 
 For more information on the various sub-schema included in a `MatchLine` follow the links below:
 
-* [`ReferenceMetaBlob`](#reference-meta)
+* [`ReferenceMetaBlob`](#referencemeta)
 
-### <a name="reference-meta"></a>`ReferenceMetaBlob`
+### `ReferenceMetaBlob`
 
 A `ReferenceMetaBlob` is a schema which provides essential information for constructing a reference on a Wikibase project. The keys in this object schema are meant to be dynamic in order to support building references through the Wikibase api. 
 
