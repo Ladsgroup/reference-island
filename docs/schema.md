@@ -4,11 +4,15 @@
 
 ### Extracted Items Dump
 
-This dump is the result of Pipe 1: Item Extractor. It is a `jsonl` file where each line follows the [`ItemLine`](#item-line) schema.
+This dump is the result of Pipe 1: Item Extractor. It is a `jsonl` file where each line follows the [`ItemLine`](#item-line) schema. 
+
+[Download Scrape #2 Item Dump Example](https://github.com/wmde/reference-hunting-data/raw/master/first_run/extracted_unreferenced_statements.jsonl.gz).
 
 ### Potential Matches Dump
 
 This dump is the result of Pipe 2: Scraper, Pipe 3: Value Matcher and Pipe 4: Statistical Matcher. It is a `jsonl` file where each line follows the [`MatchLine`](#match-line) schema.
+
+[Download Scrape #2 Potential Match Example](https://github.com/wmde/reference-hunting-data/raw/master/second_run/references.jsonl).
 
 ## Lines
 
