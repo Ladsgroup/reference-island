@@ -18,31 +18,50 @@ The following terms will be used throughout this document, their meanings are as
 
 ### Simple Pump
 
+[[Code]](../wikidatarefisland/pumps/pump.py#L14-L22)
+
 ### Observer Pump
+
+[[Code]](../wikidatarefisland/pumps/pump.py#L52-L59)
 
 ## Pipeline Segments
 
 ### Pipe 1: Item Extractor
 
+[[Code]](../wikidatarefisland/pipes/item_extractor_pipe.py)
+
 ### Pipe 2: Scraper
+
+[[Code]](../wikidatarefisland/pipes/scraper.py)
 
 ### Pipe 3: Value Matcher
 
+[[Code]](../wikidatarefisland/pipes/value_matcher_pipe.py)
+
 ### Pipe 4: Statistical Matcher
+
+[[Code: Statistical Analysis]](../wikidatarefisland/pipes/item_statistical_analysis_pipe.py)
+[[Code: Item Matching]](../wikidatarefisland/pipes/item_mapping_matcher_pipe.py)
 
 ## Side Streams
 
 ### SS 1: External Resource Whitelister
 
+[[Code]](../wikidatarefisland/external_identifiers/generate_whitelisted_ext_ids.py)
+
 ### SS 2: Schema.org JSON-LD context fetcher
+
+[[Code]](../wikidatarefisland/data_access/schema_context_downloader.py)
 
 This stream downloads the Schema.org JSON-LD context to prevent multiple calls to http://schema.org to resolve JSON-LD document contexts.
 
 Until 2020-05-19 it was possible for PyLD to automatically obtain it through content-negotiation of schema.org but this broke. To mitigate this, the side-stream has a backup method to get the context from the schema.org docs.
 
-## Utility Classes
+## Noteworthy Utility Classes
 
 ### Wikidata - Schema.org Property Mapper
+
+[[Code]](../wikidatarefisland/services/schemaorg_property_mapper.py)
 
 A service to retrieve the most recent state of mappings between Wikidata Properties and Schema.org properties.
 
@@ -64,6 +83,8 @@ Example:
 ```
 
 ### Schema.org Data Normalizer
+
+[[Code]](../wikidatarefisland/data_model/schemaorg_normalizer.py)
 
 This service takes in an object containing raw scraped data in `json-ld` format (For example, the results of the following scraping library: https://github.com/scrapinghub/extruct with the [`uniform` option set to true](https://github.com/scrapinghub/extruct#uniform)).
 
@@ -88,4 +109,6 @@ The output of this service will be a list of objects representing a Schema.org t
 
 ### Wikidata External Id URL Formatter
 
-This service takes in a string representation of an external id property and attempts to output a formatted URL  for an external resource, as well as reference metadata according to the Wikidata mapping. See [`ReferenceMetaBlob`](schema.md#referencemeta) for output. If no formatter is found is found the formatter returns `false`.
+[[Code]](../wikidatarefisland/services/external_identifier_formatter.py)
+
+This service takes in a string representation of an external id property and attempts to output a formatted URL  for an external resource, as well as reference metadata according to the Wikidata mapping. See [`ResourceBlob`](schema.md#resourceblob) for output. If no formatter is found is found the formatter returns `false`.
