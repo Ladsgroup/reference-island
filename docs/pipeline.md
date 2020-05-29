@@ -110,4 +110,4 @@ The output of this service will be a list of objects representing a Schema.org t
 
 [[Code]](../wikidatarefisland/services/external_identifier_formatter.py)
 
-This service takes in a string representation of an external id property and attempts to output a formatted URL  for an external resource, as well as reference metadata according to the Wikidata mapping. See [`ResourceBlob`](schema.md#resourceblob) for output. If no formatter is found is found the formatter returns `false`.
+This service takes in a string representation of an external id property and attempts to output a formatted URL  for an external resource, as well as reference metadata according to the Wikidata mapping. See [`ResourceBlob`](result.md#resourceblob) for output. If no formatter is found is found the formatter returns `false`.
