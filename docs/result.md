@@ -51,7 +51,7 @@ A JSON object to represent a Wikibase item which contains unreferenced statement
 ```js
 {
      "itemId": String // Wikibase QID of the item 
-     "statements": [ StatementBlob ] // An array of unreferenced statment claims
+     "statements": [ StatementBlob ] // An array of unreferenced statement claims
      "resourceUrls": [ ResourceBlob ] // An array of data describing resource URLs to scrape
 }
 ```
@@ -69,7 +69,7 @@ JSON object representing a ***potential*** data match between an unreferenced Wi
 {
     "itemId": String, // Wikibase QID of the item which contains the statement claim
     "statement": StatementBlob, // The statement data to be matched
-    "reference": ReferenceBlob // Data regerding the potential matched reference
+    "reference": ReferenceBlob // Data regarding the potential matched reference
 }
 ```
 
@@ -137,8 +137,8 @@ The `"value"` key in a statement can contain any of the value objects extracted 
         "value": {
             "amount": String, // A string representation of a number including the sign (+/-)
             "unit": String, // 1 for unitless quantities or URI to Wikibase item of unit e.g. "https://www.wikidata.org/wiki/Q11573" 
-            "upperBound": String, // Optional string rpresentation fo a number to encode uncertainty
-            "lowerBound": String, // Optional string rpresentation fo a number to encode uncertainty
+            "upperBound": String, // Optional string representation fo a number to encode uncertainty
+            "lowerBound": String, // Optional string representation fo a number to encode uncertainty
         }
     }
     ```
@@ -172,11 +172,11 @@ The `"value"` key in a statement can contain any of the value objects extracted 
     {
         //...
         "value": {
-            "time": String, // A **near** ISO 8601 time representaion
+            "time": String, // A **near** ISO 8601 time representation
             "timezone": Number, // Unused, currently always 0 
             "before": Number, // Unused, currently always 0
             "after": Number, // Unused, currently always 0
-            "precision": Number, // Integer between 0 - 14 represention the precision unit 
+            "precision": Number, // Integer between 0 - 14 representation the precision unit 
             "calendarmodel": String // URI to wikibase item of calendar model, e.g. "http://www.wikidata.org/entity/Q1985727"
         }
     }
@@ -209,7 +209,7 @@ A `ResourceBlob` schema describes a URL to scrape for data matches, as well as i
 }
 ```
 
-For more information on the various sub-schema included in a `MatchLine` follow the links below:
+For more information on the various sub-schema included in a `ResourceBlob` follow the links below:
 
 * [`ReferenceMetaBlob`](#referencemetablob)
 
@@ -224,7 +224,7 @@ The `ReferenceBlob` schema describes data to support a potential reference, as w
 }
 ```
 
-For more information on the various sub-schema included in a `MatchLine` follow the links below:
+For more information on the various sub-schema included in a `ReferenceBlob` follow the links below:
 
 * [`ReferenceMetaBlob`](#referencemetablob)
 
@@ -243,7 +243,7 @@ A `ReferenceMetaBlob` is a schema which provides essential information for const
     STATED_IN_PID: String,
     /** 
     * A key value pair representing an "external id" claim:
-    * Key: Wikibase PID representing the extrnal id for the reference source 
+    * Key: Wikibase PID representing the external id for the reference source 
     * Value: The id value for the above external id
     **/
     EXTERNAL_ID_PID: String,
