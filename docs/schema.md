@@ -1,18 +1,28 @@
 # Pipeline Result Schema Reference
 
+The following document describes the various data dump outputs of the Reference Island data pipeline process, and the structure of the data within.
+
+[TOC]
+
 ## JSON and JSON-L dumps
+
+### Whitelisted External Ids Dump
+
+This dump is the Result of Side Service 1:  Resource Whitelister. It is a `json` file containing an array of Wikibase external id PID strings.
+
+[Scrape #3 Whitelisted Resources Example](https://raw.githubusercontent.com/wmde/reference-hunting-data/master/whitelisted_ext_idefs.json?token=ABOZJNMEXT7OJRQDOAVWDUC63JNUQ).
 
 ### Extracted Items Dump
 
 This dump is the result of Pipe 1: Item Extractor. It is a `jsonl` file where each line follows the [`ItemLine`](#item-line) schema. 
 
-[Download Scrape #2 Item Dump Example](https://github.com/wmde/reference-hunting-data/raw/master/first_run/extracted_unreferenced_statements.jsonl.gz).
+[Scrape #2 Item Dump Example](https://github.com/wmde/reference-hunting-data/raw/master/first_run/extracted_unreferenced_statements.jsonl.gz).
 
 ### Potential Matches Dump
 
 This dump is the result of Pipe 2: Scraper, Pipe 3: Value Matcher and Pipe 4: Statistical Matcher. It is a `jsonl` file where each line follows the [`MatchLine`](#match-line) schema.
 
-[Download Scrape #2 Potential Match Example](https://github.com/wmde/reference-hunting-data/raw/master/second_run/references.jsonl).
+[Scrape #2 Potential Match Example](https://raw.githubusercontent.com/wmde/reference-hunting-data/master/second_run/references.jsonl?token=ABOZJNJRCIEWGXBVW5G4HAS63JN5U).
 
 ## Lines
 
