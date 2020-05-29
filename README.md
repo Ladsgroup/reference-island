@@ -39,6 +39,18 @@ For each part of the pipeline, add name of the file as argument to make (for mor
  - `make` or `make data/references.jsonl` runs and merges pipe3 and pipe4
 
 
+## Running a copy of the game locally
+There is a docker-compose setup to simulate running the game api. It should work out of the box with `docker-compose
+ up` in the root of this repository.
+
+The service will be available on http://localhost:8100
+
+To customise please look in docker-compose.yml.
+
+Note: a custom docker image derived from the official php 7.3 apache image was used to enable the PDO extension.
+
+The Dockerfiles and simulated config files are available in `./docker_config`
+
 ## Making Changes to the wikidata game
 
 1. Make sure to prefix your branch name with `game-` otherwise automatic deployment and staging would not work
