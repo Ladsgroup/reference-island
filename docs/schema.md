@@ -2,12 +2,25 @@
 
 ## Lines
 
-### `MatchLine` 
+### `ItemLine`
+
+Result of Pipe 1
 
 ```js
 {
-    "itemId": String // Wikibase QID of the item which contains the statement claim
-    "statement": StatementBlob // The statement data to be matched
+     "itemId": String // Wikibase QID of the item which contains unreferenced statements and whitelisted external source urls
+     
+}
+```
+
+### `MatchLine` 
+
+Result of Pipes 2, 3, 4
+
+```js
+{
+    "itemId": String, // Wikibase QID of the item which contains the statement claim
+    "statement": StatementBlob, // The statement data to be matched
     "reference": ReferenceBlob // Data regerding the potential matched reference
 }
 ```
@@ -18,8 +31,8 @@
 
 ```js
 {
-    "pid": String // Wikibase PID of the property of the statement
-    "datatype": String // Wikibase data type see: https://www.wikidata.org/wiki/Special:ListDatatypes
+    "pid": String, // Wikibase PID of the property of the statement
+    "datatype": String, // Wikibase data type see: https://www.wikidata.org/wiki/Special:ListDatatypes
     "value": Mixed // Data describing the matched value from a Wikibase
 }
 ```
@@ -68,7 +81,7 @@ The `"value"` key in a statement can contain any of the value objects extracted 
         //...
         "value": {
             "amount": String, // A string representation of a number including the sign (+/-)
-            "unit": String // 1 for unitless quantities or URI to Wikibase item of unit e.g. "https://www.wikidata.org/wiki/Q11573" 
+            "unit": String, // 1 for unitless quantities or URI to Wikibase item of unit e.g. "https://www.wikidata.org/wiki/Q11573" 
             "upperBound": String, // Optional string rpresentation fo a number to encode uncertainty
             "lowerBound": String, // Optional string rpresentation fo a number to encode uncertainty
         }
@@ -149,7 +162,7 @@ The `"value"` key in a statement can contain any of the value objects extracted 
          **/
         String: String,
         /** 
-         * A key value pair representing an "reference URL" claim:
+         * A key value pair representing a "reference URL" claim:
          * Key: Always "P854" in our case (Wikidata "reference URL" PID)
          * Value: The url the data was extracted from
          **/
