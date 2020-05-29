@@ -14,7 +14,7 @@ The following terms will be used throughout this document, their meanings are as
 
 ### Dump Reader Pump
 
-[[Code]](../wikidatarefisland//wikidatarefisland/pumps/pump.py#L25-L49)
+[[Code]](../wikidatarefisland/pumps/pump.py#L25-L49)
 
 ### Simple Pump
 
