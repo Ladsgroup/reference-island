@@ -26,19 +26,19 @@ The following document describes the various data dump outputs of the Reference 
 
 ### Whitelisted External Ids Dump
 
-This dump is the Result of Side Service 1:  Resource Whitelister. It is a `json` file containing an array of Wikibase external id PID strings.
+This dump is the Result of [SS 1: External Resource Whitelister](pipeline.md#ss-1-external-resource-whitelister). It is a `json` file containing an array of Wikibase external id PID strings.
 
 [Scrape #3 Whitelisted Resources Example](https://raw.githubusercontent.com/wmde/reference-hunting-data/master/whitelisted_ext_idefs.json?token=ABOZJNMEXT7OJRQDOAVWDUC63JNUQ).
 
 ### Extracted Items Dump
 
-This dump is the result of Pipe 1: Item Extractor. It is a `jsonl` file where each line follows the [`ItemLine`](#itemline) schema. 
+This dump is the result of [Pipe 1: Item Extractor](pipeline.md#pipe-1-item-extractor). It is a `jsonl` file where each line follows the [`ItemLine`](#itemline) schema. 
 
 [Scrape #2 Item Dump Example](https://github.com/wmde/reference-hunting-data/raw/master/first_run/extracted_unreferenced_statements.jsonl.gz).
 
 ### Potential Matches Dump
 
-This dump is the result of Pipe 2: Scraper, Pipe 3: Value Matcher and Pipe 4: Statistical Matcher. It is a `jsonl` file where each line follows the [`MatchLine`](#matchline) schema.
+This dump is the result of [Pipe 2: Scraper](pipeline.md#pipe-2-scraper), [Pipe 3: Value Matcher](pipeline.md#pipe-3-value-matcher) and [Pipe 4: Statistical Matcher](pipeline.md#pipe-4-statistical-matcher). It is a `jsonl` file where each line follows the [`MatchLine`](#matchline) schema.
 
 [Scrape #2 Potential Match Example](https://raw.githubusercontent.com/wmde/reference-hunting-data/master/second_run/references.jsonl?token=ABOZJNJRCIEWGXBVW5G4HAS63JN5U).
 

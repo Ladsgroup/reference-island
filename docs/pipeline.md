@@ -1,5 +1,31 @@
 # Data Pipeline Reference
 
+The following document aims to describe the flow of data in the Reference Island pipeline, as well as provide relevant code touch points and concepts covered in this code base.
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Glossary](#glossary)
+- [Pumps](#pumps)
+  - [Dump Reader Pump](#dump-reader-pump)
+  - [Simple Pump](#simple-pump)
+  - [Observer Pump](#observer-pump)
+- [Pipeline Segments](#pipeline-segments)
+  - [Pipe 1: Item Extractor](#pipe-1-item-extractor)
+  - [Pipe 2: Scraper](#pipe-2-scraper)
+  - [Pipe 3: Value Matcher](#pipe-3-value-matcher)
+  - [Pipe 4: Statistical Matcher](#pipe-4-statistical-matcher)
+- [Side Streams](#side-streams)
+  - [SS 1: External Resource Whitelister](#ss-1-external-resource-whitelister)
+  - [SS 2: Schema.org JSON-LD context fetcher](#ss-2-schemaorg-json-ld-context-fetcher)
+- [Noteworthy Utility Classes](#noteworthy-utility-classes)
+  - [Wikidata - Schema.org Property Mapper](#wikidata---schemaorg-property-mapper)
+  - [Schema.org Data Normalizer](#schemaorg-data-normalizer)
+  - [Wikidata External Id URL Formatter](#wikidata-external-id-url-formatter)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Glossary
 
 The following terms will be used throughout this document, their meanings are as follows:
