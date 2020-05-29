@@ -40,8 +40,7 @@ The following terms will be used throughout this document, their meanings are as
 
 ### Pipe 4: Statistical Matcher
 
-[[Code: Statistical Analysis]](../wikidatarefisland/pipes/item_statistical_analysis_pipe.py)
-[[Code: Item Matching]](../wikidatarefisland/pipes/item_mapping_matcher_pipe.py)
+[[Code: Statistical Analysis]](../wikidatarefisland/pipes/item_statistical_analysis_pipe.py), [[Code: Item Matching]](../wikidatarefisland/pipes/item_mapping_matcher_pipe.py)
 
 ## Side Streams
 
@@ -72,13 +71,13 @@ Outputs a list of objects representing a mapping. Each object has the following 
 
 Example:
 
-```json
+```js
 [
     {
         "property": "P1476",
         "url": "http://schema.org/name"
     },
-    ...
+    //...
 ]
 ```
 
@@ -90,7 +89,7 @@ This service takes in an object containing raw scraped data in `json-ld` format 
 
 The output of this service will be a list of objects representing a Schema.org type with the following structure: 
 
-```json
+```js
 [
     {
         "http://schema.org/name": [ "Ludwig Wittgenstein" ],
@@ -103,7 +102,7 @@ The output of this service will be a list of objects representing a Schema.org t
           }
         }
     },
-    ...
+    //...
 ]
 ```
 

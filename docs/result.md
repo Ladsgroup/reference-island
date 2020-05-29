@@ -211,7 +211,7 @@ A `ResourceBlob` schema describes a URL to scrape for data matches, as well as i
 
 For more information on the various sub-schema included in a `MatchLine` follow the links below:
 
-* [`ReferenceMetaBlob`](#referencemeta)
+* [`ReferenceMetaBlob`](#referencemetablob)
 
 ### `ReferenceBlob`
 
@@ -226,7 +226,7 @@ The `ReferenceBlob` schema describes data to support a potential reference, as w
 
 For more information on the various sub-schema included in a `MatchLine` follow the links below:
 
-* [`ReferenceMetaBlob`](#referencemeta)
+* [`ReferenceMetaBlob`](#referencemetablob)
 
 ### `ReferenceMetaBlob`
 
