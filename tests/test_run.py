@@ -1,6 +1,7 @@
 import json
 import os
 import shutil
+import time
 
 import pytest
 import requests
@@ -8,7 +9,7 @@ import requests
 from wikidatarefisland import run_main
 from wikidatarefisland.data_access import WdqsReader
 from wikidatarefisland.data_model import SchemaOrgNormalizer
-from wikidatarefisland.services import WdqsExternalIdentifierFormatter, WdqsSchemaorgPropertyMapper
+from wikidatarefisland.services import WdqsExternalIdentifierFormatter
 
 
 def relative_path(*paths):
@@ -18,23 +19,6 @@ def relative_path(*paths):
         str -- Absolute path string
     """
     return os.path.join(os.path.dirname(__file__), *paths)
-
-
-class MockResponse:
-    def __init__(self, url):
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(os.path.join(dir_path, 'data/test_response.html'), 'r') as f:
-            self.text = f.read()
-        self.status_code = 200
-        self.url = url
-
-
-class MockSession():
-    def __init__(self):
-        self.headers = {}
-
-    def get(self, url, *args, **kwargs):
-        return MockResponse(url)
 
 
 @pytest.fixture()
@@ -110,13 +94,7 @@ def test_main_match(test_directory):
         assert result_file.read() == expected.read()
 
 
-def test_scraper(monkeypatch, test_directory):
-    def mock_get_mapping(_):
-        return [
-            {'property': 'P321', 'url': 'http://schema.org/director'},
-            {'property': 'P123', 'url': 'http://schema.org/name'},
-        ]
-
+def test_scraper(monkeypatch, test_directory, mock_wdqs_schemaorg_property_mapper, mock_response):
     def mock_normalize_from_extruct(_, data):
         return [{
             "http://schema.org/director": [
@@ -127,9 +105,11 @@ def test_scraper(monkeypatch, test_directory):
             ]
         }]
 
+    def gmtime():
+        return time.struct_time((2020, 5, 30, 0, 24, 37, 5, 151, 0))
+
     monkeypatch.setattr(SchemaOrgNormalizer, "normalize_from_extruct", mock_normalize_from_extruct)
-    monkeypatch.setattr(WdqsSchemaorgPropertyMapper, "get_mapping", mock_get_mapping)
-    monkeypatch.setattr(requests, "Session", MockSession)
+    monkeypatch.setattr(time, "gmtime", gmtime)
 
     test_given_filename = "test_given_pipe1.jsonl"
     mock_input_path = relative_path('mock_data', test_given_filename)
@@ -156,9 +136,8 @@ def test_scraper(monkeypatch, test_directory):
         'itemId': 'Q42',
         'reference': {'referenceMetadata': {
             'a': 'b',
+            'dateRetrieved': '2020-05-30 00:24:37',
             'P854': 'https://example_with_schema.org/wow'},
             'extractedData': ['James Cameron']}}
     result = json.loads(result_file.read())
-    assert 'dateRetrieved' in result['reference']['referenceMetadata']
-    del result['reference']['referenceMetadata']['dateRetrieved']
     assert result == expected_result
