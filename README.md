@@ -38,6 +38,9 @@ For each part of the pipeline, add name of the file as argument to make (for mor
  - `make data/matched_item_references.jsonl` runs pipe4
  - `make` or `make data/references.jsonl` runs and merges pipe3 and pipe4
 
+## Developer Reference
+
+For more information regarding the pipeline or it's results, see the [`docs`](docs/) folder.
 
 ## Making Changes to the wikidata game
 
