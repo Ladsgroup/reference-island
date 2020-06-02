@@ -46,7 +46,7 @@ This dump is the result of [Pipe 2: Scraper](pipeline.md#pipe-2-scraper), [Pipe 
 
 ### `ItemLine`
 
-A JSON object to represent a Wikibase item which contains unreferenced statements and ***whitelisted*** external source URLs. This information is extracted from a Wikidata data dump in Pipe 1: Item Extractor.
+A JSON object to represent a Wikibase item which contains unreferenced statements and [***whitelisted***](pipeline.md#ss-1-external-resource-whitelister) external source URLs. This information is extracted from a Wikidata data dump in [Pipe 1: Item Extractor](#pipe-1-item-extractor).
 
 ```js
 {
@@ -137,8 +137,8 @@ The `"value"` key in a statement can contain any of the value objects extracted 
         "value": {
             "amount": String, // A string representation of a number including the sign (+/-)
             "unit": String, // 1 for unitless quantities or URI to Wikibase item of unit e.g. "https://www.wikidata.org/wiki/Q11573" 
-            "upperBound": String, // Optional string representation fo a number to encode uncertainty
-            "lowerBound": String, // Optional string representation fo a number to encode uncertainty
+            "upperBound": String, // Optional string representation of a number to encode uncertainty
+            "lowerBound": String, // Optional string representation of a number to encode uncertainty
         }
     }
     ```
@@ -176,7 +176,7 @@ The `"value"` key in a statement can contain any of the value objects extracted 
             "timezone": Number, // Unused, currently always 0 
             "before": Number, // Unused, currently always 0
             "after": Number, // Unused, currently always 0
-            "precision": Number, // Integer between 0 - 14 representation the precision unit 
+            "precision": Number, // Integer between 0 - 14 representing the precision unit 
             "calendarmodel": String // URI to wikibase item of calendar model, e.g. "http://www.wikidata.org/entity/Q1985727"
         }
     }
@@ -193,7 +193,7 @@ The `"value"` key in a statement can contain any of the value objects extracted 
         //...
         "value": {
             "entity-type": String, // Will always be "item" in this case
-            "id": Strong, // Wikibase QID
+            "id": String, // Wikibase QID
             "numeric-id": Number // Numeric representation of the above id
           }
     }
@@ -205,7 +205,7 @@ A `ResourceBlob` schema describes a URL to scrape for data matches, as well as i
 ```js
 {
     "url": String // The URL to scrape for data
-    "referenceMetaData": ReferenceMetaBlob // Data for constructing a Wikibase reference, without the "dateRetrieved key"
+    "referenceMetaData": ReferenceMetaBlob // Data for constructing a Wikibase reference, without the "dateRetrieved" key
 }
 ```
 
@@ -219,7 +219,7 @@ The `ReferenceBlob` schema describes data to support a potential reference, as w
 
 ```js
 {
-    "extractedData": [ Mixed ] // An array of data extracted for this item
+    "extractedData": [ Mixed ] // An array of data extracted for this statement
     "referenceMetadata": ReferenceMetaBlob, // Data for constructing a Wikibase reference 
 }
 ```

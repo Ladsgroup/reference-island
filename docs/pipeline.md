@@ -69,7 +69,7 @@ This pipe segment is designed to filter out and formats Wikibase Items according
 * Have at least one [***unreferenced***](../config/default.yml#L108-L110) statement of a [***non blacklisted property***](../config/default.yml#L11-L76).
 * Have at least one External Id linking to a ***whitelisted*** external resource (see: [SS 1: External Resource Whitelister](#ss-1-external-resource-whitelister)).
 
-It takes in an de-serialized [Wikibase Item](https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/Wikibase/+/master/docs/topics/json.md#json) dump as an input and returns an array with a single [`ItemLine`](result.md#itemline) or an empty array if the item does not match the criteria.
+It takes in a de-serialized [Wikibase Item](https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/Wikibase/+/master/docs/topics/json.md#json) dump as an input and returns an array with a single [`ItemLine`](result.md#itemline) or an empty array if the item does not match the criteria.
 
 ### Pipe 2: Scraper
 
@@ -77,7 +77,7 @@ It takes in an de-serialized [Wikibase Item](https://gerrit.wikimedia.org/r/plug
 
 The scraper pipe makes calls to external resource URLs to retrieve Schema.org data in various formats (microdata, json-ld, rdfa). It [normalizes](#schemaorg-data-normalizer) this data and pairs statements with potential extracted data matches according to a Schema.org <-> Wikidata [mapping](#wikidata---schemaorg-property-mapper) maintained on Wikidata by the community.
 
-This pipe takes in a single [`ItemLine`](result.md#itemline) and return an array with 0 or more [`MatchLine`](result.md#matchline)s, depending whether any potential matches were found.
+This pipe takes in a single [`ItemLine`](result.md#itemline) and returns an array with 0 or more [`MatchLine`](result.md#matchline)s, depending whether any potential matches were found.
 
 ### Pipe 3: Value Matcher
 
@@ -93,8 +93,8 @@ This pipe takes in a single [`MatchLine`](result.md#matchline), and returns an a
 
 This pipeline segment actually consist of two pipe steps in order to match extracted data and statement values which refer to a Wikibase Item: 
 
-- The first step reads and updates an internal statistic record about the frequency of matches between a piece of extracted data and a Wikibase QID utilizing setting for a [minimum frequency](../config/default.yml#L128-L129) and maximum amount of [allowed noise](../config/default.yml#L128-L129).
--  The second step of this segment relies on the the data gathered above to match Wikibase Items to their ***probable matches***.
+- The first step reads and updates an internal statistic record about the frequency of matches between a piece of extracted data and a Wikibase QID utilizing settings for a [minimum frequency](../config/default.yml#L128-L129) and maximum amount of [allowed noise](../config/default.yml#L131-L132).
+-  The second step of this segment relies on the data gathered above to match Wikibase Items to their ***probable matches***.
 
 This segment takes in a single [`MatchLine`](result.md#matchline), and returns an array with that line if a match exists, or an empty array if it doesn't.
 
@@ -104,13 +104,13 @@ This segment takes in a single [`MatchLine`](result.md#matchline), and returns a
 
 [[Code]](../wikidatarefisland/external_identifiers/generate_whitelisted_ext_ids.py), [[Makefile Command]](../Makefile#L7-L8): `make data/whitelisted_ext_idefs.json`
 
-This service produces a list of External Identifier resource which are viable candidates for data extraction. It tests scrapes a sample of 10 usecases from each non [***blacklisted external identifier***](../config/default.yml#L78-L106) to determine whether the resource of that identifier contains enough viable data to scrape. It then collects all identifiers representing viable resources and writes their Wikibase Property IDs to a JSON array.
+This service produces a list of External Identifier resource which are viable candidates for data extraction. It test-scrapes a sample of 10 use cases from each non [***blacklisted external identifier***](../config/default.yml#L78-L106) to determine whether the resource of that identifier contains enough viable data to scrape. It then collects all identifiers representing viable resources and writes their Wikibase Property IDs to a JSON array.
 
 ###  SS 2: Schema.org JSON-LD context fetcher
 
 [[Code]](../wikidatarefisland/data_access/schema_context_downloader.py), [[Makefile Command]](../Makefile#L12-L13): `make data/schema_org_context.jsonld`
 
-This service downloads the Schema.org JSON-LD context to prevent multiple calls to http://schema.org to resolve JSON-LD document contexts.
+This service downloads the Schema.org JSON-LD context to prevent multiple calls to http://schema.org during scraping.
 
 Until 2020-05-19 it was possible for PyLD to automatically obtain it through content-negotiation of schema.org but this broke. To mitigate this, the side-stream has a backup method to get the context from the schema.org docs.
 
@@ -120,7 +120,7 @@ Until 2020-05-19 it was possible for PyLD to automatically obtain it through con
 
 [[Code]](../wikidatarefisland/services/external_identifier_formatter.py)
 
-This service takes in a string representation of an external id property and attempts to output a formatted URL  for an external resource, as well as reference metadata according to the Wikidata mapping. See [`ResourceBlob`](result.md#resourceblob) for output. If no formatter is found is found the formatter returns `false`.
+This service takes in a string representation of an external id property and attempts to output a formatted URL  for an external resource, as well as reference metadata according to the Wikidata mapping. See [`ResourceBlob`](result.md#resourceblob) for output. If no formatter is found the service returns `false`.
 
 ### Schema.org Data Normalizer
 
