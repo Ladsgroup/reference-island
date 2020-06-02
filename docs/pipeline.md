@@ -31,7 +31,7 @@ The following document aims to describe the flow of data in the Reference Island
 
 The following terms will be used throughout this document, their meanings are as follows:
 
-**Pump**: Represents a class that "flows" data into a pipeline segment, and is responsible for reading and writing the results of each segment to an from the disk.
+**Pump**: Represents a class that "flows" data into a pipeline segment, and is responsible for reading and writing the results of each segment to and from the disk.
 
 **Pipe #:** Represents a sequential segment in the main data pipeline, which processes Wikidata item serializations into a formatted list of potential references. 
 
@@ -63,13 +63,13 @@ The observer pump is designed as a read only pipeline. It reads files in `jsonl`
 
 [[Code]](../wikidatarefisland/pipes/item_extractor_pipe.py), [[Makefile Command]](../Makefile#L9-L11): `make data/extracted_unreferenced_statements.jsonl`
 
-This pipe segment is designed to filter out and formats Wikibase Items according to specified criteria in order to pass this pipe segment, the Item must:
+This pipe segment is designed to filter out and formats Wikibase Items according to specified criteria. In order to pass this pipe segment, the Item must:
 
-* Is not an instance of a [***blacklisted class***](../config/default.yml#L1-L9)
-* Have at least one [***unreferenced***](../config/default.yml#L108-L110) statement of a [***non blacklisted property***](../config/default.yml#L11-L76)
-* Have at least one External Id linking to a ***whitelisted*** external resource (See: [SS 1: External Resource Whitelister](#ss-1-external-resource-whitelister))
+* Not be an instance of a [***blacklisted class***](../config/default.yml#L1-L9).
+* Have at least one [***unreferenced***](../config/default.yml#L108-L110) statement of a [***non blacklisted property***](../config/default.yml#L11-L76).
+* Have at least one External Id linking to a ***whitelisted*** external resource (see: [SS 1: External Resource Whitelister](#ss-1-external-resource-whitelister)).
 
-It takes in an unserialized [Wikibase Item](https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/Wikibase/+/master/docs/topics/json.md#json) as an input and returns an array with a single [`ItemLine`](result.md#itemline) or an empty array if the item does not match the criteria.
+It takes in an de-serialized [Wikibase Item](https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/Wikibase/+/master/docs/topics/json.md#json) dump as an input and returns an array with a single [`ItemLine`](result.md#itemline) or an empty array if the item does not match the criteria.
 
 ### Pipe 2: Scraper
 
