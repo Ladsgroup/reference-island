@@ -21,10 +21,14 @@ the complete dump file.
 the data folder. e.g. using scp.
 
 2. Run:
-`DUMP_PATH="/mnt/data/xmldatadumps/public/wikidatawiki/entities/latest-all.json.gz" make data/extracted_unreferenced_statements.jsonl`
+```bash
+DUMP_PATH=<path-to-dump-file> make data/extracted_unreferenced_statements.jsonl
+```
 
-Where dump path is set to the patch to the dump. We recommend using the gzipped dump due to the quicker decompression
+Make sure to set the `DUMP_PATH` to the dump. We recommend using the gzipped dump due to the quicker decompression
 time.
+
+_**Note**:On `stat1005` the path to the dump is: `/mnt/data/xmldatadumps/public/wikidatawiki/entities/latest-all.json.gz`_
 
 # Running the scraper and matchers
 This should *not* be run on a production machine. It can be run on either labs (or a developer laptop with a small dataset).
@@ -32,7 +36,7 @@ This should *not* be run on a production machine. It can be run on either labs (
 You should copy `extracted_unreferenced_statements.jsonl` from the production machine to where you will run the scraper.
 You should also copy in the `data/whitelisted_ext_idefs.json` file you made earlier
 
-Run `make` #todo double check
+Run `make`
 
 This should trigger all the remaining jobs and the resultant data in `data/references.jsonl` is now ready for further
-manual processing by you or to be loaded into the Wikidata game. See `./wikidata-game.md`
+manual processing by you or to be [loaded into the Wikidata game](./wikidata-game.md).
