@@ -4,40 +4,48 @@ This document describes various aspects of the Reference Hunt Wikidata Game: fro
 
 ## Background
 
-The development team for the Reference Island data pipeline implemented a [Wikidata Distributed Game](https://tools.wmflabs.org/wikidata-game/distributed/) to measure the quality of the pipeline, and add references to Wikidata. For more information about the Wikidata Distributed Game and the Reference Hunt implementation, see the following:
+The development team for the Reference Island data pipeline implemented a [Wikidata Distributed Game](https://tools.wmflabs.org/wikidata-game/distributed/) to measure the quality of the pipeline, and add references to Wikidata.
 
+For more information about the Wikidata Distributed Game and the Reference Hunt implementation, see the following:
 - [Wikidata Distributed Game API documentation](https://bitbucket.org/magnusmanske/wikidata-game/src/master/public_html/distributed/?at=master)
-
 - [Reference Hunt Distributed Game](https://tools.wmflabs.org/wikidata-game/distributed/#game=73)
 
 ### Distributed Game Requirements
 
-The platform requires an api to be provided that:
-
-1. serves "tiles" that can then be shown to users.
-1. receives sent feedback about user actions. e.g. accepted or rejected tiles
-1. provides a small summary for inclusion on the main page of the game (logo, description etc..)
+The Distributed Game platform requires developers to expose an api which provides:
+* Serves "tiles" that can then be shown to users.
+* Receives sent feedback about user actions. e.g. accepted or rejected tiles
+* Provides a small summary for inclusion on the main page of the game (logo, description etc.)
 
 ### Game API Hosting
 
-The API must be accessible by the platform over http(s). We therefore chose to host our game on toolforge.
+The API must be accessible by the Distributed Game platform over http(s). The development team chose to host the
+Reference Hunt game api on [ToolForge](https://gerrit.wikimedia.org/r/admin/projects).
 
-Documentation for toolforge can be found: [here](https://wikitech.wikimedia.org/wiki/Help:Toolforge)
+For more information about ToolForge and the specific tool see:
+- [ToolForge Documentation](https://wikitech.wikimedia.org/wiki/Help:Toolforge)
+- [wd-ref-island Tool Admin Panel](https://tools.wmflabs.org/admin/tool/wd-ref-island)
 
-It is hosted under the tool name: `wd-ref-island`. Current maintainers can be found [here](https://tools.wmflabs.org/admin/tool/wd-ref-island).
-You can get in touch with them to request access.
+Current maintainers can be found on the Admin Panel. You can get in touch with them to request access.
 
 ## Updating The Game Data
+The game API reads potential matches from a mysql database hosted on ToolForge. For an overview of the database schema
+please see: [`wikidata_game/game.sql`](../wikidata_game/game.sql).
+
+In order to obtain the potential matches run the pipeline. See the documentation for [running the pipeline]()
+<where to do this?>
+<backup?>
+
 Load data using `wikidata_game/populator.php` which should be run with the env variable `REFS_PATH` set to a JSON file
 containing the references in one large array.
 
 ```bash
-RAFS_PATH="<path-to-refs.json>" php wikidata_game/populator.php
+REFS_PATH="<path-to-refs.json>" php wikidata_game/populator.php
 ```
 
 ## Development workflow
 
-Scripts for the game are found in the wikidata_game subfolder.
+Scripts for the game are found in the `wikidata_game` subfolder.
 
 ### Running a copy of the game locally
 
