@@ -51,7 +51,7 @@ please see: [`wikidata_game/game.sql`](../wikidata_game/game.sql).
 
 In order to obtain the potential matches and update the game database, make sure you are listed as a tool maintainer on ToolForge, and follow the steps below:
 
-1. Run the Reference Island [Data Pipeline](pipeline.md) (see: [Production Pipeline Documentation](production-pipeline.md)).
+1. Run the Reference Island [Data Pipeline](pipeline.md) (see: [Production Pipeline Documentation](production-run.md)).
 
 2. Log into the tool's [ToolForge Tool Account](https://wikitech.wikimedia.org/wiki/Portal:Toolforge/Tool_Accounts). 
 
