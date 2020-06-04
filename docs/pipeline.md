@@ -16,7 +16,7 @@ The following document aims to describe the flow of data in the Reference Island
   - [Pipe 2: Scraper](#pipe-2-scraper)
   - [Pipe 3: Value Matcher](#pipe-3-value-matcher)
   - [Pipe 4: Statistical Matcher](#pipe-4-statistical-matcher)
-- [Side Streams](#side-streams)
+- [Side Services](#side-services)
   - [SS 1: External Resource Whitelister](#ss-1-external-resource-whitelister)
   - [SS 2: Schema.org JSON-LD context fetcher](#ss-2-schemaorg-json-ld-context-fetcher)
 - [Noteworthy Utility Classes](#noteworthy-utility-classes)
@@ -35,7 +35,7 @@ The following terms will be used throughout this document, their meanings are as
 
 **Pipe #:** Represents a sequential segment in the main data pipeline, which processes Wikidata item serializations into a formatted list of potential references. 
 
-**SS #:** Represents a "side stream", to provide additional data to segments in the main pipeline, which will aid in making decisions or filter and format potential references.
+**SS #:** Represents a "side service", to provide additional data to segments in the main pipeline, which will aid in making decisions or filter and format potential references.
 
 ## Data Pumps
 
@@ -98,7 +98,7 @@ This pipeline segment actually consist of two pipe steps in order to match extra
 
 This segment takes in a single [`MatchLine`](result.md#matchline), and returns an array with that line if a match exists, or an empty array if it doesn't.
 
-## Side Streams
+## Side Services
 
 ### SS 1: External Resource Whitelister
 
