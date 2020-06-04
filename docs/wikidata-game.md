@@ -2,6 +2,23 @@
 
 This document describes various aspects of the Reference Hunt Wikidata Game: from updating the game's data to deploying new versions.
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Background](#background)
+  - [Distributed Game Requirements](#distributed-game-requirements)
+  - [Game API Hosting](#game-api-hosting)
+- [Updating The Game Data](#updating-the-game-data)
+- [Development workflow](#development-workflow)
+  - [Installing docker](#installing-docker)
+  - [Installing composer dependencies](#installing-composer-dependencies)
+  - [Running a copy of the game locally](#running-a-copy-of-the-game-locally)
+  - [Running phpunit](#running-phpunit)
+- [Automatic Deployment](#automatic-deployment)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Background
 
 The development team for the Reference Island data pipeline implemented a [Wikidata Distributed Game](https://tools.wmflabs.org/wikidata-game/distributed/) to measure the quality of the pipeline, and add references to Wikidata.
@@ -82,18 +99,16 @@ To run the phpunit tests locally, run the following command from the `wikidata_g
 docker run -it --rm --user $(id -u):$(id -g) -v ~/.composer:/tmp -v $(pwd):/app docker.io/composer run-script test
 ```
 
-## Deployment
+## Automatic Deployment
 
-The tool was set up manually and includes code to keep the game scripts updated when new commits are made to the master
-branch of this repository on github.
+The Reference Hunt Game API was set up manually on ToolForge. It includes GitHub Hook scripts to:
 
-It also provides a staging environment to test new versions of the api.
+*  Keep the Game API updated when new commits are made to the master branch of this repository. 
+* Provide a staging environment to verify unmerged branches of the API.
 
-### Staging and automatic deployment to toolforge
+To automatically ***stage*** and ***deploy*** versions of the Game API, follow the steps below:
 
-1. Make sure to prefix your branch name with `game-` otherwise automatic deployment and staging would not work
-2. Once you would like to preview your changes, create a WIP pull request to this repository. This will create a staged api version from your branch.
-3. To preview your changes go to `https://tools.wmflabs.org/wd-ref-island/test.php?branch=<your branch name>` to see a live test of the game on your branch.
-4. Once your pull request is merged, the game will be automatically deployed to https://tools.wmflabs.org/wikidata-game/distributed/#game=73 .
-
-[Refer to above for depenedency install]
+1. Ensure your branch name is prefixed with `game-`. Otherwise, automatic deployment and staging will not work.
+2. Create a WIP pull request to this repository. This will create a staged version of the Game API from your branch.
+3. To preview your changes go to `https://tools.wmflabs.org/wd-ref-island/test.php?branch=<your branch name>`.
+4. Once your pull request is merged, the game will be automatically deployed to https://tools.wmflabs.org/wikidata-game/distributed/#game=73.

@@ -7,10 +7,7 @@ Running the Reference Island data pipeline on a large scale Wikidata dump is a p
 - Wikidata dumps are pretty large - ~100GB uncompressed.
 - Processing time for the entire pipe line is relatively long: According to the latest estimation, >40 days.
 
-Therefore, as a more robust solution, the development team recommends to run most of the pipeline on a Virtual Machine on WMF's Cloud VPS with the exception of .
-
-Most of the code should not be run inside the WMF production cluster because it requires scraping the internet. A
-Virtual Machine (VM) on the WMF provided "Cloud-VPS" is a good place to run most of the code.
+Therefore, as a more robust solution, the development team recommends to run most of the pipeline on a Virtual Machine on WMF's Cloud VPS with the exception of [Pipe 1: Item Extractor](#pipe-1-item-extractor).
 
 The item extraction pipe reads the complete dumps. The machines in the WMF stats cluster have the complete dumps
 available and are on storage that is quick to read. Therefore, the stats cluster is the best place to run the item extraction pipe.  
