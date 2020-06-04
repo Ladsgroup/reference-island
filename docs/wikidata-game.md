@@ -36,15 +36,9 @@ In order to obtain the potential matches and update the game database, make sure
 
 1. Run the Reference Island [Data Pipeline](pipeline.md) (see: [Production Pipeline Documentation](production-pipeline.md)).
 
-2. Log into ToolForge via ssh.
+2. Log into the tool's [ToolForge Tool Account](https://wikitech.wikimedia.org/wiki/Portal:Toolforge/Tool_Accounts). 
 
-3. Run the following command to use ToolForge as the `wd-ref-island` tool:
-
-   ```bash
-   become wd-ref-island
-   ```
-
-4. Upload the potential matches dump (the file called `refernces.jsonl`) to a path under the tool's home directory. 
+4. Upload the potential matches dump (the file called `references.jsonl`) to a path under the tool's home directory. 
 
 5. Run the following command ***from the tool's home directory*** to populate the game's database:
 
@@ -56,40 +50,41 @@ In order to obtain the potential matches and update the game database, make sure
 
 ## Development workflow
 
-Scripts for the game are found in the `wikidata_game` subfolder.
+Scripts for the game are found in the `wikidata_game` sub-folder of this repository.
 
-### Running a copy of the game locally
-
-There is a docker-compose setup to simulate running the game api. It should work out of the box with `docker-compose
- up` in the root of this repository.
-
-The service will be available on http://localhost:8100
-
-To customise please look in docker-compose.yml.
-
-Note: a custom docker image derived from the official php 7.3 apache image was used to enable the PDO extension.
-
-The Dockerfiles and simulated config files are available in `./docker_config`
+### Installing docker
+The Reference Hunt Game API includes an easy to use docker-compose environment for local development. To use
+this environment install docker and docker-compose by following the
+[docker-compose installation guide](https://docs.docker.com/compose/install/).
 
 ### Installing composer dependencies
 
-To install the project's dependencies, run the following command from the `wikidata_game` directory:
+To install the project's dependencies, run the following command **_in_** the `wikidata_game` directory:
 
 ```bash
-php bin/composer install
+docker run -it --rm --user $(id -u):$(id -g) -v ~/.composer:/tmp -v $(pwd):/app docker.io/composer install`
 ```
+
+### Running a copy of the game locally
+To start a local copy of the game API run:
+```bash
+docker-compose up
+```
+The game API will be available at `http://localhost:8100/api.php`
+
+For more details see: [`docker-compose.yml`](../docker-compose.yml)
 
 ### Running phpunit
 
 To run the phpunit tests locally, run the following command from the `wikidata_game` directory:
 
 ```bash
-php bin/composer run-script test
+docker run -it --rm --user $(id -u):$(id -g) -v ~/.composer:/tmp -v $(pwd):/app docker.io/composer run-script test
 ```
 
 ## Deployment
 
-The tool was setup manually and includes code to keep the game scripts updated when new commits are made to the master
+The tool was set up manually and includes code to keep the game scripts updated when new commits are made to the master
 branch of this repository on github.
 
 It also provides a staging environment to test new versions of the api.
