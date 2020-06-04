@@ -91,12 +91,12 @@ This pipe takes in a single [`MatchLine`](result.md#matchline), and returns an a
 
 [[Code: Statistical Analysis]](../wikidatarefisland/pipes/item_statistical_analysis_pipe.py), [[Code: Item Matching]](../wikidatarefisland/pipes/item_mapping_matcher_pipe.py), [[Makefile Command]](../Makefile#L21-L23): `make data/matched_item_references.jsonl`
 
-This pipeline segment actually consist of two pipe steps in order to match extracted data and statement values which refer to a Wikibase Item: 
+This pipeline segment consists of two pipe steps in order to match extracted data and statement values that refer to a Wikibase Item: 
 
 - The first step reads and updates an internal statistic record about the frequency of matches between a piece of extracted data and a Wikibase QID utilizing settings for a [minimum frequency](../config/default.yml#L128-L129) and maximum amount of [allowed noise](../config/default.yml#L131-L132).
 -  The second step of this segment relies on the data gathered above to match Wikibase Items to their ***probable matches***.
 
-This segment takes in a single [`MatchLine`](result.md#matchline), and returns an array with that line if a match exists, or an empty array if it doesn't.
+This segment iterates over the data dump twice, where each pipe takes in a single [`MatchLine`](result.md#matchline), and returns an array with that line if a match exists, or an empty array if it doesn't.
 
 ## Side Services
 
