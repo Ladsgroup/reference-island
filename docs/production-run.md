@@ -77,10 +77,23 @@ make data/whitelisted_ext_idefs.json
 This step should be run on a machine in the ***Analytics cluster***. The initial development team ran it on `stat1005`.
 
 ### Setup
-
+1. [Setup the HTTP Proxy](https://wikitech.wikimedia.org/wiki/HTTP_proxy) so that you can access the internet.
 1. Clone this repository into a machine in the analytics cluster.
+1. Create a python virtualenv in the repository root:
 
-   <!-- TODO: Get more details from Amir on how he set ran this step in the stat1005 machine -->
+    ```bash
+    virtualenv -p python3 venv
+    ```
+1. Activate the virtual environment:
+
+   ```bash
+   source venv/bin/active
+   ```
+1. Install this package and it's dependencies into the python virtual environment:
+
+   ```bash
+   pip install .
+   ```
 
 ### Run
 
