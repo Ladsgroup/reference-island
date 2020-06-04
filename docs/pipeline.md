@@ -104,7 +104,7 @@ This segment iterates over the data dump twice, where each pipe takes in a singl
 
 [[Code]](../wikidatarefisland/external_identifiers/generate_whitelisted_ext_ids.py), [[Makefile Command]](../Makefile#L7-L8): `make data/whitelisted_ext_idefs.json`
 
-This service produces a list of External Identifier resource which are viable candidates for data extraction. It test-scrapes a sample of 10 use cases from each non [***blacklisted external identifier***](../config/default.yml#L78-L106) to determine whether the resource of that identifier contains enough viable data to scrape. It then collects all identifiers representing viable resources and writes their Wikibase Property IDs to a JSON array.
+This service produces a list of External Identifier resource which are viable candidates for data extraction. It test-scrapes a sample of 10 use cases from each non [***blacklisted external identifier***](../config/default.yml#L78-L106), obtained through the [Wikidata Query Service](https://query.wikidata.org/), to determine whether the resource of that identifier contains enough viable data to scrape. It then collects all identifiers representing viable resources and writes their Wikibase Property IDs to a JSON array.
 
 ###  SS 2: Schema.org JSON-LD context fetcher
 
@@ -120,7 +120,7 @@ Until 2020-05-19 it was possible for PyLD to automatically obtain it through con
 
 [[Code]](../wikidatarefisland/services/external_identifier_formatter.py)
 
-This service takes in a string representation of an external id property and attempts to output a formatted URL  for an external resource, as well as reference metadata according to the Wikidata mapping. See [`ResourceBlob`](result.md#resourceblob) for output. If no formatter is found the service returns `false`.
+This service takes in a string representation of an external id property and attempts to output a formatted URL for an external resource utilizing the [Wikidata Query Service](https://query.wikidata.org/). In addition, the URL Formatter generates a reference metadata object according to the retrieved formatted URL. See [`ResourceBlob`](result.md#resourceblob) for the output, if no formatter is found the service returns `false`.
 
 ### Schema.org Data Normalizer
 
@@ -135,13 +135,13 @@ The output of this service will be a list of objects representing a Schema.org t
     {
         "http://schema.org/name": [ "Ludwig Wittgenstein" ],
         "http://schema.org/sameAs": [ "http://viaf.org/viaf/24609378" ],
-        "http://schema.org/birthPlace": {
+        "http://schema.org/birthPlace": [{
           "http://schema.org/name": [ "Vienna" ],
-          "http://schema.org/geo": {
-            "http://schema.org/geo/latitude": "48.20849",
-            "http://schema.org/geo/longitude": "16.37208"
-          }
-        }
+          "http://schema.org/geo": [{
+            "http://schema.org/geo/latitude": ["48.20849"],
+            "http://schema.org/geo/longitude": ["16.37208"]
+          }]
+        }]
     },
     //...
 ]
@@ -151,9 +151,9 @@ The output of this service will be a list of objects representing a Schema.org t
 
 [[Code]](../wikidatarefisland/services/schemaorg_property_mapper.py)
 
-A service to retrieve the most recent state of mappings between Wikidata Properties and Schema.org properties.
+A service to retrieve the most recent state of mappings between Wikidata Properties and Schema.org properties using the [Wikidata Query Service](https://query.wikidata.org/).
 
-Outputs a list of objects representing a mapping. Each object has the following structure:
+Outputs a list of objects representing a mapping, where each object has the following structure:
 
 * `property`: String representing a property on Wikidata.
 * `url`: A Schema.org property URL
