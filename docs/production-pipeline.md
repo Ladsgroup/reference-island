@@ -1,10 +1,13 @@
-# Introduction
-This documentation is for developers wishing to run the pipeline. It concisely describes how to analyse all of Wikidata.
-It does not describe the internals of the system or how it can be further developed.
+# Running the Data Pipeline
+This documentation is for developers wishing to run the pipeline in a large scale. It concisely describes how to analyse **all of Wikidata** in order to obtain potential reference matches.
 
-# Pre-requisites
-The size of the dumps is large (100GBs uncompressed) and the processing time is long (10s of days).
-Therefore, running the pipeline should not normally be done on a developer laptop.
+## Prerequisites
+Running the Reference Island data pipeline on a large scale Wikidata dump is a process that requires multiple machines and a length of time. Generally speaking, it is **not** recommended to run the entire pipeline on a developer laptop for large scale Wikidata dumps, for the following reasons:
+
+- Wikidata dumps are pretty large - ~100GB uncompressed.
+- Processing time for the entire pipe line is relatively long: According to the latest estimation, >40 days.
+
+Therefore, as a more robust solution, the development team recommends to run most of the pipeline on a Virtual Machine on WMF's Cloud VPS with the exception of .
 
 Most of the code should not be run inside the WMF production cluster because it requires scraping the internet. A
 Virtual Machine (VM) on the WMF provided "Cloud-VPS" is a good place to run most of the code.

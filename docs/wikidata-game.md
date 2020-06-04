@@ -20,28 +20,39 @@ The Distributed Game platform requires developers to expose an api which provide
 ### Game API Hosting
 
 The API must be accessible by the Distributed Game platform over http(s). The development team chose to host the
-Reference Hunt game api on [ToolForge](https://gerrit.wikimedia.org/r/admin/projects).
+Reference Hunt game API on [ToolForge](https://gerrit.wikimedia.org/r/admin/projects).
 
 For more information about ToolForge and the specific tool see:
 - [ToolForge Documentation](https://wikitech.wikimedia.org/wiki/Help:Toolforge)
 - [wd-ref-island Tool Admin Panel](https://tools.wmflabs.org/admin/tool/wd-ref-island)
 
-Current maintainers can be found on the Admin Panel. You can get in touch with them to request access.
+_**Note**: In order to gain access to the Game API and ToolForge tool, please get in touch with one of the maintainers listed  in the tool's admin panel_
 
 ## Updating The Game Data
-The game API reads potential matches from a mysql database hosted on ToolForge. For an overview of the database schema
+The Reference Hunt Game API reads potential matches from a mysql database hosted on ToolForge. For an overview of the database schema
 please see: [`wikidata_game/game.sql`](../wikidata_game/game.sql).
 
-In order to obtain the potential matches run the pipeline. See the documentation for [running the pipeline]()
-<where to do this?>
-<backup?>
+In order to obtain the potential matches and update the game database, make sure you are listed as a tool maintainer on ToolForge, and follow the steps below:
 
-Load data using `wikidata_game/populator.php` which should be run with the env variable `REFS_PATH` set to a JSON file
-containing the references in one large array.
+1. Run the Reference Island [Data Pipeline](pipeline.md) (see: [Production Pipeline Documentation](production-pipeline.md)).
 
-```bash
-REFS_PATH="<path-to-refs.json>" php wikidata_game/populator.php
-```
+2. Log into ToolForge via ssh.
+
+3. Run the following command to use ToolForge as the `wd-ref-island` tool:
+
+   ```bash
+   become wd-ref-island
+   ```
+
+4. Upload the potential matches dump (the file called `refernces.jsonl`) to a path under the tool's home directory. 
+
+5. Run the following command ***from the tool's home directory*** to populate the game's database:
+
+   ```bash
+   REFS_PATH="<path to references.jsonl>" php -f populator/populator.php
+   ```
+
+   _**Note:** don't forget to replace `<path to references.jsonl>` with the actual path to the potential matches dump file._
 
 ## Development workflow
 
