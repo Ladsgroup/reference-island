@@ -2,24 +2,22 @@
 This documentation is for developers wishing to run the pipeline in a large scale. It concisely describes how to analyse **all of Wikidata** in order to obtain potential reference matches.
 
 ## Prerequisites
-Running the Reference Island data pipeline on a large scale Wikidata dump is a process that requires multiple machines and a length of time. Generally speaking, it is **not** recommended to run the entire pipeline on a developer laptop for large scale Wikidata dumps, for the following reasons:
+Running the Reference Island data pipeline on a large scale Wikidata dump is a process that requires multiple machines and a length of time. It is **not** recommended to run the entire pipeline on a developer laptop for large scale dumps because:
 
-- Wikidata dumps are pretty large - ~100GB uncompressed.
-- Processing time for the entire pipe line is relatively long: According to the latest estimation, >40 days.
+- Wikidata dumps are pretty large: ≈100s of GB uncompressed.
+- Processing time for the entire pipeline is relatively long: According to the latest estimation, >40 days.
 
-Therefore, as a more robust solution, the development team recommends to run most of the pipeline on a Virtual Machine on WMF's Cloud VPS with the exception of [Pipe 1: Item Extractor](#pipe-1-item-extractor).
+As a more robust solution, the development team recommends to run most of the pipeline on a Virtual Machine on [WMF's Cloud VPS](https://wikitech.wikimedia.org/wiki/Portal:Cloud_VPS) with the exception of [Pipe 1: Item Extractor](pipeline.md#pipe-1-item-extractor).
 
-The item extraction pipe reads the complete dumps. The machines in the WMF stats cluster have the complete dumps
-available and are on storage that is quick to read. Therefore, the stats cluster is the best place to run the item extraction pipe.  
+For Pipe 1 to read the complete dumps it is advisable to run on a machine in the [WMF Analytics cluster](https://wikitech.wikimedia.org/wiki/Analytics/Systems/Cluster). This is recommended because the machines in the Analytics cluster have the complete dumps available on fast storage.
 
-## Setting up a Cloud-VPS VM
-Documentation for setting up a VM on Cloud-VPS is available [here](https://wikitech.wikimedia.org/wiki/Help:Cloud_VPS_Instances).
+The following documentation assumes that you:
+- Have [set-up a Cloud VPS VM](https://wikitech.wikimedia.org/wiki/Help:Cloud_VPS_Instances)
 
-_**Note**: that there is an existing project used by the Wikidata team for miscellaneous work: wikidata-dev_
+    _**Note**: the Wikidata team has a Cloud VPS project called `wikidata-dev` for miscellaneous work_
 
-## Access to the WMF Production Stats machines
-Documentation for gaining permission to use the stats machines and technical details for accessing this is available
-[here](https://wikitech.wikimedia.org/wiki/Analytics/Data_access).
+- Have [permissions to access to the Analytics Cluster](https://wikitech.wikimedia.org/wiki/Analytics/Data_access)
+
 
 # Steps to run
 ## 1. Running SS1
