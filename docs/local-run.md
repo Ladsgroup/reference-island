@@ -38,7 +38,7 @@ The Reference Island Data Pipeline is a python package designed to extract poten
 3. Activate the virtual environment:
 
     ```bash
-    source venv/bin/active
+    source venv/bin/activate
     ```
 
 4. Install this package and it's dependencies into the python virtual environment:
@@ -108,7 +108,7 @@ The Data Pipeline python package includes handy tools for local development. To 
 1. Activate the virtual environment:
 
    ```bash
-   source venv/bin/active
+   source venv/bin/activate
    ```
 
 2. Install the Development dependencies and tests

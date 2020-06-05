@@ -51,7 +51,7 @@ Clone the repository to your ***Cloud VPS VM***, and run the following command *
 2. Activate the virtual environment:
 
    ```bash
-   source venv/bin/active
+   source venv/bin/activate
    ```
 
 3. Install this package and it's dependencies into the python virtual environment:
@@ -87,7 +87,7 @@ This step should be run on a machine in the ***Analytics cluster***. The initial
 1. Activate the virtual environment:
 
    ```bash
-   source venv/bin/active
+   source venv/bin/activate
    ```
 1. Install this package and it's dependencies into the python virtual environment:
 
