@@ -1,6 +1,6 @@
 # Local Run and Development
 
-This documentation aimed developers wishing to run the Reference Island Data Pipeline on a small scale with their local machines or continue the development of the data pipeline.
+This documentation is aimed at developers wishing to run the Reference Island Data Pipeline on a small scale with their local machines or continue the development of the data pipeline.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -93,7 +93,7 @@ To run only individual parts of the data pipeline, add name of the result file a
 The commands for each sequential step are as follows:
 
 1. `make data/whitelisted_ext_idefs.json` runs [SS 1: External Resource Whitelister](pipeline.md#ss-1-external-resource-whitelister)
-2. `make data/extracted_unreferenced_statements.jsonl` runs [Pipe 1: Item Extractor](pipeline.md#pipe-1-item-extractor)
+2. `DUMP_PATH=<path-to-dump-file> make data/extracted_unreferenced_statements.jsonl` runs [Pipe 1: Item Extractor](pipeline.md#pipe-1-item-extractor)
 3. `make data/schema_org_context.jsonld` runs [SS 2: Schema.org JSON-LD context fetcher](pipeline.md#ss-2-schemaorg-json-ld-context-fetcher)
 4. `make data/scraped_data.jsonl` runs [Pipe 2: Scraper](pipeline.md#pipe-2-scraper)
 5. `make data/matched_references.jsonl` runs [Pipe 3: Value Matcher](pipeline.md#pipe-3-value-matcher)
