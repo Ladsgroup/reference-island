@@ -26,6 +26,7 @@ The development team for the Reference Island data pipeline implemented a [Wikid
 For more information about the Wikidata Distributed Game and the Reference Hunt implementation, see the following:
 - [Wikidata Distributed Game API documentation](https://bitbucket.org/magnusmanske/wikidata-game/src/master/public_html/distributed/?at=master)
 - [Reference Hunt Distributed Game](https://tools.wmflabs.org/wikidata-game/distributed/#game=73)
+- [Reference Treasure Hunt - Game Stats](https://tools.wmflabs.org/wd-ref-island/stats.php) (Live)
 
 ### Distributed Game Requirements
 
@@ -53,7 +54,7 @@ In order to obtain the potential matches and update the game database, make sure
 
 1. Run the Reference Island [Data Pipeline](pipeline.md) (see: [Production Pipeline Documentation](production-run.md)).
 
-2. Log into the tool's [ToolForge Tool Account](https://wikitech.wikimedia.org/wiki/Portal:Toolforge/Tool_Accounts). 
+2. Log into the tool's [ToolForge Account](https://wikitech.wikimedia.org/wiki/Portal:Toolforge/Tool_Accounts). 
 
 4. Upload the potential matches dump (the file called `references.jsonl`) to a path under the tool's home directory. 
 

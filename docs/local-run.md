@@ -1,9 +1,11 @@
 # Local Run and Development
 
-This documentation is for developers wishing to run the Reference Island Data Pipeline in a small scale on their local machines.
+This documentation aimed developers wishing to run the Reference Island Data Pipeline on a small scale with their local machines or continue the development of the data pipeline.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 
 - [Prerequisites & Setup](#prerequisites--setup)
@@ -31,7 +33,7 @@ The Reference Island Data Pipeline is a python package designed to extract poten
     python3 -m venv venv
     ```
 
-    This has the advantage of keeping dependencies of this project separate from your system.
+    This has the advantage of keeping the dependencies of this project separate from your system.
 
 3. Activate the virtual environment:
 
@@ -49,11 +51,11 @@ The Reference Island Data Pipeline is a python package designed to extract poten
 
 In order to run the Reference Island Data Pipeline, you will need to obtain a small set of Wikibase item dump, in the same format as a [Wikidata JSON dumps](https://www.wikidata.org/wiki/Wikidata:Database_download#JSON_dumps_(recommended)). 
 
-_**Important:** It is **not** recommended to run the entire pipeline on a developer laptop for large scale dumps if you would like to run the pipeline on a large part of Wikidata, see the [Production run documentation](production-run.md)._
+_**Important:** It is **not** recommended to run the entire pipeline on a developer laptop for large scale dumps. If you would like to run the pipeline on a large part of Wikidata, see the [production run documentation](production-run.md)._
 
 ### Getting some sample data
 
-In case you don't have a small dataset to run the data pipeline on locally, you can follow the steps below to obtain a small sample of the Wikidata Dumps (See [Wikidata dumps directory](https://dumps.wikimedia.org/other/wikibase/wikidatawiki/) for a list of most recent entity dumps). 
+In case you don't have a small dataset to run the data pipeline on, you can follow the steps below to obtain a small sample of the Wikidata Dumps (See [Wikidata dumps directory](https://dumps.wikimedia.org/other/wikibase/wikidatawiki/) for a list of most recent entity dumps). 
 
 1. Start downloading the latest dump:
 
@@ -69,7 +71,7 @@ In case you don't have a small dataset to run the data pipeline on locally, you 
    zcat latest-all.json.gz > dumps.json
    ```
 
-   _**Note: ** You might see errors since there will probably be a partial chunk that is missing from the file. This isn't a problem however, as the pipeline will ignore the corrupt chunk._
+   _**Note:** You might see errors since there will probably be a partial chunk that is missing from the file. This isn't a problem however, as the pipeline will ignore the corrupt chunk._
 
 ### Running the full pipeline
 

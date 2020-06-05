@@ -109,3 +109,5 @@ Back on the ***Cloud VPS VM*** . follow the steps below:
 
 This should trigger all the remaining jobs and the resultant data in `data/references.jsonl` is now ready for further
 manual processing by you or to be [loaded into the Wikidata game](./wikidata-game.md#updating-the-game-data).
+
+For more information on the Schema of the result data in `data/references.jsonl`, see [Pipeline Result Schema Reference](result.md).
