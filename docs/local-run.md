@@ -73,7 +73,7 @@ In case you don't have a small dataset to run the data pipeline on locally, you 
 
 ### Running the full pipeline
 
-As each step of the Reference Island Data Pipeline is encoded as a command in a [`Makefile`](../Makfile), running the whole pipeline is fairly simple:
+As each step of the Reference Island Data Pipeline is encoded as a command in a [`Makefile`](../Makefile), running the whole pipeline is fairly simple:
 
 ```bash
 DUMP_PATH=<path-to-dump-file> make
