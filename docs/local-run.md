@@ -85,7 +85,7 @@ _**Note:** Make sure to set the `DUMP_PATH`  environment variable to the path of
 
 ### Running parts of the pipeline individually
 
-To run only individual parts of the data pipeline, add the name of the result file as an argument to the `make` command. See the following for more information regarding each step of the pipeline:
+To run only individual parts of the data pipeline, add a name for the result file as an argument to the `make` command. See the following for more information regarding each step of the pipeline:
 
 *  [Data Pipeline Reference](pipeline.md) provides more information on each of the pipeline stages
 *  [Pipeline Result Schema Reference](result.md) provides more information on the results of each step.
