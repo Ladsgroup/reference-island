@@ -44,9 +44,10 @@ class TestDateTimeValue:
 
     @pytest.mark.parametrize("statement,equivalent", [
         (mock["statement"]["with_datetime"]["invalid_date_day_precision"], "+1986-05-04T00:00:00Z"),
-        (mock["statement"]["with_datetime"]["day_precision"], "+1986-20-20T00:00:00Z")
+        (mock["statement"]["with_datetime"]["day_precision"], "+1986-20-20T00:00:00Z"),
+        (mock["statement"]["with_datetime"]["invalid_date_day_precision"], "+1986-20-20T00:00:00Z")
     ])
-    def test_invalid_dates(self, statement, equivalent):
+    def test_invalid_dates_returns_false_and_not_throws(self, statement, equivalent):
         assert (DateTimeValue(statement) == equivalent) is False
 
 
