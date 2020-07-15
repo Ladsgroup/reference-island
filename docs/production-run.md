@@ -69,7 +69,7 @@ _**Important:** Do not run this step on an Analytics Cluster Machine, as it make
 On the ***Cloud VPS VM*** run the following:
 
 ```bash
-make data/whitelisted_ext_idefs.json
+make data/allowed_ext_idefs.json
 ```
 
 ## 3. Run [Pipe 1: Item Extractor](pipeline.md#pipe-1-item-extractor)
@@ -97,7 +97,7 @@ This step should be run on a machine in the ***Analytics cluster***. The initial
 
 ### Run
 
-1. Copy across your generated `whitelisted_ext_idefs.json` to the `data` folder in this repository.
+1. Copy across your generated `allowed_ext_idefs.json` to the `data` folder in this repository.
 
 2. Run the following:
 
