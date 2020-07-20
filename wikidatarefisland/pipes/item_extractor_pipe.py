@@ -11,16 +11,16 @@ class ItemExtractorPipe(AbstractPipe):
     """Pipe that extracts statements that could be referenced from an item"""
     def __init__(self, external_id_formatter,
                  blacklisted_properties=None,
-                 whitelisted_ext_ids=None,
+                 allowed_ext_ids=None,
                  blacklisted_classes=None,
                  ignored_reference_properties=[]):
         self.external_id_formatter = external_id_formatter
         if blacklisted_properties is None:
             blacklisted_properties = []
         self.blacklisted_properties = blacklisted_properties
-        if whitelisted_ext_ids is None:
-            whitelisted_ext_ids = []
-        self.whitelisted_ext_ids = whitelisted_ext_ids
+        if allowed_ext_ids is None:
+            allowed_ext_ids = []
+        self.allowed_ext_ids = allowed_ext_ids
         if blacklisted_classes is None:
             blacklisted_classes = []
         self.blacklisted_classes = blacklisted_classes
@@ -51,7 +51,7 @@ class ItemExtractorPipe(AbstractPipe):
         statement_filters = StatementFilters()
 
         external_id_statements = list(filter(
-            statement_filters.get_property_id_statement_includer(self.whitelisted_ext_ids),
+            statement_filters.get_property_id_statement_includer(self.allowed_ext_ids),
             all_statements
         ))
         resource_urls = map(self._format_external_id, external_id_statements)

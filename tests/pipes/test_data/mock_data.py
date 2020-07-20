@@ -1,7 +1,7 @@
 IGNORED_REFERENCE_PROPERTY = "P143"
-WHITELISTED_EXT_ID = "P3029"
+ALLOWED_EXT_ID = "P3029"
 EXTERNAL_ID_VALUE = "tst1234"
-NON_WHITELISTED_EXT_ID = "P3028"
+NON_ALLOWED_EXT_ID = "P3028"
 ITEM_ID = "Q23"
 BLACKLISTED_PROPERTY = "P26"
 NON_BLACKLISTED_PROPERTY = "P509"
@@ -63,7 +63,7 @@ EXAMPLE_LINE = {
     **REFERENCE_LINE,
     'statement': STATEMENT_BLOB,
     'reference': {
-        'referenceMetadata': {WHITELISTED_EXT_ID: 'fooid'},
+        'referenceMetadata': {ALLOWED_EXT_ID: 'fooid'},
         'extractedData': ['foo', 'bar']
     }
 }
@@ -98,14 +98,14 @@ mock = {
         },
         "with_any_external_id": {
             "mainsnak": {
-                "property": NON_WHITELISTED_EXT_ID,
+                "property": NON_ALLOWED_EXT_ID,
                 "datatype": "external-id"
             }
         },
-        "with_whitelisted_external_id": {
+        "with_allowed_external_id": {
             "mainsnak": {
                 "datatype": "external-id",
-                "property": WHITELISTED_EXT_ID,
+                "property": ALLOWED_EXT_ID,
                 "datavalue": {
                     "value": EXTERNAL_ID_VALUE
                 }

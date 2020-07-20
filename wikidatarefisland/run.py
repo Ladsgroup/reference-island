@@ -52,11 +52,11 @@ def main(argv, filepath):
         return
 
     if 'extract_items' == args.step:
-        whitelisted_ext_ids = storage.get(args.side_service_input_path)
+        allowed_ext_ids = storage.get(args.side_service_input_path)
         item_extractor = pipes.ItemExtractorPipe(
             external_identifier_formatter,
             config.get('blacklisted_properties'),
-            whitelisted_ext_ids,
+            allowed_ext_ids,
             config.get('blacklisted_item_classes'),
             config.get('ignored_reference_properties')
         )
@@ -76,16 +76,16 @@ def main(argv, filepath):
         return
 
     if 'item_analysis' == args.step:
-        whitelisted_ext_ids = storage.get(args.side_service_input_path)
+        allowed_ext_ids = storage.get(args.side_service_input_path)
         analysis_pipe = pipes.ItemStatisticalAnalysisPipe(
-            whitelisted_ext_ids,
+            allowed_ext_ids,
             config.get('minimum_repetitions_for_item_values'),
             config.get('maximum_noise_ratio_for_item_values')
         )
         observer_pump = pumps.ObserverPump(storage)
         observer_pump.run(analysis_pipe, args.input_path, '-')
         mapping = analysis_pipe.get_mapping()
-        matching_pipe = pipes.ItemMappingMatcherPipe(mapping, whitelisted_ext_ids)
+        matching_pipe = pipes.ItemMappingMatcherPipe(mapping, allowed_ext_ids)
         simple_pump.run(matching_pipe, args.input_path, args.output_path)
         return
 

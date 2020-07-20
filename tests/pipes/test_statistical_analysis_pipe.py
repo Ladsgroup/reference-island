@@ -37,8 +37,8 @@ given = {
 expected = {
     "mapping": {
         "no_mapping": {},
-        "empty_mapping": {test_data.WHITELISTED_EXT_ID: {test_data.NON_BLACKLISTED_PROPERTY: {}}},
-        "simple_mapping": {test_data.WHITELISTED_EXT_ID: {
+        "empty_mapping": {test_data.ALLOWED_EXT_ID: {test_data.NON_BLACKLISTED_PROPERTY: {}}},
+        "simple_mapping": {test_data.ALLOWED_EXT_ID: {
             test_data.NON_BLACKLISTED_PROPERTY: {'bar': 191789, 'foo': 191789}
         }}
     },
@@ -87,8 +87,8 @@ class TestItemExtractorPipe:
         ),
     ])
     def test_flow(self, given, expected, repetitions, noise):
-        whitelisted_ext_ids = [test_data.WHITELISTED_EXT_ID]
-        pipe = ItemStatisticalAnalysisPipe(whitelisted_ext_ids, repetitions, noise)
+        allowed_ext_ids = [test_data.ALLOWED_EXT_ID]
+        pipe = ItemStatisticalAnalysisPipe(allowed_ext_ids, repetitions, noise)
         for case in given:
             pipe.flow(case)
 
