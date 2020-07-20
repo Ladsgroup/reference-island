@@ -3,7 +3,7 @@ import concurrent.futures
 import requests
 
 
-class GenerateWhitelistedExtIds():
+class GenerateAllowedExtIds():
 
     def __init__(self, wdqs_reader, storage, config, external_identifier_formatter,
                  no_checks=10, no_processes=10):

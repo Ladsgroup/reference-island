@@ -102,7 +102,7 @@ This segment iterates over the data dump twice, where each pipe takes in a singl
 
 ### SS 1: External Resource Whitelister
 
-[[Code]](../wikidatarefisland/external_identifiers/generate_whitelisted_ext_ids.py), [[Makefile Command]](../Makefile#L7-L8): `make data/allowed_ext_idefs.json`
+[[Code]](../wikidatarefisland/external_identifiers/generate_allowed_ext_ids.py), [[Makefile Command]](../Makefile#L7-L8): `make data/allowed_ext_idefs.json`
 
 This service produces a list of External Identifier resource which are viable candidates for data extraction. It test-scrapes a sample of 10 use cases from each non [***blacklisted external identifier***](../config/default.yml#L78-L106), obtained through the [Wikidata Query Service](https://query.wikidata.org/), to determine whether the resource of that identifier contains enough viable data to scrape. It then collects all identifiers representing viable resources and writes their Wikibase Property IDs to a JSON array.
 

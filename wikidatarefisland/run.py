@@ -45,7 +45,7 @@ def main(argv, filepath):
     dump_reader_pump = pumps.DumpReaderPump(storage, args.write_batch)
 
     if 'ss1' == args.step:
-        ext_ids = external_identifiers.GenerateWhitelistedExtIds(
+        ext_ids = external_identifiers.GenerateAllowedExtIds(
             wdqs_reader, storage, config, external_identifier_formatter).run()
 
         storage.store(args.output_path, ext_ids)
