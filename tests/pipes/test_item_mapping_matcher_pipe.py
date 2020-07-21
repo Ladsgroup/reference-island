@@ -8,7 +8,7 @@ given = {
         "not_item_value_type": {
             **test_data.REFERENCE_LINE,
             'statement': {
-                "pid": test_data.NON_BLACKLISTED_PROPERTY,
+                "pid": test_data.NON_SKIPPED_PROPERTY,
                 "datatype": 'string',
                 "value": 'wow'
             }
@@ -18,13 +18,13 @@ given = {
     "mapping": {
         "no_mapping": {},
         "simple_mapping": {
-            test_data.ALLOWED_EXT_ID: {test_data.NON_BLACKLISTED_PROPERTY: {'foo': 191789}}
+            test_data.ALLOWED_EXT_ID: {test_data.NON_SKIPPED_PROPERTY: {'foo': 191789}}
         },
         "non_matching_mapping_value": {
-            test_data.ALLOWED_EXT_ID: {test_data.NON_BLACKLISTED_PROPERTY: {'baz': 191789}}
+            test_data.ALLOWED_EXT_ID: {test_data.NON_SKIPPED_PROPERTY: {'baz': 191789}}
         },
         "non_matching_mapping_item": {
-            test_data.ALLOWED_EXT_ID: {test_data.NON_BLACKLISTED_PROPERTY: {'foo': 191788}}
+            test_data.ALLOWED_EXT_ID: {test_data.NON_SKIPPED_PROPERTY: {'foo': 191788}}
         },
     }
 }

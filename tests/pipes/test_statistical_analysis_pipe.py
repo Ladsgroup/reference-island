@@ -9,7 +9,7 @@ given = {
         "not_item_value_type": [{
             **test_data.REFERENCE_LINE,
             'statement': {
-                "pid": test_data.NON_BLACKLISTED_PROPERTY,
+                "pid": test_data.NON_SKIPPED_PROPERTY,
                 "datatype": 'string',
                 "value": 'wow'
             }
@@ -21,7 +21,7 @@ given = {
             {
                 **test_data.REFERENCE_LINE,
                 'statement': {
-                    "pid": test_data.NON_BLACKLISTED_PROPERTY,
+                    "pid": test_data.NON_SKIPPED_PROPERTY,
                     "datatype": test_data.DATATYPE,
                     "value": {
                         "entity-type": "item",
@@ -37,9 +37,9 @@ given = {
 expected = {
     "mapping": {
         "no_mapping": {},
-        "empty_mapping": {test_data.ALLOWED_EXT_ID: {test_data.NON_BLACKLISTED_PROPERTY: {}}},
+        "empty_mapping": {test_data.ALLOWED_EXT_ID: {test_data.NON_SKIPPED_PROPERTY: {}}},
         "simple_mapping": {test_data.ALLOWED_EXT_ID: {
-            test_data.NON_BLACKLISTED_PROPERTY: {'bar': 191789, 'foo': 191789}
+            test_data.NON_SKIPPED_PROPERTY: {'bar': 191789, 'foo': 191789}
         }}
     },
     "repetitions": {

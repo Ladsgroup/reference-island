@@ -9,7 +9,7 @@ given = {
         "without_non_ignored_references": {
             **test_data.ITEM,
             "claims": {
-                test_data.NON_BLACKLISTED_PROPERTY: [
+                test_data.NON_SKIPPED_PROPERTY: [
                     test_data.mock["claim"]["with_ignored_references_only"]
                 ],
                 test_data.ALLOWED_EXT_ID: [
@@ -20,7 +20,7 @@ given = {
         "without_unreferenced_claims": {
             **test_data.ITEM,
             "claims": {
-                test_data.NON_BLACKLISTED_PROPERTY: [
+                test_data.NON_SKIPPED_PROPERTY: [
                     test_data.mock["claim"]["with_references"]
                 ]
             }
@@ -28,7 +28,7 @@ given = {
         "without_non_skipped_properties": {
             **test_data.ITEM,
             "claims": {
-                test_data.BLACKLISTED_PROPERTY: [
+                test_data.SKIPPED_PROPERTY: [
                     test_data.mock["claim"]["with_blacklisted_property"]
                 ]
             }
@@ -36,7 +36,7 @@ given = {
         "without_allowed_external_ids": {
             **test_data.ITEM,
             "claims": {
-                test_data.NON_BLACKLISTED_PROPERTY: [
+                test_data.NON_SKIPPED_PROPERTY: [
                     test_data.mock["claim"]["with_any_unreferenced_property"]
                 ],
                 test_data.NON_ALLOWED_EXT_ID: [
@@ -47,7 +47,7 @@ given = {
         "without_blacklisted_classes": {
             **test_data.ITEM,
             "claims": {
-                test_data.NON_BLACKLISTED_PROPERTY: [
+                test_data.NON_SKIPPED_PROPERTY: [
                     test_data.mock["claim"]["with_any_unreferenced_property"]
                 ],
                 test_data.ALLOWED_EXT_ID: [
@@ -61,7 +61,7 @@ given = {
         "with_all": {
             **test_data.ITEM,
             "claims": {
-                test_data.NON_BLACKLISTED_PROPERTY: [
+                test_data.NON_SKIPPED_PROPERTY: [
                     test_data.mock["claim"]["with_any_unreferenced_property"]
                 ],
                 test_data.ALLOWED_EXT_ID: [
@@ -99,10 +99,10 @@ class TestItemExtractorPipe:
     ])
     def test_flow(self, given, expected):
         external_id_formatter = MockExternalIdFormatter()
-        skipped_properties = [test_data.BLACKLISTED_PROPERTY]
+        skipped_properties = [test_data.SKIPPED_PROPERTY]
         allowed_ext_ids = [test_data.ALLOWED_EXT_ID]
         imported_from_properties = [test_data.IGNORED_REFERENCE_PROPERTY]
-        blacklisted_classes = [test_data.BLACKLISTED_CLASS]
+        blacklisted_classes = [test_data.IGNORED_CLASS]
 
         pipe = ItemExtractorPipe(
             external_id_formatter,
