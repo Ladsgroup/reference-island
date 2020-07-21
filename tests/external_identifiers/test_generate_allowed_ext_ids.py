@@ -38,7 +38,7 @@ class MockStorage():
 
 class MockConfig():
     def get(self, key):
-        if key == 'blacklisted_external_identifiers':
+        if key == 'ignored_external_identifiers':
             return ['P3']
 
 

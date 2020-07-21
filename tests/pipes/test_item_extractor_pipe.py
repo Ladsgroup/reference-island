@@ -25,7 +25,7 @@ given = {
                 ]
             }
         },
-        "without_non_blacklisted_properties": {
+        "without_non_skipped_properties": {
             **test_data.ITEM,
             "claims": {
                 test_data.BLACKLISTED_PROPERTY: [
@@ -92,21 +92,21 @@ class TestItemExtractorPipe:
     @pytest.mark.parametrize("given,expected", [
         (given["item"]["without_non_ignored_references"], [expected["line"]["with_all"]]),
         (given["item"]["without_unreferenced_claims"], []),
-        (given["item"]["without_non_blacklisted_properties"], []),
+        (given["item"]["without_non_skipped_properties"], []),
         (given["item"]["without_blacklisted_classes"], []),
         (given["item"]["without_allowed_external_ids"], []),
         (given["item"]["with_all"], [expected["line"]["with_all"]])
     ])
     def test_flow(self, given, expected):
         external_id_formatter = MockExternalIdFormatter()
-        blacklisted_properties = [test_data.BLACKLISTED_PROPERTY]
+        skipped_properties = [test_data.BLACKLISTED_PROPERTY]
         allowed_ext_ids = [test_data.ALLOWED_EXT_ID]
         imported_from_properties = [test_data.IGNORED_REFERENCE_PROPERTY]
         blacklisted_classes = [test_data.BLACKLISTED_CLASS]
 
         pipe = ItemExtractorPipe(
             external_id_formatter,
-            blacklisted_properties,
+            skipped_properties,
             allowed_ext_ids,
             blacklisted_classes,
             imported_from_properties)

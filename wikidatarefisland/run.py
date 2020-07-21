@@ -55,9 +55,9 @@ def main(argv, filepath):
         allowed_ext_ids = storage.get(args.side_service_input_path)
         item_extractor = pipes.ItemExtractorPipe(
             external_identifier_formatter,
-            config.get('blacklisted_properties'),
+            config.get('skipped_properties'),
             allowed_ext_ids,
-            config.get('blacklisted_item_classes'),
+            config.get('ignored_item_classes'),
             config.get('ignored_reference_properties')
         )
         dump_reader_pump.run(item_extractor, args.dump_path, args.output_path)

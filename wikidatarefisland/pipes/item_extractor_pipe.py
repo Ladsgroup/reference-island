@@ -10,14 +10,14 @@ from .abstract_pipe import AbstractPipe
 class ItemExtractorPipe(AbstractPipe):
     """Pipe that extracts statements that could be referenced from an item"""
     def __init__(self, external_id_formatter,
-                 blacklisted_properties=None,
+                 skipped_properties=None,
                  allowed_ext_ids=None,
                  blacklisted_classes=None,
                  ignored_reference_properties=[]):
         self.external_id_formatter = external_id_formatter
-        if blacklisted_properties is None:
-            blacklisted_properties = []
-        self.blacklisted_properties = blacklisted_properties
+        if skipped_properties is None:
+            skipped_properties = []
+        self.skipped_properties = skipped_properties
         if allowed_ext_ids is None:
             allowed_ext_ids = []
         self.allowed_ext_ids = allowed_ext_ids
@@ -69,7 +69,7 @@ class ItemExtractorPipe(AbstractPipe):
             lambda statement: statement is not None,
             statement_filters.get_referenced_statement_excluder(self.ignored_reference_properties),
             statement_filters.external_id_statement_excluder,
-            statement_filters.get_property_id_statement_excluder(self.blacklisted_properties)
+            statement_filters.get_property_id_statement_excluder(self.skipped_properties)
         ]
         potentially_ref_statement_filterer = StatementFilterer(
             ref_statement_filters

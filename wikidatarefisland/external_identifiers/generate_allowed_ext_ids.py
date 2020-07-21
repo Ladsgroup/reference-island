@@ -67,7 +67,7 @@ class GenerateAllowedExtIds():
 
         pids = []
         for i in external_identifiers:
-            if i in final_results or i in self.config.get('blacklisted_external_identifiers'):
+            if i in final_results or i in self.config.get('ignored_external_identifiers'):
                 continue
             pids.append(i)
 
