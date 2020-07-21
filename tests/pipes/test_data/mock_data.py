@@ -120,7 +120,7 @@ mock = {
                 "datatype": DATATYPE
             }
         },
-        "with_blacklisted_class": {
+        "with_ignored_class": {
             "mainsnak": {
                 "property": INSTANCE_OF_PROPERTY,
                 "datavalue": {
@@ -129,7 +129,7 @@ mock = {
                 "datatype": DATATYPE
             }
         },
-        "with_blacklisted_property": {
+        "with_skipped_property": {
             "mainsnak": {
                 "property": SKIPPED_PROPERTY
             }

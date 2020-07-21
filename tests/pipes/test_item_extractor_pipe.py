@@ -29,7 +29,7 @@ given = {
             **test_data.ITEM,
             "claims": {
                 test_data.SKIPPED_PROPERTY: [
-                    test_data.mock["claim"]["with_blacklisted_property"]
+                    test_data.mock["claim"]["with_skipped_property"]
                 ]
             }
         },
@@ -44,7 +44,7 @@ given = {
                 ]
             }
         },
-        "without_blacklisted_classes": {
+        "without_ignored_classes": {
             **test_data.ITEM,
             "claims": {
                 test_data.NON_SKIPPED_PROPERTY: [
@@ -54,7 +54,7 @@ given = {
                     test_data.mock["claim"]["with_allowed_external_id"]
                 ],
                 test_data.INSTANCE_OF_PROPERTY: [
-                    test_data.mock["claim"]["with_blacklisted_class"]
+                    test_data.mock["claim"]["with_ignored_class"]
                 ]
             }
         },
@@ -93,7 +93,7 @@ class TestItemExtractorPipe:
         (given["item"]["without_non_ignored_references"], [expected["line"]["with_all"]]),
         (given["item"]["without_unreferenced_claims"], []),
         (given["item"]["without_non_skipped_properties"], []),
-        (given["item"]["without_blacklisted_classes"], []),
+        (given["item"]["without_ignored_classes"], []),
         (given["item"]["without_allowed_external_ids"], []),
         (given["item"]["with_all"], [expected["line"]["with_all"]])
     ])
@@ -102,13 +102,13 @@ class TestItemExtractorPipe:
         skipped_properties = [test_data.SKIPPED_PROPERTY]
         allowed_ext_ids = [test_data.ALLOWED_EXT_ID]
         imported_from_properties = [test_data.IGNORED_REFERENCE_PROPERTY]
-        blacklisted_classes = [test_data.IGNORED_CLASS]
+        ignored_classes = [test_data.IGNORED_CLASS]
 
         pipe = ItemExtractorPipe(
             external_id_formatter,
             skipped_properties,
             allowed_ext_ids,
-            blacklisted_classes,
+            ignored_classes,
             imported_from_properties)
 
         assert pipe.flow(given) == expected

@@ -12,7 +12,7 @@ class ItemExtractorPipe(AbstractPipe):
     def __init__(self, external_id_formatter,
                  skipped_properties=None,
                  allowed_ext_ids=None,
-                 blacklisted_classes=None,
+                 ignored_classes=None,
                  ignored_reference_properties=[]):
         self.external_id_formatter = external_id_formatter
         if skipped_properties is None:
@@ -21,13 +21,13 @@ class ItemExtractorPipe(AbstractPipe):
         if allowed_ext_ids is None:
             allowed_ext_ids = []
         self.allowed_ext_ids = allowed_ext_ids
-        if blacklisted_classes is None:
-            blacklisted_classes = []
-        self.blacklisted_classes = blacklisted_classes
+        if ignored_classes is None:
+            ignored_classes = []
+        self.ignored_classes = ignored_classes
         self.ignored_reference_properties = ignored_reference_properties
 
     def flow(self, input_data):
-        item_class_excluder = ItemFilters().get_item_class_excluder(self.blacklisted_classes)
+        item_class_excluder = ItemFilters().get_item_class_excluder(self.ignored_classes)
         if item_class_excluder(input_data) is False:
             return []
         return self._process_item(input_data)
